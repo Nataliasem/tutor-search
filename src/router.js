@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import tutorsList from '@/pages/tutors/tutors-list'
-import tutorDetails from '@/pages/tutors/tutor-details'
-import tutorRegistration from '@/pages/tutors/tutor-registration'
-import contactTutor from '@/pages/requests/contact-tutor'
-import requestsList from '@/pages/requests/requests-list'
-import notFound from '@/pages/not-found'
+import tutorsList from '~/pages/tutors/tutors-list.vue'
+import tutorDetails from '~/pages/tutors/tutor-details.vue'
+import tutorRegistration from '~/pages/tutors/tutor-registration.vue'
+import contactTutor from '~/pages/requests/contact-tutor.vue'
+import requestsList from '~/pages/requests/requests-list.vue'
+import notFound from '~/pages/not-found.vue'
 
 const router = createRouter({
   history: createWebHistory(),
