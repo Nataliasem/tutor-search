@@ -1,7 +1,7 @@
 <template>
   <div>tutors-list</div>
   <section>FILTER</section>
-  <section>LIST-OF-COACHES</section>
+  <section>LIST-OF-TUTORS</section>
 </template>
 
 <script>
