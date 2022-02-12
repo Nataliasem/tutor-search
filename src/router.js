@@ -1,23 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import tutorsList from '~/pages/tutors/tutors-list.vue'
-import tutorDetails from '~/pages/tutors/tutor-details.vue'
-import tutorRegistration from '~/pages/tutors/tutor-registration.vue'
-import contactTutor from '~/pages/requests/contact-tutor.vue'
-import requestsList from '~/pages/requests/requests-list.vue'
-import notFound from '~/pages/not-found.vue'
+import TutorsList from '~/pages/tutors/tutors-list.vue'
+import TutorDetails from '~/pages/tutors/tutor-details.vue'
+import TutorRegistration from '~/pages/tutors/tutor-registration.vue'
+import ContactTutor from '~/pages/requests/contact-tutor.vue'
+import RequestsList from '~/pages/requests/requests-list.vue'
+import NotFound from '~/pages/not-found.vue'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: '/', redirect: '/tutors'},
-    { path: '/tutors', component: tutorsList },
-    { path: '/tutors:id', component: tutorDetails, children: [
-        { path: '/contact', component: contactTutor }
+    { path: '/tutors', component: TutorsList },
+    { path: '/tutors/:id',
+      component: TutorDetails,
+      children: [
+        { path: 'contact', component: ContactTutor }
       ] },
-    { path: '/register', component: tutorRegistration },
-    { path: '/requests', component: requestsList },
-    { path: '/:not-found(.*)', component: notFound },
+    { path: '/register', component: TutorRegistration },
+    { path: '/requests', component: RequestsList },
+    { path: '/:not-found(.*)', component: NotFound },
   ]
 })
 
