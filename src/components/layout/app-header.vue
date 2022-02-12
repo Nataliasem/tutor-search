@@ -1,7 +1,7 @@
 <template>
   <header>
     <nav>
-      <h1><router-link to="/">Find a coach</router-link></h1>
+      <h1><router-link to="/">Find a tutor</router-link></h1>
       <ul>
         <li><router-link to="/tutors">All tutors</router-link></li>
         <li><router-link to="/requests">All requests</router-link></li>
