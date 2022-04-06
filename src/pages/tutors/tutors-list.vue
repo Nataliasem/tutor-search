@@ -5,28 +5,32 @@
   <!-- FILTER -->
   <section>Filter</section>
 
-  <!-- ACTIONS -->
-  <div class='controls'>
-    <button type='button'>Refresh</button>
-    <router-link to='/register'>Register as a coach</router-link>
+  <div class="base-card">
+    <!-- ACTIONS -->
+    <div class='controls'>
+      <base-button class="outline">Refresh</base-button>
+      <base-button to='/register' mode="link">Register as a coach</base-button>
+    </div>
+
+    <!-- NO TUTORS MESSAGE -->
+    <div v-if="hasTutors === false">No tutors found</div>
+
+    <!-- LIST OF TUTORS-->
+    <ul v-else>
+      <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
+    </ul>
   </div>
-
-  <!-- NO TUTORS MESSAGE -->
-  <div v-if="hasTutors === false">No tutors found</div>
-
-  <!-- LIST OF TUTORS-->
-  <ul v-else>
-    <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
-  </ul>
 </template>
 
 <script>
-import tutorItem from '../../components/tutors/tutor-item.vue'
+import TutorItem from '../../components/tutors/tutor-item.vue'
+import BaseButton from '../../components/ui/base-button.vue'
 
 export default {
   name: 'tutors-list',
   components: {
-    tutorItem
+    TutorItem,
+    BaseButton
   },
   computed: {
     filteredTutors() {
