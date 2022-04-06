@@ -1,0 +1,33 @@
+/*******************BASE-CARD**********************/
+.base-card {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    padding: 1rem;
+    margin: 2rem auto;
+    max-width: 40rem;
+}
+
+/*******************BASE-BADGE**********************/
+.base-badge {
+    background-color: #ccc;
+    color: #252525;
+    border-radius: 30px;
+    padding: 0.5rem 1.5rem;
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.base-badge.frontend {
+    background-color: #3d008d;
+    color: white;
+}
+
+.base-badge.backend {
+    background-color: #71008d;
+    color: white;
+}
+
+.base-badge.career {
+    background-color: #8d006e;
+    color: white;
+}
