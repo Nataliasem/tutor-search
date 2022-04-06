@@ -1,25 +1,25 @@
 <template>
-  <li>
+  <li class="tutor-item">
     <!-- FULL NAME-->
-    <h3>{{ fullName }}</h3>
+    <div class="name">{{ fullName }}</div>
 
     <!-- HOURLY RATE-->
-    <h4>{{ hourlyRate }}</h4>
+    <div class="rate">{{ hourlyRate }}</div>
 
-    <!-- ACTIONS-->
-<!--    <div>-->
-<!--      <span v-for="area in areas" :key="area">{{ area }}</span>-->
-<!--    </div>-->
+    <!-- AREAS -->
+    <div v-for="area in tutor.areas" :key="area" class="base-badge" :class="area">{{ (area || []).toUpperCase() }}</div>
 
     <!-- ACTIONS-->
     <div class="actions">
-      <router-link :to="tutorContactLink">Contact</router-link>
-      <router-link :to="tutorDetailsLink">View details</router-link>
+      <base-button class="outline" mode="link" :to="tutorContactLink">Contact</base-button>
+      <base-button mode="link" :to="tutorDetailsLink">View details</base-button>
     </div>
   </li>
 </template>
 
 <script>
+import BaseButton from '../../components/ui/base-button.vue'
+
 export default {
   name: 'tutor-item',
   props: {
@@ -27,6 +27,9 @@ export default {
       type: Object,
       request: true
     }
+  },
+  components: {
+    BaseButton
   },
   computed: {
     fullName() {
@@ -57,28 +60,28 @@ export default {
 }
 </script>
 
-<style scoped>
-li {
+<style>
+.tutor-item {
   margin: 1rem 0;
   border: 1px solid #424242;
   border-radius: 12px;
   padding: 1rem;
 }
 
-h3 {
+.tutor-item .name {
   font-size: 1.5rem;
 }
 
-h3,
-h4 {
+.tutor-item .name,
+.tutor-item .rate {
   margin: 0.5rem 0;
 }
 
-div {
+.tutor-item .base-badge {
   margin: 0.5rem 0;
 }
 
-.actions {
+.tutor-item .actions {
   display: flex;
   justify-content: flex-end;
 }
