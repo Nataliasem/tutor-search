@@ -7,7 +7,3 @@ export default {
   name: 'tutor-registration'
 };
 </script>
-
-<style scoped>
-
-</style>

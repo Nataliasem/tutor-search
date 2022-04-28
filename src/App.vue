@@ -7,7 +7,7 @@
 import AppHeader from '~/components/layout/app-header.vue'
 
 export default {
-  name: 'App',
+  name: 'app',
   components: {
     AppHeader
   }

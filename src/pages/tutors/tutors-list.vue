@@ -15,7 +15,7 @@
     <!-- NO TUTORS MESSAGE -->
     <div v-if="hasTutors === false">No tutors found</div>
 
-    <!-- LIST OF TUTORS-->
+    <!-- LIST OF TUTORS -->
     <ul v-else>
       <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
     </ul>

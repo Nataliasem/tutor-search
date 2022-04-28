@@ -1,15 +1,15 @@
 <template>
   <li class="tutor-item">
-    <!-- FULL NAME-->
+    <!-- FULL NAME -->
     <div class="name">{{ fullName }}</div>
 
-    <!-- HOURLY RATE-->
+    <!-- HOURLY RATE -->
     <div class="rate">{{ hourlyRate }}</div>
 
     <!-- AREAS -->
     <div v-for="area in tutor.areas" :key="area" class="base-badge" :class="area">{{ (area || []).toUpperCase() }}</div>
 
-    <!-- ACTIONS-->
+    <!-- ACTIONS -->
     <div class="actions">
       <base-button class="outline" mode="link" :to="tutorContactLink">Contact</base-button>
       <base-button mode="link" :to="tutorDetailsLink">View details</base-button>
@@ -22,14 +22,14 @@ import BaseButton from '../../components/ui/base-button.vue'
 
 export default {
   name: 'tutor-item',
+  components: {
+    BaseButton
+  },
   props: {
     tutor: {
       type: Object,
       request: true
     }
-  },
-  components: {
-    BaseButton
   },
   computed: {
     fullName() {
