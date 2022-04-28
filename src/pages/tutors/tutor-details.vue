@@ -1,20 +1,20 @@
 <template>
-  <div class="tutor-details">
+  <div class="max-w-card mx-auto mt-8">
     <div v-if="!tutor">No tutor info</div>
 
     <template v-else>
-      <div class="base-card">
+      <div>
         <h2>{{ tutorNameView }}</h2>
         <h3>{{ tutorRateView }}</h3>
       </div>
 
-      <div class="base-card">
+      <div>
         <h2>Interested? Reach out now!</h2>
-        <base-button to='/tutors/t1/contact' mode="link">Contact</base-button>
+        <ts-base-button to='/tutors/t1/contact' mode="link">Contact</ts-base-button>
       </div>
 
-      <div class="base-card">
-        <div v-for="area in tutor.areas" :key="area" class="base-badge" :class="area">{{ (area || []).toUpperCase() }}</div>
+      <div>
+        <div v-for="area in tutor.areas" :key="area" class="ts-base-badge" :class="area">{{ area }}</div>
         <p>{{ tutor.description }}</p>
       </div>
     </template>
@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import BaseButton from '~/components/ui/base-button.vue'
+import TsBaseButton from '~/components/ui/ts-base-button.vue'
 
 export default {
   name: 'tutor-details',
-  components: { BaseButton },
+  components: { TsBaseButton },
   props: {
     id: {
       type: String,
