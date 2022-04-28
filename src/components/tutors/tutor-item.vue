@@ -1,24 +1,26 @@
 <template>
-  <li class="tutor-item">
-    <!-- FULL NAME -->
-    <div class="name">{{ fullName }}</div>
+    <div class="ts-base-card space-y-3">
+      <!-- FULL NAME -->
+      <div class="text-size-22">{{ fullName }}</div>
 
-    <!-- HOURLY RATE -->
-    <div class="rate">{{ hourlyRate }}</div>
+      <!-- HOURLY RATE -->
+      <div>{{ hourlyRate }}</div>
 
     <!-- AREAS -->
-    <div v-for="area in formattedAreas" :key="area" class="base-badge" :class="area">{{ (area || []).toUpperCase() }}</div>
-
-    <!-- ACTIONS -->
-    <div class="actions">
-      <base-button class="outline" mode="link" :to="tutorContactLink">Contact</base-button>
-      <base-button mode="link" :to="tutorDetailsLink">View details</base-button>
+    <div class="space-x-2">
+      <div v-for="area in formattedAreas" :key="area" class="base-badge" :class="area">{{ (area || []).toUpperCase() }}</div>
     </div>
-  </li>
+
+      <!-- ACTIONS -->
+      <div class="flex justify-end space-x-5">
+        <ts-base-button mode="link" :to="tutorContactLink">Contact</ts-base-button>
+        <ts-base-button mode="link" :to="tutorDetailsLink">View details</ts-base-button>
+      </div>
+    </div>
 </template>
 
 <script>
-import BaseButton from '../../components/ui/base-button.vue'
+import TsBaseButton from '../ui/ts-base-button.vue'
 
 const AREAS_NAMES = {
   1: 'frontend',
@@ -29,7 +31,7 @@ const AREAS_NAMES = {
 export default {
   name: 'tutor-item',
   components: {
-    BaseButton
+    TsBaseButton
   },
   props: {
     tutor: {
@@ -69,30 +71,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.tutor-item {
-  margin: 1rem 0;
-  border: 1px solid #424242;
-  border-radius: 12px;
-  padding: 1rem;
-}
-
-.tutor-item .name {
-  font-size: 1.5rem;
-}
-
-.tutor-item .name,
-.tutor-item .rate {
-  margin: 0.5rem 0;
-}
-
-.tutor-item .base-badge {
-  margin: 0.5rem 0;
-}
-
-.tutor-item .actions {
-  display: flex;
-  justify-content: flex-end;
-}
-</style>

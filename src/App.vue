@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import AppHeader from '~/components/layout/app-header.vue'
+import AppHeader from '~/components/layout/ts-header.vue'
 
 export default {
   name: 'app',
@@ -13,19 +13,3 @@ export default {
   }
 }
 </script>
-
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  font-family: "Roboto", sans-serif;
-}
-
-body {
-  margin: 0;
-}
-</style>

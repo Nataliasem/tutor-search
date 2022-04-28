@@ -1,31 +1,32 @@
 <template>
   <!-- FILTER -->
-  <div class="base-card">
-    <h2>Find your tutor</h2>
-    <tutor-filters v-model:checked="checkedAreas" :filter-options="areasOptions" />
+  <div class="max-w-card mx-auto mt-8">
+   <div class="ts-base-card">
+     <h2>Find your tutor</h2>
+     <tutor-filters v-model:checked="checkedAreas" :filter-options="areasOptions" />
+   </div>
+
+  <!-- ACTIONS -->
+  <div class="flex justify-between mb-6">
+    <ts-base-button class="outline">Refresh</ts-base-button>
+    <ts-base-button to='/register' mode="link">Register as a coach</ts-base-button>
   </div>
 
-  <div class="base-card">
-    <!-- ACTIONS -->
-    <div class='controls'>
-      <base-button class="outline">Refresh</base-button>
-      <base-button to='/register' mode="link">Register as a coach</base-button>
-    </div>
+  <!-- NO TUTORS MESSAGE -->
+  <div v-if="hasTutors === false">No tutors found</div>
 
-    <!-- NO TUTORS MESSAGE -->
-    <div v-if="hasTutors === false">No tutors found</div>
-
-    <!-- LIST OF TUTORS -->
-    <ul v-else>
-      <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
-    </ul>
+  <!-- LIST OF TUTORS -->
+  <div class="space-y-6">
+    <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
   </div>
+  </div>
+
 </template>
 
 <script>
 import TutorItem from '../../components/tutors/tutor-item.vue'
+import TsBaseButton from '../../components/ui/ts-base-button.vue'
 import TutorFilters from '../../components/tutors/tutor-filters.vue'
-import BaseButton from '../../components/ui/base-button.vue'
 
 const AREAS_OPTIONS =
   [
@@ -48,7 +49,7 @@ export default {
   name: 'tutors-list',
   components: {
     TutorItem,
-    BaseButton,
+    TsBaseButton,
     TutorFilters
   },
   data: () => ({
@@ -71,16 +72,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.controls {
-  display: flex;
-  justify-content: space-between;
-}
-</style>
