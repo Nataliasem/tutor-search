@@ -52,15 +52,15 @@ export default {
     TutorFilters
   },
   data: () => ({
-    checkedAreas: [1, 2, 3], // по умолчанию отмечены все
+    checkedAreas: [],
     areasOptions: AREAS_OPTIONS
   }),
   computed: {
     filteredTutors() {
       const tutors = this.$store.getters['tutors/tutors'] || []
 
-      if(tutors.length === 0) {
-        return []
+      if(this.checkedAreas.length === 0) {
+        return tutors
       }
 
       return tutors.filter(item => item.areas.some(area => this.checkedAreas.includes(area)))
