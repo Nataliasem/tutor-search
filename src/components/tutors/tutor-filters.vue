@@ -1,5 +1,5 @@
 <template>
-  <div class="tutor-filter">
+  <div class="tutor-filter space-x-2">
     <label v-for="option in filterOptions" :key="option.value">
       <input type="checkbox"
              :id="option.value"

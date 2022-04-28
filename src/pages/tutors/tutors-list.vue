@@ -1,14 +1,13 @@
 <template>
   <!-- FILTER -->
   <div class="max-w-card mx-auto mt-8">
-   <div class="ts-base-card">
-     <h2>Find your tutor</h2>
-     <tutor-filters v-model:checked="checkedAreas" :filter-options="areasOptions" />
-   </div>
+
+
+
 
   <!-- ACTIONS -->
   <div class="flex justify-between mb-6">
-    <ts-base-button class="outline">Refresh</ts-base-button>
+    <tutor-filters v-model:checked="checkedAreas" :filter-options="areasOptions" />
     <ts-base-button to='/register' mode="link">Register as a coach</ts-base-button>
   </div>
 
