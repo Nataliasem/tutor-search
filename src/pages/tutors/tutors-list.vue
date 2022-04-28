@@ -1,11 +1,5 @@
 <template>
     <div class="max-w-card mx-auto mt-8">
-      <!-- ACTIONS -->
-      <div class="flex justify-between mb-6">
-        <ts-base-button class="outline">Refresh</ts-base-button>
-        <ts-base-button to='/register' mode="link">Register as a coach</ts-base-button>
-      </div>
-
       <!-- NO TUTORS MESSAGE -->
       <div v-if="hasTutors === false">No tutors found</div>
 
@@ -18,13 +12,11 @@
 
 <script>
 import TutorItem from '../../components/tutors/tutor-item.vue'
-import TsBaseButton from '../../components/ui/ts-base-button.vue'
 
 export default {
   name: 'tutors-list',
   components: {
-    TutorItem,
-    TsBaseButton
+    TutorItem
   },
   computed: {
     filteredTutors() {

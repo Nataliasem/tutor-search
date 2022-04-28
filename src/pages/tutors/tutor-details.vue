@@ -10,7 +10,7 @@
 
       <div>
         <h2>Interested? Reach out now!</h2>
-        <ts-base-button to='/tutors/t1/contact' mode="link">Contact</ts-base-button>
+        <router-link to='/tutors/t1/contact'>Contact</router-link>
       </div>
 
       <div>
@@ -22,11 +22,8 @@
 </template>
 
 <script>
-import TsBaseButton from '~/components/ui/ts-base-button.vue'
-
 export default {
   name: 'tutor-details',
-  components: { TsBaseButton },
   props: {
     id: {
       type: String,

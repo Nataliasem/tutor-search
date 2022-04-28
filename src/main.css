@@ -25,18 +25,25 @@ body {
 
 /*******************BASE-BADGE**********************/
 .ts-base-badge {
-    @apply text-white px-2 py-1 rounded-md;
-    display: inline-block;
+    @apply border text-white rounded-ts-lg;
+    @apply inline-block;
+    padding: 2px 12px;
 }
 
 .ts-base-badge.frontend {
-    @apply bg-indigo-900;
+    @apply border-indigo-900 text-indigo-900 bg-indigo-100;
 }
 
 .ts-base-badge.backend {
-    @apply bg-sky-500;
+    @apply border-sky-500 text-sky-500 bg-sky-100;
 }
 
 .ts-base-badge.career {
-    @apply bg-amber-500;
+    @apply border-amber-500 text-amber-500 bg-orange-50;
+}
+
+.ts-button-main {
+    @apply inline-block;
+    @apply outline-0 bg-sky-500 text-white;
+    @apply px-5 py-2 rounded-ts-sm;
 }

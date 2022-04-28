@@ -11,7 +11,8 @@ module.exports = {
       borderRadius: {
         'ts-xs': '1px',
         'ts-sm': '2px',
-        'ts-md': '8px'
+        'ts-md': '8px',
+        'ts-lg': '20px'
       },
     },
     spacing: {

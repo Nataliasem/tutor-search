@@ -13,20 +13,16 @@
 
       <!-- ACTIONS -->
       <div class="flex justify-end space-x-5">
-        <ts-base-button mode="link" :to="tutorContactLink">Contact</ts-base-button>
-        <ts-base-button mode="link" :to="tutorDetailsLink">View details</ts-base-button>
+        <router-link :to="tutorContactLink">Contact</router-link>
+        <router-link :to="tutorDetailsLink">View details</router-link>
       </div>
     </div>
 </template>
 
 <script>
-import TsBaseButton from '../ui/ts-base-button.vue'
 
 export default {
   name: 'tutor-item',
-  components: {
-    TsBaseButton
-  },
   props: {
     tutor: {
       type: Object,
