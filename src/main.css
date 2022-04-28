@@ -16,34 +16,38 @@ body {
     margin: 0;
 }
 
-/*******************TS-BASE-CARD**********************/
-.ts-base-card {
+/*******************TS-CARD**********************/
+.ts-card {
     @apply border border-slate-300 rounded-ts-md;
-    @apply w-full max-w-card py-3 px-5;
+    @apply w-full max-w-card py-6;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 }
 
-/*******************BASE-BADGE**********************/
-.ts-base-badge {
+.ts-card-footer {
+    @apply space-x-2 border-t border-slate-300 pt-5 px-6;
+}
+
+    /*******************BASE-BADGE**********************/
+.ts-badge {
     @apply border text-white rounded-ts-lg;
     @apply inline-block;
     padding: 2px 12px;
 }
 
-.ts-base-badge.frontend {
-    @apply border-indigo-900 text-indigo-900 bg-indigo-100;
+.ts-badge.frontend {
+    @apply border-indigo-600 text-indigo-900 bg-indigo-100;
 }
 
-.ts-base-badge.backend {
-    @apply border-sky-500 text-sky-500 bg-sky-100;
+.ts-badge.backend {
+    @apply border-sky-500 text-sky-600 bg-sky-100;
 }
 
-.ts-base-badge.career {
-    @apply border-amber-500 text-amber-500 bg-orange-50;
+.ts-badge.career {
+    @apply border-amber-500 text-amber-600 bg-orange-50;
 }
 
 .ts-button-main {
     @apply inline-block;
-    @apply outline-0 bg-sky-500 text-white;
-    @apply px-5 py-2 rounded-ts-sm;
+    @apply outline-0 bg-sky-600 text-white;
+    @apply px-4 py-1 rounded-ts-sm;
 }

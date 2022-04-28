@@ -14,7 +14,7 @@
       </div>
 
       <div>
-        <div v-for="area in tutor.areas" :key="area" class="ts-base-badge" :class="area">{{ area }}</div>
+        <div v-for="area in tutor.areas" :key="area" class="ts-badge" :class="area">{{ area }}</div>
         <p>{{ tutor.description }}</p>
       </div>
     </template>
