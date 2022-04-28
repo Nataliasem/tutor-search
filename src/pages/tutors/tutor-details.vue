@@ -14,7 +14,7 @@
       </div>
 
       <div class="base-card">
-        <div v-for="area in tutor.areas" :key="area" class="base-badge" :class="area">{{ (area || []).toUpperCase() }}</div>
+        <div v-for="area in formattedAreas" :key="area" class="base-badge" :class="area">{{ (area || []).toUpperCase() }}</div>
         <p>{{ tutor.description }}</p>
       </div>
     </template>
@@ -23,6 +23,12 @@
 
 <script>
 import BaseButton from '~/components/ui/base-button.vue'
+
+const AREAS_NAMES = {
+  1: 'frontend',
+  2: 'backend',
+  3: 'career'
+}
 
 export default {
   name: 'tutor-details',
@@ -48,6 +54,10 @@ export default {
     tutorRateView() {
       const rate = this.tutor.hourlyRate || ''
       return rate ? `${rate}$/hour` : '-'
+    },
+
+    formattedAreas() {
+      return (this.tutor || []).areas.map(item => AREAS_NAMES[item])
     }
   },
 

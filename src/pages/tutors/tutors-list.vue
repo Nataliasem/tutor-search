@@ -1,9 +1,9 @@
 <template>
-  <!-- PAGE TITLE -->
-  <div>Tutors</div>
-
   <!-- FILTER -->
-  <section>Filter</section>
+  <div class="base-card">
+    <h2>Find your tutor</h2>
+    <tutor-filters v-model:checked="checkedAreas" :filter-options="areasOptions" />
+  </div>
 
   <div class="base-card">
     <!-- ACTIONS -->
@@ -24,14 +24,37 @@
 
 <script>
 import TutorItem from '../../components/tutors/tutor-item.vue'
+import TutorFilters from '../../components/tutors/tutor-filters.vue'
 import BaseButton from '../../components/ui/base-button.vue'
+
+const AREAS_OPTIONS =
+  [
+    {
+      value: 1,
+      name: 'Frontend'
+    },
+    {
+      value: 2,
+      name: 'Backend'
+    },
+    {
+      value: 3,
+      name: 'Career'
+    },
+  ]
+
 
 export default {
   name: 'tutors-list',
   components: {
     TutorItem,
-    BaseButton
+    BaseButton,
+    TutorFilters
   },
+  data: () => ({
+    checkedAreas: [1, 2, 3], // по умолчанию отмечены все
+    areasOptions: AREAS_OPTIONS
+  }),
   computed: {
     filteredTutors() {
       return this.$store.getters['tutors/tutors'] || []
