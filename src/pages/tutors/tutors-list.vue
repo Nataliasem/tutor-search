@@ -1,36 +1,30 @@
 <template>
-  <!-- PAGE TITLE -->
-  <div>Tutors</div>
+    <div class="max-w-card mx-auto mt-8">
+      <!-- ACTIONS -->
+      <div class="flex justify-between mb-6">
+        <ts-base-button class="outline">Refresh</ts-base-button>
+        <ts-base-button to='/register' mode="link">Register as a coach</ts-base-button>
+      </div>
 
-  <!-- FILTER -->
-  <section>Filter</section>
+      <!-- NO TUTORS MESSAGE -->
+      <div v-if="hasTutors === false">No tutors found</div>
 
-  <div class="base-card">
-    <!-- ACTIONS -->
-    <div class='controls'>
-      <base-button class="outline">Refresh</base-button>
-      <base-button to='/register' mode="link">Register as a coach</base-button>
+      <!-- LIST OF TUTORS -->
+      <div class="space-y-6">
+        <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
+      </div>
     </div>
-
-    <!-- NO TUTORS MESSAGE -->
-    <div v-if="hasTutors === false">No tutors found</div>
-
-    <!-- LIST OF TUTORS -->
-    <ul v-else>
-      <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
-    </ul>
-  </div>
 </template>
 
 <script>
 import TutorItem from '../../components/tutors/tutor-item.vue'
-import BaseButton from '../../components/ui/base-button.vue'
+import TsBaseButton from '../../components/ui/ts-base-button.vue'
 
 export default {
   name: 'tutors-list',
   components: {
     TutorItem,
-    BaseButton
+    TsBaseButton
   },
   computed: {
     filteredTutors() {
@@ -42,16 +36,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.controls {
-  display: flex;
-  justify-content: space-between;
-}
-</style>

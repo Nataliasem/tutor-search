@@ -1,33 +1,42 @@
-/*******************BASE-CARD**********************/
-.base-card {
-    border-radius: 12px;
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: "Roboto", sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+/*******************TS-BASE-CARD**********************/
+.ts-base-card {
+    @apply border border-slate-300 rounded-ts-md;
+    @apply w-full max-w-card py-3 px-5;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-    padding: 1rem;
-    margin: 2rem auto;
-    max-width: 40rem;
 }
 
 /*******************BASE-BADGE**********************/
-.base-badge {
-    background-color: #ccc;
-    color: #252525;
-    border-radius: 30px;
-    padding: 0.5rem 1.5rem;
+.ts-base-badge {
+    @apply text-white px-2 py-1 rounded-md;
     display: inline-block;
-    margin-right: 0.5rem;
 }
 
-.base-badge.frontend {
-    background-color: #3d008d;
-    color: white;
+.ts-base-badge.frontend {
+    @apply bg-indigo-900;
 }
 
-.base-badge.backend {
-    background-color: #71008d;
-    color: white;
+.ts-base-badge.backend {
+    @apply bg-sky-500;
 }
 
-.base-badge.career {
-    background-color: #8d006e;
-    color: white;
+.ts-base-badge.career {
+    @apply bg-amber-500;
 }
