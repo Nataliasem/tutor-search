@@ -20,6 +20,15 @@ export default {
           description:
             'I am Julie and as a senior developer in a big tech company, I can help you get your first job or progress in your current role.',
           hourlyRate: 30
+        },
+        {
+          id: '64cb4c65-36ff-4f67-b666-e0530c92266a',
+          firstName: 'Anna',
+          lastName: 'Fox',
+          areas: [3],
+          description:
+            'I am Anna, HR-manager',
+          hourlyRate: 30
         }
       ]
     }

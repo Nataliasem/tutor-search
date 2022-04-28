@@ -57,7 +57,13 @@ export default {
   }),
   computed: {
     filteredTutors() {
-      return this.$store.getters['tutors/tutors'] || []
+      const tutors = this.$store.getters['tutors/tutors'] || []
+
+      if(tutors.length === 0) {
+        return []
+      }
+
+      return tutors.filter(item => item.areas.some(area => this.checkedAreas.includes(area)))
     },
     hasTutors() {
       return this.$store.getters['tutors/hasTutors'] || []
