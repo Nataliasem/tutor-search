@@ -22,7 +22,8 @@
 </template>
 
 <script>
-import BaseButton from '../../components/ui/base-button.vue'
+import BaseButton from '~/components/ui/base-button.vue'
+
 export default {
   name: 'tutor-details',
   components: { BaseButton },
