@@ -18,9 +18,8 @@
   <!-- LIST OF TUTORS -->
   <div class="space-y-6">
     <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
+   </div>
   </div>
-  </div>
-
 </template>
 
 <script>
