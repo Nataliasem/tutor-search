@@ -6,10 +6,10 @@
       <!-- HOURLY RATE -->
       <div>{{ hourlyRate }}</div>
 
-      <!-- AREAS -->
-      <div class="space-x-2">
-        <div v-for="area in tutor.areas" :key="area" class="ts-base-badge" :class="area">{{ area }}</div>
-      </div>
+    <!-- AREAS -->
+    <div class="space-x-2">
+      <div v-for="area in formattedAreas" :key="area" class="ts-base-badge" :class="area">{{ (area || []).toUpperCase() }}</div>
+    </div>
 
       <!-- ACTIONS -->
       <div class="flex justify-end space-x-5">
@@ -21,6 +21,12 @@
 
 <script>
 import TsBaseButton from '../ui/ts-base-button.vue'
+
+const AREAS_NAMES = {
+  1: 'frontend',
+  2: 'backend',
+  3: 'career'
+}
 
 export default {
   name: 'tutor-item',
@@ -45,6 +51,10 @@ export default {
       const rate = this.tutor.hourlyRate || ''
 
       return '$' + rate + '/hour'
+    },
+
+    formattedAreas() {
+      return (this.tutor || []).areas.map(item => AREAS_NAMES[item])
     },
 
     tutorDetailsLink() {
