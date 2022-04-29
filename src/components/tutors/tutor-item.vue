@@ -4,6 +4,7 @@
         <div class="flex justify-between items-center">
           <!-- FULL NAME -->
           <div class="text-size-22">{{ fullName }}</div>
+
           <!-- ACTIONS -->
           <div class="flex items-center space-x-5 text-indigo-900">
             <router-link :to="tutorContactLink" title="contact"><icon-phone /></router-link>
@@ -17,7 +18,7 @@
 
     <!-- AREAS -->
     <div class="ts-card-footer">
-      <div v-for="area in formattedAreas" :key="area" class="ts-base-badge" :class="area">{{ area }}</div>
+      <div v-for="area in formattedAreas" :key="area" class="ts-badge" :class="area">{{ area }}</div>
     </div>
     </div>
 </template>

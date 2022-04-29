@@ -1,18 +1,15 @@
 <template>
-    <div class="max-w-card mx-auto mt-8">
-      <!-- NO TUTORS MESSAGE -->
-      <div v-if="hasTutors === false">No tutors found</div>
+  <div class="max-w-card mx-auto mt-8">
+    <!-- NO TUTORS MESSAGE -->
+    <div v-if="hasTutors === false">No tutors found</div>
 
-  <!-- ACTIONS -->
+    <!-- LIST OF TUTORS -->
+    <div class="space-y-6">
+      <!-- FILTERS -->
       <tutor-filters v-model:checked="checkedAreas" :filter-options="areasOptions" />
 
-
-  <!-- NO TUTORS MESSAGE -->
-  <div v-if="hasTutors === false">No tutors found</div>
-
-  <!-- LIST OF TUTORS -->
-  <div class="space-y-6">
-    <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
+      <!-- TUTORS -->
+      <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
    </div>
   </div>
 </template>

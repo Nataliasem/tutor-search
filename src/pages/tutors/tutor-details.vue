@@ -22,7 +22,6 @@
 </template>
 
 <script>
--button.vue'
 
 const AREAS_NAMES = {
   1: 'frontend',
