@@ -15,15 +15,21 @@
         <div>{{ hourlyRate }}</div>
       </div>
 
-      <!-- AREAS -->
-      <div class="ts-card-footer">
-        <div v-for="area in tutor.areas" :key="area" class="ts-badge" :class="area">{{ area }}</div>
-      </div>
+    <!-- AREAS -->
+    <div class="ts-card-footer">
+      <div v-for="area in formattedAreas" :key="area" class="ts-base-badge" :class="area">{{ area }}</div>
+    </div>
     </div>
 </template>
 
 <script>
 import { defineAsyncComponent } from 'vue';
+
+const AREAS_NAMES = {
+  1: 'frontend',
+  2: 'backend',
+  3: 'career'
+}
 
 export default {
   name: 'tutor-item',
@@ -53,6 +59,10 @@ export default {
       const rate = this.tutor.hourlyRate || ''
 
       return '$' + rate + '/hour'
+    },
+
+    formattedAreas() {
+      return (this.tutor || []).areas.map(item => AREAS_NAMES[item])
     },
 
     tutorDetailsLink() {
