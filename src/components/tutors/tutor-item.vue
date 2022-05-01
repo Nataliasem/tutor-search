@@ -1,26 +1,30 @@
 <template>
-    <div class="ts-base-card space-y-3">
-      <!-- FULL NAME -->
-      <div class="text-size-22">{{ fullName }}</div>
+    <div class="ts-card">
+      <div class="px-6 pb-10">
+        <div class="flex justify-between items-center">
+          <!-- FULL NAME -->
+          <div class="text-size-22">{{ fullName }}</div>
 
-      <!-- HOURLY RATE -->
-      <div>{{ hourlyRate }}</div>
+          <!-- ACTIONS -->
+          <div class="flex items-center space-x-5 text-indigo-900">
+            <router-link :to="tutorContactLink" title="contact"><icon-phone /></router-link>
+            <router-link :to="tutorDetailsLink" title="details"><icon-user /></router-link>
+          </div>
+        </div>
+
+        <!-- HOURLY RATE -->
+        <div>{{ hourlyRate }}</div>
+      </div>
 
     <!-- AREAS -->
-    <div class="space-x-2">
-      <div v-for="area in formattedAreas" :key="area" class="ts-base-badge" :class="area">{{ (area || []).toUpperCase() }}</div>
+    <div class="ts-card-footer">
+      <div v-for="area in formattedAreas" :key="area" class="ts-badge" :class="area">{{ area }}</div>
     </div>
-
-      <!-- ACTIONS -->
-      <div class="flex justify-end space-x-5">
-        <ts-base-button mode="link" :to="tutorContactLink">Contact</ts-base-button>
-        <ts-base-button mode="link" :to="tutorDetailsLink">View details</ts-base-button>
-      </div>
     </div>
 </template>
 
 <script>
-import TsBaseButton from '../ui/ts-base-button.vue'
+import { defineAsyncComponent } from 'vue';
 
 const AREAS_NAMES = {
   1: 'frontend',
@@ -31,7 +35,12 @@ const AREAS_NAMES = {
 export default {
   name: 'tutor-item',
   components: {
-    TsBaseButton
+    IconUser: defineAsyncComponent(() =>
+      import('~/components/icons/icon-user.vue')
+    ),
+    IconPhone: defineAsyncComponent(() =>
+      import('~/components/icons/icon-phone.vue')
+    )
   },
   props: {
     tutor: {

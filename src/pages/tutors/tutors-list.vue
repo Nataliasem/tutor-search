@@ -1,29 +1,21 @@
 <template>
-  <!-- FILTER -->
   <div class="max-w-card mx-auto mt-8">
+    <!-- NO TUTORS MESSAGE -->
+    <div v-if="hasTutors === false">No tutors found</div>
 
+    <!-- LIST OF TUTORS -->
+    <div class="space-y-6">
+      <!-- FILTERS -->
+      <tutor-filters v-model:checked="checkedAreas" :filter-options="areasOptions" />
 
-
-
-  <!-- ACTIONS -->
-  <div class="flex justify-between mb-6">
-    <tutor-filters v-model:checked="checkedAreas" :filter-options="areasOptions" />
-    <ts-base-button to='/register' mode="link">Register as a coach</ts-base-button>
-  </div>
-
-  <!-- NO TUTORS MESSAGE -->
-  <div v-if="hasTutors === false">No tutors found</div>
-
-  <!-- LIST OF TUTORS -->
-  <div class="space-y-6">
-    <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
+      <!-- TUTORS -->
+      <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
    </div>
   </div>
 </template>
 
 <script>
 import TutorItem from '../../components/tutors/tutor-item.vue'
-import TsBaseButton from '../../components/ui/ts-base-button.vue'
 import TutorFilters from '../../components/tutors/tutor-filters.vue'
 
 const AREAS_OPTIONS =
@@ -47,7 +39,6 @@ export default {
   name: 'tutors-list',
   components: {
     TutorItem,
-    TsBaseButton,
     TutorFilters
   },
   data: () => ({

@@ -10,11 +10,11 @@
 
       <div>
         <h2>Interested? Reach out now!</h2>
-        <ts-base-button to='/tutors/t1/contact' mode="link">Contact</ts-base-button>
+        <router-link to='/tutors/t1/contact'>Contact</router-link>
       </div>
 
       <div>
-        <div v-for="area in formattedAreas" :key="area" class="ts-base-badge" :class="area">{{ (area || []).toUpperCase() }}</div>
+        <div v-for="area in formattedAreas" :key="area" class="ts-badge" :class="area">{{ area }}</div>
         <p>{{ tutor.description }}</p>
       </div>
     </template>
@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import TsBaseButton from '~/components/ui/ts-base-button.vue'
 
 const AREAS_NAMES = {
   1: 'frontend',
@@ -32,7 +31,6 @@ const AREAS_NAMES = {
 
 export default {
   name: 'tutor-details',
-  components: { TsBaseButton },
   props: {
     id: {
       type: String,
