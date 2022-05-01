@@ -4,12 +4,14 @@
 </template>
 
 <script>
-import AppHeader from '~/components/layout/ts-header.vue'
+import { defineAsyncComponent } from 'vue';
 
 export default {
   name: 'app',
   components: {
-    AppHeader
+  AppHeader: defineAsyncComponent(() =>
+      import('~/components/layout/ts-header.vue')
+    ),
   }
 }
 </script>
