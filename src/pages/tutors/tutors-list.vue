@@ -15,15 +15,18 @@
 </template>
 
 <script>
-import TutorItem from '../../components/tutors/tutor-item.vue'
-import TsFieldChecklist from '../../components/fields/ts-field-checklist.vue'
+import { defineAsyncComponent } from 'vue';
 import { AREAS_OPTIONS } from '~/constants.js'
 
 export default {
   name: 'tutors-list',
   components: {
-    TutorItem,
-    TsFieldChecklist
+    TutorItem: defineAsyncComponent(() =>
+      import('~/components/tutors/tutor-item.vue')
+    ),
+    TsFieldChecklist: defineAsyncComponent(() =>
+      import('~/components/fields/ts-field-checklist.vue')
+    )
   },
   data: () => ({
     checkedAreas: [],
