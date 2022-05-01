@@ -26,7 +26,7 @@
         <!-- AREAS OF EXPERTISE -->
         <div class="flex flex-col space-y-2">
           <span class="font-bold">Areas of expertise</span>
-          <ts-field-checklist v-model:checked="checkedAreas" :filter-options="areasOptions" />
+          <ts-field-checklist v-model:checked="checkedAreas" :options="areasOptions" />
         </div>
       </div>
       <button type="submit" class="ts-button-main mt-8">Register</button>
@@ -52,6 +52,7 @@ export default {
       import('~/components/fields/ts-field-checklist.vue')
     )
   },
+  emits: ['register'],
   data: () => ({
     tutor: REGISTRATION_MODEL,
     areasOptions: AREAS_OPTIONS,
@@ -60,6 +61,7 @@ export default {
   methods: {
     register() {
       const data = {
+        id: '818690e3-d1d9-489e-82cc-799e640d16fb',
         firstName: this.tutor.firstName,
         lastName: this.tutor.lastName,
         areas: this.checkedAreas,
@@ -67,7 +69,7 @@ export default {
         hourlyRate: this.tutor.hourlyRate
       }
 
-      console.log(data)
+      this.$emit('register', data)
     }
   }
 };

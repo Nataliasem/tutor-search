@@ -33,7 +33,11 @@ export default {
       ]
     }
   },
-  mutations: {},
+  mutations: {
+    addTutor(state, tutor) {
+      state.tutors.push(tutor)
+    }
+  },
   actions: {},
   getters: {
     tutors(state) {
