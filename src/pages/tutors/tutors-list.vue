@@ -6,7 +6,7 @@
     <!-- LIST OF TUTORS -->
     <div class="space-y-6">
       <!-- FILTERS -->
-      <ts-field-checklist v-model:checked="checkedAreas" :filter-options="areasOptions" />
+      <ts-field-checklist v-model:checked="checkedAreas" :options="areasOptions" />
 
       <!-- TUTORS -->
       <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>

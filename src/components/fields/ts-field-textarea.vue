@@ -6,7 +6,7 @@
 
     <textarea
       v-model.trim="localValue"
-      class="ts-input"
+      class="ts-input pt-3"
       :class="{ 'invalid' : !valid }"
       :rows="rows"
       @blur="update"

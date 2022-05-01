@@ -8,7 +8,7 @@
             v-model="tutor.firstName.value"
             v-model:valid="tutor.firstName.valid"
             v-model:touched="tutor.firstName.touched"
-            required
+            :required="tutor.firstName.required"
           >
             First name
           </ts-field-input>
@@ -17,8 +17,8 @@
         <ts-field-input
           v-model="tutor.lastName.value"
           v-model:valid="tutor.lastName.valid"
-          v-model:touched="tutor.firstName.touched"
-          required
+          v-model:touched="tutor.lastName.touched"
+          :required="tutor.lastName.required"
         >
           Last name
         </ts-field-input>
@@ -27,8 +27,8 @@
         <ts-field-textarea
           v-model="tutor.description.value"
           v-model:valid="tutor.description.valid"
-          v-model:touched="tutor.firstName.touched"
-          required
+          v-model:touched="tutor.description.touched"
+          :required="tutor.description.required"
         >
           Description
         </ts-field-textarea>
@@ -37,8 +37,8 @@
         <ts-field-input
           v-model="tutor.hourlyRate.value"
           v-model:valid="tutor.hourlyRate.valid"
-          v-model:touched="tutor.firstName.touched"
-          required
+          v-model:touched="tutor.hourlyRate.touched"
+          :required="tutor.hourlyRate.required"
         >
           Hourly rate
         </ts-field-input>
@@ -56,26 +56,30 @@
 
 <script>
 import { defineAsyncComponent } from 'vue';
-import { AREAS_OPTIONS } from '~/constants.js'
+import { AREAS_OPTIONS } from '~/constants'
 import clonedeep from 'lodash.clonedeep'
 
 const REGISTRATION_MODEL = {
   firstName: {
+    required: true,
     value: '',
     valid: true,
     touched: false
   },
   lastName: {
+    required: true,
     value: '',
     valid: true,
     touched: false
   },
   description: {
+    required: false,
     value: '',
     valid: true,
     touched: false
   },
   hourlyRate: {
+    required: true,
     value: '',
     valid: true,
     touched: false
@@ -83,7 +87,7 @@ const REGISTRATION_MODEL = {
 }
 
 export default {
-  name: 'registration-form',
+  name: 'ts-form',
   components: {
     TsFieldInput: defineAsyncComponent(() =>
       import('~/components/fields/ts-field-input.vue')
@@ -103,8 +107,15 @@ export default {
   }),
   methods: {
     register() {
-      const isTouched= Object.keys(this.tutor).every(item => item.touched)
+      const isTouched = Object.keys(this.tutor).every(item => item.touched)
+
       if(!isTouched) {
+        for (const key in this.tutor) {
+          if(this.tutor[key].required) {
+            this.tutor[key].valid = false
+          }
+        }
+
         return
       }
 
@@ -112,8 +123,6 @@ export default {
       if(!isValid) {
         return
       }
-
-      console.log('submitted')
 
       const data = {
         id: '818690e3-d1d9-489e-82cc-799e640d16fb',
