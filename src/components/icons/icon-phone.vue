@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'icon-eye',
+  name: 'icon-phone',
   props: {
     width: {
       type: Number,

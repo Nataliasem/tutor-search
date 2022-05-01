@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: 'icon-eye',
+  name: 'icon-user',
   props: {
     width: {
       type: Number,

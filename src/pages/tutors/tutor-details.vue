@@ -14,7 +14,7 @@
       </div>
 
       <div>
-        <div v-for="area in formattedAreas" :key="area" class="ts-badge" :class="area">{{ (area || []).toUpperCase() }}</div>
+        <div v-for="area in formattedAreas" :key="area" class="ts-badge" :class="area">{{ area }}</div>
         <p>{{ tutor.description }}</p>
       </div>
     </template>

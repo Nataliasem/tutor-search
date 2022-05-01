@@ -27,7 +27,7 @@ body {
     @apply space-x-2 border-t border-slate-300 pt-5 px-6;
 }
 
-    /*******************BASE-BADGE**********************/
+/*******************TS-BADGE**********************/
 .ts-badge {
     @apply border text-white rounded-ts-lg;
     @apply inline-block;
@@ -46,6 +46,7 @@ body {
     @apply border-amber-500 text-amber-600 bg-orange-50;
 }
 
+/*******************TS-BUTTON**********************/
 .ts-button-main {
     @apply inline-block;
     @apply outline-0 bg-sky-600 text-white;
