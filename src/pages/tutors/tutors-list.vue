@@ -6,7 +6,7 @@
     <!-- LIST OF TUTORS -->
     <div class="space-y-6">
       <!-- FILTERS -->
-      <tutor-filters v-model:checked="checkedAreas" :filter-options="areasOptions" />
+      <ts-field-checklist v-model:checked="checkedAreas" :options="areasOptions" />
 
       <!-- TUTORS -->
       <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
@@ -16,7 +16,7 @@
 
 <script>
 import TutorItem from '../../components/tutors/tutor-item.vue'
-import TutorFilters from '../../components/tutors/tutor-filters.vue'
+import TsFieldChecklist from '../../components/fields/ts-field-checklist.vue'
 
 const AREAS_OPTIONS =
   [
@@ -39,7 +39,7 @@ export default {
   name: 'tutors-list',
   components: {
     TutorItem,
-    TutorFilters
+    TsFieldChecklist
   },
   data: () => ({
     checkedAreas: [],

@@ -1,6 +1,6 @@
 <template>
-  <div class="tutor-filter space-x-2">
-    <label v-for="option in filterOptions" :key="option.value">
+  <div class="ts-field-checklist space-x-2">
+    <label v-for="option in options" :key="option.value">
       <input type="checkbox"
              :id="option.value"
              :name="option.name"
@@ -17,7 +17,7 @@
 import clonedeep from 'lodash.clonedeep'
 
 export default {
-  name: 'tutor-filters',
+  name: 'ts-field-checklist',
   props: {
     /**
      * @type {Array<String>}
@@ -30,7 +30,7 @@ export default {
     /**
      * @type {Array<Object>}
      */
-    filterOptions: {
+    options: {
       type: Array,
       required: true
     }
