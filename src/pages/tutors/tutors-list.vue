@@ -6,7 +6,7 @@
     <!-- LIST OF TUTORS -->
     <div class="space-y-6">
       <!-- FILTERS -->
-      <ts-field-checklist v-model:checked="checkedAreas" :options="areasOptions" />
+      <ts-field-checklist v-model:checked="checkedAreas" :options="allAreas" />
 
       <!-- TUTORS -->
       <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue';
-
 const AREAS_OPTIONS =
   [
     {
@@ -33,6 +31,11 @@ const AREAS_OPTIONS =
     },
   ]
 
+
+import { defineAsyncComponent } from 'vue'
+import { reactive, computed, toRefs } from 'vue'
+import { useStore } from 'vuex'
+
 export default {
   name: 'tutors-list',
   components: {
@@ -43,23 +46,28 @@ export default {
       import('~/components/fields/ts-field-checklist.vue')
     )
   },
-  data: () => ({
-    checkedAreas: [],
-    areasOptions: AREAS_OPTIONS
-  }),
-  computed: {
-    filteredTutors() {
-      const tutors = this.$store.getters['tutors/tutors'] || []
+  setup() {
+    const store = useStore()
+    const hasTutors = computed(() => {
+      return store.getters['tutors/hasTutors'] || []
+    })
 
-      if(this.checkedAreas.length === 0) {
+    const areas = reactive({
+      checkedAreas: [],
+      allAreas: AREAS_OPTIONS
+    })
+
+    const filteredTutors = computed(() => {
+      const tutors = store.getters['tutors/tutors'] || []
+
+      if(areas.checkedAreas.length === 0) {
         return tutors
       }
 
-      return tutors.filter(item => item.areas.some(area => this.checkedAreas.includes(area)))
-    },
-    hasTutors() {
-      return this.$store.getters['tutors/hasTutors'] || []
-    }
+      return tutors.filter(item => item.areas.some(area => areas.checkedAreas.includes(area)))
+    })
+
+    return { ...toRefs(areas), hasTutors, filteredTutors }
   }
 }
 </script>
