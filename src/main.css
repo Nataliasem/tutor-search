@@ -13,6 +13,7 @@ html {
 }
 
 body {
+    @apply text-size-14;
     margin: 0;
 }
 
@@ -51,4 +52,22 @@ body {
     @apply inline-block;
     @apply outline-0 bg-sky-600 text-white;
     @apply px-4 py-1 rounded-ts-sm;
+}
+
+.ts-button-main:active {
+    @apply bg-sky-900;
+}
+
+/*******************TS-INPUT**********************/
+.ts-input {
+    @apply border border-slate-300 outline-0 rounded-ts-sm min-h-input;
+    @apply px-4;
+}
+
+.ts-input:focus {
+    @apply ring-blue-200 ring-offset-1 ring-2;
+}
+
+.ts-input.invalid {
+    @apply border-red-400;
 }

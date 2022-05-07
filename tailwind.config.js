@@ -8,6 +8,9 @@ module.exports = {
       maxWidth: {
         card: '700px'
       },
+      minHeight: {
+        input: '32px'
+      },
       borderRadius: {
         'ts-xs': '1px',
         'ts-sm': '2px',
