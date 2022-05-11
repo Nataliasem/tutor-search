@@ -48,7 +48,7 @@ export default {
         return tutors
       }
 
-      return tutors.filter(item => item.areas.some(area => areas.checkedAreas.includes(area)))
+      return tutors.filter(item => item.areas.some(area => (areas.checkedAreas || []).includes(area)))
     })
 
     return { ...toRefs(areas), hasTutors, filteredTutors }
