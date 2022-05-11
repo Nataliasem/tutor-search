@@ -15,26 +15,10 @@
 </template>
 
 <script>
-const AREAS_OPTIONS =
-  [
-    {
-      value: 1,
-      name: 'Frontend'
-    },
-    {
-      value: 2,
-      name: 'Backend'
-    },
-    {
-      value: 3,
-      name: 'Career'
-    },
-  ]
-
-
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent } from 'vue';
 import { reactive, computed, toRefs } from 'vue'
 import { useStore } from 'vuex'
+import { AREAS_OPTIONS } from '~/constants.js'
 
 export default {
   name: 'tutors-list',
