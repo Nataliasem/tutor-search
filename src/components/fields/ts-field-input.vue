@@ -40,7 +40,7 @@ export default {
       default: false
     }
   },
-  emits: ['update:modelValue', 'update:valid', 'update:touched'],
+  emits: ['update:modelValue', 'update:valid'],
   data: () => ({
     localValue: ''
   }),
@@ -51,8 +51,6 @@ export default {
   },
   methods: {
     update() {
-      this.$emit('update:touched', true)
-
       if(this.required && !this.localValue) {
         this.$emit('update:valid', false)
         return
