@@ -1,5 +1,6 @@
 <template>
   <div class="mx-auto max-w-card pt-8">
+    <div class="text-center mb-8 text-size-16">Register as a tutor now</div>
     <ts-form :form-schema="tutorSchema" submit-text="Register" @validate="register">
     <!-- FIRSTNAME -->
     <ts-field-input

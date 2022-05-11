@@ -1,6 +1,5 @@
 <template>
   <div class="ts-card p-8">
-    <div class="text-center mb-8 text-size-16">Register as a tutor now</div>
     <form @submit.prevent="validate">
       <div class="flex flex-col space-y-8">
         <slot />
