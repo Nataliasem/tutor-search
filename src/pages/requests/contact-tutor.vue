@@ -1,7 +1,10 @@
 <template>
   <div class="mx-auto max-w-card pt-8">
+    <!-- ALERT -->
+    <ts-alert v-if="error" @close="clearError">{{ error }}</ts-alert>
+
     <div class="text-center mb-8 text-size-16">Contact a tutor</div>
-    <ts-form :form-schema="contactSchema" submit-text="Send" @validate="send">
+    <ts-form :form-schema="contactSchema" submit-text="Send" :saving="saving" @validate="send">
       <!-- EMAIL -->
       <ts-field-input
         v-model="contactSchema.email.value"
@@ -25,6 +28,7 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
+import requestsApi from '~/api/requests';
 
 const CONTACT_SCHEMA = {
   email: {
@@ -50,10 +54,15 @@ export default {
     ),
     TsFieldTextarea: defineAsyncComponent(() =>
       import('~/components/fields/ts-field-textarea.vue')
+    ),
+    TsAlert: defineAsyncComponent(() =>
+      import('~/components/layout/ts-alert.vue')
     )
   },
   data: () => ({
     contactSchema: CONTACT_SCHEMA,
+    saving: false,
+    error: ''
   }),
   computed: {
     tutorId() {
@@ -62,13 +71,23 @@ export default {
   },
   methods: {
     send() {
-      this.$store.dispatch('requests/sendRequest', {
+      this.saving = true
+      const request = {
         tutorId: this.tutorId,
         email: this.contactSchema.email.value,
         message: this.contactSchema.message.value
-      })
+      }
 
-      this.$router.push('/requests')
+      requestsApi.createRequest(request)
+        .then(() => this.$router.push('/requests'))
+        .catch(response => {
+          this.error = new Error(response.message || 'Failed to fetch')
+        })
+        .finally(() => (this.saving = false))
+    },
+
+    clearError() {
+      this.error = ''
     }
   }
 };

@@ -4,7 +4,7 @@
       <div class="flex flex-col space-y-8">
         <slot />
       </div>
-      <button type="submit" class="ts-button-main mt-8">{{ submitText }}</button>
+      <button type="submit" class="ts-button-main mt-8" :disabled="saving">{{ submitText }}</button>
     </form>
   </div>
 </template>
@@ -20,6 +20,10 @@ export default {
     submitText: {
       type: String,
       default: 'Save'
+    },
+    saving: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['validate'],

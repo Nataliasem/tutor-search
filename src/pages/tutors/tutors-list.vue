@@ -1,6 +1,9 @@
 <template>
   <div class="max-w-card mx-auto mt-8">
-    <!-- LOADING... -->
+    <!-- ALERT -->
+    <ts-alert v-if="error" @close="clearError">{{ error }}</ts-alert>
+
+    <!-- LOADING -->
     <ts-loader v-if="loading" >Loading tutors</ts-loader>
 
     <!-- NO TUTORS MESSAGE -->
@@ -19,8 +22,8 @@
 
 <script>
 import { defineAsyncComponent } from 'vue';
-import { AREAS_OPTIONS } from '~/constants.js'
-import tutorApi from '~/api/tutors'
+import { AREAS_OPTIONS } from '~/constants.js';
+import tutorApi from '~/api/tutors';
 
 export default {
   name: 'tutors-list',
@@ -33,13 +36,17 @@ export default {
     ),
     TsLoader: defineAsyncComponent(() =>
       import('~/components/layout/ts-loader.vue')
+    ),
+    TsAlert: defineAsyncComponent(() =>
+      import('~/components/layout/ts-alert.vue')
     )
   },
   data: () => ({
     loading: true,
     tutors: [],
     checkedAreas: [],
-    areasOptions: AREAS_OPTIONS
+    areasOptions: AREAS_OPTIONS,
+    error: ''
   }),
   computed: {
     filteredTutors() {
@@ -62,8 +69,14 @@ export default {
 
       tutorApi.loadTutors()
         .then(tutors => this.tutors = tutors)
-        .catch(() => console.log('error with loading tutors'))
+        .catch(response => {
+          this.error = new Error(response.message || 'Failed to fetch')
+        })
         .finally(() => (this.loading = false))
+    },
+
+    clearError() {
+      this.error = ''
     }
   }
 }

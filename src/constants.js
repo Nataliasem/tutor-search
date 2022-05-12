@@ -1,3 +1,5 @@
+export const BASE_URL = 'https://tutor-search-6aa47-default-rtdb.firebaseio.com'
+
 export const AREAS_OPTIONS =
   [
     {

@@ -1,5 +1,11 @@
 <template>
   <div class="max-w-card mx-auto mt-8">
+    <!-- ALERT -->
+    <ts-alert v-if="error" @close="clearError">{{ error }}</ts-alert>
+
+    <!-- LOADING -->
+    <ts-loader v-if="loading" >Loading requests</ts-loader>
+
     <!-- NO REQUESTS MESSAGE -->
     <div v-if="hasRequests === false">No requests found</div>
 
@@ -15,14 +21,46 @@
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
+import requestsApi from '~/api/requests';
+
 export default {
   name: 'requests-list',
+  components: {
+    TsLoader: defineAsyncComponent(() =>
+      import('~/components/layout/ts-loader.vue')
+    ),
+    TsAlert: defineAsyncComponent(() =>
+      import('~/components/layout/ts-alert.vue')
+    )
+  },
+  data: () => ({
+    loading: true,
+    requests: [],
+    error: ''
+  }),
   computed: {
-    requests() {
-      return this.$store.getters['requests/requests'] || []
-    },
     hasRequests() {
-      return this.$store.getters['requests/hasRequests']
+      return (this.requests || []).length > 0
+    }
+  },
+  mounted() {
+    this.loadRequests()
+  },
+  methods: {
+    loadRequests() {
+      this.loading = true
+
+      requestsApi.loadRequests()
+        .then(requests => (this.requests = requests))
+        .catch(response => {
+          this.error = new Error(response.message || 'Failed to fetch')
+        })
+        .finally(() => (this.loading = false))
+    },
+
+    clearError() {
+      this.error = ''
     }
   }
 }

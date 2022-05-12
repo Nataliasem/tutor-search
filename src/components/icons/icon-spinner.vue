@@ -20,19 +20,11 @@
 export default {
   name: 'icon-spinner',
   props: {
-    /**
-     * Ширина
-     * @type {number}
-     */
     width: {
       type: Number,
       default: 16
     },
 
-    /**
-     * Высота
-     * @type {number}
-     */
     height: {
       type: Number,
       default: 16

@@ -1,4 +1,4 @@
-const BASE_URL = 'https://tutor-search-6aa47-default-rtdb.firebaseio.com'
+import { BASE_URL } from '~/constants.js';
 
 export default {
   loadTutors() {
