@@ -99,8 +99,6 @@ export default {
   methods: {
     register() {
       const tutor = {
-        // TODO: currentUser id
-        id: '818690e3-d1d9-489e-82cc-799e640d16fb',
         firstName: this.tutorSchema.firstName.value,
         lastName: this.tutorSchema.lastName.value,
         areas: this.checkedAreas,
@@ -108,8 +106,7 @@ export default {
         hourlyRate: this.tutorSchema.hourlyRate.value
       }
 
-      tutorApi.updateTutor(tutor)
-        .then(tutor => this.$store.commit('tutors/addTutor', tutor))
+      tutorApi.createTutor(tutor)
         .then(() => this.$router.push('/tutors'))
         .then(() => console.log('error'))
     }

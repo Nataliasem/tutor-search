@@ -34,11 +34,6 @@ export default {
       ]
     }
   },
-  mutations: {
-    addTutor(state, tutor) {
-      state.tutors.push(tutor)
-    }
-  },
   actions: {},
   getters: {
     currentTutor(state) {

@@ -1,10 +1,13 @@
 <template>
   <div class="max-w-card mx-auto mt-8">
+    <!-- LOADING... -->
+    <ts-loader v-if="loading" >Loading tutors</ts-loader>
+
     <!-- NO TUTORS MESSAGE -->
-    <div v-if="hasTutors === false">No tutors found</div>
+    <div v-else-if="hasTutors === false">No tutors found</div>
 
     <!-- LIST OF TUTORS -->
-    <div class="space-y-6">
+    <div v-else class="space-y-6">
       <!-- FILTERS -->
       <ts-field-checklist v-model:checked="checkedAreas" :options="areasOptions" />
 
@@ -27,9 +30,13 @@ export default {
     ),
     TsFieldChecklist: defineAsyncComponent(() =>
       import('~/components/fields/ts-field-checklist.vue')
+    ),
+    TsLoader: defineAsyncComponent(() =>
+      import('~/components/layout/ts-loader.vue')
     )
   },
   data: () => ({
+    loading: true,
     tutors: [],
     checkedAreas: [],
     areasOptions: AREAS_OPTIONS
@@ -51,9 +58,12 @@ export default {
   },
   methods: {
     loadTutors() {
+      this.loading = true
+
       tutorApi.loadTutors()
         .then(tutors => this.tutors = tutors)
         .catch(() => console.log('error with loading tutors'))
+        .finally(() => (this.loading = false))
     }
   }
 }

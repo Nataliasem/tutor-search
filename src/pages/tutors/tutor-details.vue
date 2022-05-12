@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import tutorApi from '~/api/tutors'
+
 export default {
   name: 'tutor-details',
   props: {
@@ -24,12 +26,10 @@ export default {
       required: true
     }
   },
+  data: () => ({
+    tutor: null
+  }),
   computed: {
-    tutor() {
-      const tutors = this.$store.getters['tutors/tutors'] || []
-      return tutors.find(item => item.id === this.id) || null
-    },
-
     tutorNameView() {
       const firstName = this.tutor.firstName || ''
       const lastName = this.tutor.lastName || ''
@@ -45,6 +45,15 @@ export default {
       return `${this.$route.path}/contact`
     }
   },
-
+  mounted() {
+    this.loadTutor()
+  },
+  methods:{
+    loadTutor() {
+      tutorApi.loadTutor(this.id)
+        .then(tutor => (this.tutor = tutor))
+        .catch(() => console.log('error load a tutor'))
+    }
+  }
 }
 </script>
