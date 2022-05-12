@@ -1,34 +1,21 @@
 <template>
-  <div class="max-w-card mx-auto mt-8">
+  <div class="max-w-card mx-auto mt-8 space-y-6">
     <div v-if="!tutor">No tutor info</div>
 
     <template v-else>
       <div>
-        <h2>{{ tutorNameView }}</h2>
-        <h3>{{ tutorRateView }}</h3>
+        <div class="text-size-16 font-bold">{{ tutorNameView }}</div>
+        <div>{{ tutorRateView }}</div>
       </div>
 
-      <div>
-        <h2>Interested? Reach out now!</h2>
-        <router-link to='/tutors/t1/contact'>Contact</router-link>
-      </div>
+      <p>{{ tutor.description }}</p>
 
-      <div>
-        <div v-for="area in formattedAreas" :key="area" class="ts-badge" :class="area">{{ area }}</div>
-        <p>{{ tutor.description }}</p>
-      </div>
+      <router-link class="ts-button-main" to='/contact'>Interested? Reach out now!</router-link>
     </template>
   </div>
 </template>
 
 <script>
-
-const AREAS_NAMES = {
-  1: 'frontend',
-  2: 'backend',
-  3: 'career'
-}
-
 export default {
   name: 'tutor-details',
   props: {
@@ -52,10 +39,6 @@ export default {
     tutorRateView() {
       const rate = this.tutor.hourlyRate || ''
       return rate ? `${rate}$/hour` : '-'
-    },
-
-    formattedAreas() {
-      return (this.tutor || []).areas.map(item => AREAS_NAMES[item])
     }
   },
 
