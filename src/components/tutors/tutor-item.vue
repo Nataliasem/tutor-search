@@ -7,7 +7,7 @@
 
           <!-- ACTIONS -->
           <div class="flex items-center space-x-5 text-indigo-900">
-            <router-link to="/contact" title="contact"><icon-phone /></router-link>
+            <router-link :to="tutorContactsLink" title="contact"><icon-phone /></router-link>
             <router-link :to="tutorDetailsLink" title="details"><icon-user /></router-link>
           </div>
         </div>
@@ -71,6 +71,13 @@ export default {
       const id = this.tutor.id || ''
 
       return `${path}/${id}`
+    },
+
+    tutorContactsLink() {
+      const path = this.$route.path
+      const id = this.tutor.id || ''
+
+      return `${path}/${id}/contact`
     }
   }
 }

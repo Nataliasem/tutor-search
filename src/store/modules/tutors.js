@@ -2,6 +2,7 @@ export default {
   namespaced: true,
   state() {
     return {
+      currentTutor: null,
       tutors: [
         {
           id: '0a655bc0-5146-4a8f-9fa2-ad3a701374ba',
@@ -40,10 +41,13 @@ export default {
   },
   actions: {},
   getters: {
+    currentTutor(state) {
+      return state.currentTutor
+    },
     tutors(state) {
       return state.tutors || []
     },
-    haveTutors(state) {
+    hasTutors(state) {
       return state.tutors.length > 0
     }
   }

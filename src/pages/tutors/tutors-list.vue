@@ -43,7 +43,7 @@ export default {
       return tutors.filter(item => item.areas.some(area => this.checkedAreas.includes(area)))
     },
     hasTutors() {
-      return this.$store.getters['tutors/hasTutors'] || []
+      return this.$store.getters['tutors/hasTutors']
     }
   }
 }

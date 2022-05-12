@@ -55,11 +55,17 @@ export default {
   data: () => ({
     contactSchema: CONTACT_SCHEMA,
   }),
+  computed: {
+    tutorId() {
+      return this.$route.params.id
+    }
+  },
   methods: {
     send() {
-      this.$store.commit('tutors/addTutor', {
-        email: this.contactSchema.email,
-        message: this.contactSchema.message
+      this.$store.dispatch('requests/sendRequest', {
+        tutorId: this.tutorId,
+        email: this.contactSchema.email.value,
+        message: this.contactSchema.message.value
       })
 
       this.$router.push('/requests')
