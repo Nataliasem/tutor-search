@@ -14,10 +14,12 @@ const router = createRouter({
     { path: '/tutors', component: TutorsList },
     { path: '/tutors/:id',
       component: TutorDetails,
-      props: true,
-      children: [
-        { path: 'contact', component: ContactTutor }
-      ] },
+      props: true
+    },
+    { path: '/tutors/:id/contact',
+      component: ContactTutor,
+      props: true
+    },
     { path: '/register', component: TutorRegistration },
     { path: '/requests', component: RequestsList },
     { path: '/:not-found(.*)', component: NotFound },

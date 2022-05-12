@@ -1,5 +1,6 @@
 <template>
   <div class="mx-auto max-w-card pt-8">
+    <div class="text-center mb-8 text-size-16">Register as a tutor now</div>
     <ts-form :form-schema="tutorSchema" submit-text="Register" @validate="register">
     <!-- FIRSTNAME -->
     <ts-field-input
@@ -47,8 +48,9 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue'
-import { AREAS_OPTIONS } from '~/constants'
+import { defineAsyncComponent } from 'vue';
+import { AREAS_OPTIONS } from '~/constants';
+import tutorApi from '~/api/tutors'
 
 const TUTOR_SCHEMA = {
   firstName: {
@@ -97,7 +99,6 @@ export default {
   methods: {
     register() {
       const tutor = {
-        id: '818690e3-d1d9-489e-82cc-799e640d16fb',
         firstName: this.tutorSchema.firstName.value,
         lastName: this.tutorSchema.lastName.value,
         areas: this.checkedAreas,
@@ -105,9 +106,9 @@ export default {
         hourlyRate: this.tutorSchema.hourlyRate.value
       }
 
-      this.$store.commit('tutors/addTutor', tutor)
-
-      this.$router.push('/tutors')
+      tutorApi.createTutor(tutor)
+        .then(() => this.$router.push('/tutors'))
+        .then(() => console.log('error'))
     }
   }
 };

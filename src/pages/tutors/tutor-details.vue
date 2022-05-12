@@ -1,33 +1,22 @@
 <template>
-  <div class="max-w-card mx-auto mt-8">
+  <div class="max-w-card mx-auto mt-8 space-y-6">
     <div v-if="!tutor">No tutor info</div>
 
     <template v-else>
       <div>
-        <h2>{{ tutorNameView }}</h2>
-        <h3>{{ tutorRateView }}</h3>
+        <div class="text-size-16 font-bold">{{ tutorNameView }}</div>
+        <div>{{ tutorRateView }}</div>
       </div>
 
-      <div>
-        <h2>Interested? Reach out now!</h2>
-        <router-link to='/tutors/t1/contact'>Contact</router-link>
-      </div>
+      <p>{{ tutor.description }}</p>
 
-      <div>
-        <div v-for="area in formattedAreas" :key="area" class="ts-badge" :class="area">{{ area }}</div>
-        <p>{{ tutor.description }}</p>
-      </div>
+      <router-link class="ts-button-main" :to='tutorContactsLink'>Interested? Reach out now!</router-link>
     </template>
   </div>
 </template>
 
 <script>
-
-const AREAS_NAMES = {
-  1: 'frontend',
-  2: 'backend',
-  3: 'career'
-}
+import tutorApi from '~/api/tutors'
 
 export default {
   name: 'tutor-details',
@@ -37,12 +26,10 @@ export default {
       required: true
     }
   },
+  data: () => ({
+    tutor: null
+  }),
   computed: {
-    tutor() {
-      const tutors = this.$store.getters['tutors/tutors'] || []
-      return tutors.find(item => item.id === this.id) || null
-    },
-
     tutorNameView() {
       const firstName = this.tutor.firstName || ''
       const lastName = this.tutor.lastName || ''
@@ -54,10 +41,19 @@ export default {
       return rate ? `${rate}$/hour` : '-'
     },
 
-    formattedAreas() {
-      return (this.tutor || []).areas.map(item => AREAS_NAMES[item])
+    tutorContactsLink() {
+      return `${this.$route.path}/contact`
     }
   },
-
+  mounted() {
+    this.loadTutor()
+  },
+  methods:{
+    loadTutor() {
+      tutorApi.loadTutor(this.id)
+        .then(tutor => (this.tutor = tutor))
+        .catch(() => console.log('error load a tutor'))
+    }
+  }
 }
 </script>
