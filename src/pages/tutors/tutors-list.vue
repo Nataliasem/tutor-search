@@ -17,6 +17,7 @@
 <script>
 import { defineAsyncComponent } from 'vue';
 import { AREAS_OPTIONS } from '~/constants.js'
+import tutorApi from '~/api/tutors'
 
 export default {
   name: 'tutors-list',
@@ -29,21 +30,30 @@ export default {
     )
   },
   data: () => ({
+    tutors: [],
     checkedAreas: [],
     areasOptions: AREAS_OPTIONS
   }),
   computed: {
     filteredTutors() {
-      const tutors = this.$store.getters['tutors/tutors'] || []
-
       if(this.checkedAreas.length === 0) {
-        return tutors
+        return this.tutors
       }
 
-      return tutors.filter(item => item.areas.some(area => this.checkedAreas.includes(area)))
+      return this.tutors.filter(item => item.areas.some(area => this.checkedAreas.includes(area)))
     },
     hasTutors() {
-      return this.$store.getters['tutors/hasTutors']
+      return (this.tutors || []).length > 0
+    }
+  },
+  mounted() {
+    this.loadTutors()
+  },
+  methods: {
+    loadTutors() {
+      tutorApi.loadTutors()
+        .then(tutors => this.tutors = tutors)
+        .catch(() => console.log('error with loading tutors'))
     }
   }
 }

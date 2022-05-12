@@ -48,8 +48,9 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue'
-import { AREAS_OPTIONS } from '~/constants'
+import { defineAsyncComponent } from 'vue';
+import { AREAS_OPTIONS } from '~/constants';
+import tutorApi from '~/api/tutors'
 
 const TUTOR_SCHEMA = {
   firstName: {
@@ -98,6 +99,7 @@ export default {
   methods: {
     register() {
       const tutor = {
+        // TODO: currentUser id
         id: '818690e3-d1d9-489e-82cc-799e640d16fb',
         firstName: this.tutorSchema.firstName.value,
         lastName: this.tutorSchema.lastName.value,
@@ -106,9 +108,10 @@ export default {
         hourlyRate: this.tutorSchema.hourlyRate.value
       }
 
-      this.$store.commit('tutors/addTutor', tutor)
-
-      this.$router.push('/tutors')
+      tutorApi.updateTutor(tutor)
+        .then(tutor => this.$store.commit('tutors/addTutor', tutor))
+        .then(() => this.$router.push('/tutors'))
+        .then(() => console.log('error'))
     }
   }
 };
