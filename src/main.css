@@ -95,20 +95,18 @@ body {
 
 .route-enter-from,
 .route-leave-to {
-    transform: translateY(-32px);
     opacity: 0;
 }
 
 .route-enter-active {
-    transition: all 1s ease-out;
+    transition: all 0.3s ease-out;
 }
 
 .route-leave-active {
-    transition: all 2s ease-in;
+    transition: all 0.3s ease-in;
 }
 
 .route-enter-to,
 .route-leave-from {
-    transform: translateY(0);
     opacity: 1;
 }
