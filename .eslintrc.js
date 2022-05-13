@@ -80,8 +80,6 @@ module.exports = {
     'vue/v-on-function-call': ['error', 'never'],
 
     // [VUE] Максимум атрибутов в строке
-    // WARN, потому что в некоторых случаях ESLINT/PRETTIER конфликтуют
-    // REF: https://github.com/prettier/prettier/issues/5501
     'vue/max-attributes-per-line': [
       'warn',
       {
