@@ -19,9 +19,15 @@ const store = createStore({
     SET_LAST_FETCH_TUTORS_TIMESTAMP(state) {
       state.lastFetchTutorsTimestamp = new Date().getTime()
     },
+    CLEAR_LAST_FETCH_TUTORS_TIMESTAMP(state) {
+      state.lastFetchTutorsTimestamp = null
+    },
     SET_LAST_FETCH_REQUESTS_TIMESTAMP(state) {
       state.lastFetchRequestsTimestamp = new Date().getTime()
-    }
+    },
+    CLEAR_LAST_FETCH_REQUESTS_TIMESTAMP(state) {
+      state.lastFetchRequestsTimestamp = null
+    },
   }
 })
 

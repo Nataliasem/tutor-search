@@ -107,6 +107,7 @@ export default {
       }
 
       tutorApi.createTutor(tutor)
+        .then(() => this.$store.commit('CLEAR_LAST_FETCH_TUTORS_TIMESTAMP'))
         .then(() => this.$router.push('/tutors'))
         .then(() => console.log('error'))
     }

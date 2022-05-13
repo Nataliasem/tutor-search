@@ -28,7 +28,7 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
-import requestsApi from '~/api/requests.js'
+import requestsApi from '~/api/requests'
 import TsAlert from '~/components/layout/ts-alert.vue'
 
 const CONTACT_SCHEMA = {
@@ -78,6 +78,7 @@ export default {
       }
 
       requestsApi.createRequest(request)
+        .then(() => this.$store.commit('CLEAR_LAST_FETCH_REQUESTS_TIMESTAMP'))
         .then(() => this.$router.push('/requests'))
         .catch(response => {
           this.error = new Error(response.message || 'Failed to fetch')
