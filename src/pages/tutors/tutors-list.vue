@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-card mx-auto mt-8">
+  <div class="page-wrapper">
     <!-- ALERT -->
     <ts-alert :show="Boolean(error)" @close="clearError">{{ error }}</ts-alert>
 

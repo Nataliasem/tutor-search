@@ -1,5 +1,5 @@
 <template>
-  <div class="ts-card p-8">
+  <div class="ts-card px-6">
     <form @submit.prevent="validate">
       <div class="flex flex-col space-y-8">
         <slot />

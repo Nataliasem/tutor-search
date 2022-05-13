@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-card mx-auto mt-8">
+  <div class="page-wrapper">
     <!-- ALERT -->
     <ts-alert :show="Boolean(error)" @close="clearError">{{ error }}</ts-alert>
 
@@ -12,7 +12,7 @@
     <!-- LIST OF REQUESTS -->
     <div class="space-y-6">
       <!-- REQUESTS -->
-      <div class="ts-card p-6 space-y-4" v-for="request in requests" :key="request.id">
+      <div class="ts-card px-6 space-y-4" v-for="request in requests" :key="request.id">
         <div class="font-bold">{{ request.email }}</div>
         <div>{{ request.message }}</div>
       </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-card mx-auto mt-8 space-y-6">
+  <div class="page-wrapper space-y-6">
     <div v-if="!tutor">No tutor info</div>
 
     <template v-else>

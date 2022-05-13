@@ -17,6 +17,10 @@ body {
     margin: 0;
 }
 
+.page-wrapper {
+    @apply max-w-card mx-auto py-8;
+}
+
 /*******************TS-CARD**********************/
 .ts-card {
     @apply border border-slate-300 rounded-ts-md;
