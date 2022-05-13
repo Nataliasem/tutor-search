@@ -56,24 +56,4 @@ export default {
   @apply flex items-center space-x-6;
   @apply p-4 border border-amber-400 bg-amber-200;
 }
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: scale(0.8);
-  opacity: 0;
-}
-
-.slide-fade-enter-active {
-  transition: all 0.3s ease-out;
-}
-
-.slide-fade-leave-active {
-  transition: all 0.3s ease-in;
-}
-
-.slide-fade-enter-to,
-.slide-fade-leave-from {
-  transform: scale(1);
-  opacity: 1;
-}
 </style>

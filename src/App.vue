@@ -1,6 +1,8 @@
 <template>
-  <app-header />
-  <router-view />
+    <ts-header />
+    <Transition name="route">
+      <router-view />
+    </Transition>
 </template>
 
 <script>
@@ -9,7 +11,7 @@ import { defineAsyncComponent } from 'vue';
 export default {
   name: 'app',
   components: {
-  AppHeader: defineAsyncComponent(() =>
+  TsHeader: defineAsyncComponent(() =>
       import('~/components/layout/ts-header.vue')
     ),
   }
