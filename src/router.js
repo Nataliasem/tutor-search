@@ -22,7 +22,7 @@ const router = createRouter({
     },
     { path: '/register', component: TutorRegistration },
     { path: '/requests', component: RequestsList },
-    { path: '/:not-found(.*)', component: NotFound },
+    { path: '/:notFound(.*)', component: NotFound },
   ]
 })
 
