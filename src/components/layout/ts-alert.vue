@@ -1,9 +1,13 @@
 <template>
   <teleport to="body">
     <Transition name="slide-fade">
-      <div class="ts-alert">
-        <span><slot/></span>
-        <span @click="close"><icon-cross class="text-amber-600" /></span>
+      <div v-if="show" class="ts-alert">
+        <span>
+          <slot />
+        </span>
+        <span class="text-amber-600 cursor-pointer" @click="close">
+          <icon-cross />
+        </span>
       </div>
     </Transition>
   </teleport>
@@ -17,9 +21,29 @@ export default {
   components: {
     IconCross
   },
+  props: {
+    show: {
+      type: Boolean,
+      default: false
+    }
+  },
   emits: ['close'],
+  data: () => ({
+    timerId: null
+  }),
+  watch: {
+    show: {
+      immediate: true,
+      handler() {
+        if (this.show) {
+          this.timerId = setTimeout(this.close, 3000)
+        }
+      }
+    }
+  },
   methods: {
     close() {
+      this.timerId = null
       this.$emit('close')
     }
   }
@@ -33,17 +57,23 @@ export default {
   @apply p-4 border border-amber-400 bg-amber-200;
 }
 
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: scale(0.8);
+  opacity: 0;
+}
+
 .slide-fade-enter-active {
-  transition: all 6s ease-out;
+  transition: all 0.3s ease-out;
 }
 
 .slide-fade-leave-active {
-  transition: all 10s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 0.3s ease-in;
 }
 
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateX(20px);
-  opacity: 0;
+.slide-fade-enter-to,
+.slide-fade-leave-from {
+  transform: scale(1);
+  opacity: 1;
 }
 </style>

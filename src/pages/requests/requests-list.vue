@@ -1,13 +1,13 @@
 <template>
   <div class="max-w-card mx-auto mt-8">
     <!-- ALERT -->
-    <ts-alert v-if="error" @close="clearError">{{ error }}</ts-alert>
+    <ts-alert :show="Boolean(error)" @close="clearError">{{ error }}</ts-alert>
 
     <!-- LOADING -->
     <ts-loader v-if="loading" >Loading requests</ts-loader>
 
     <!-- NO REQUESTS MESSAGE -->
-    <div v-if="hasRequests === false">No requests found</div>
+    <div v-else-if="hasRequests === false">No requests found</div>
 
     <!-- LIST OF REQUESTS -->
     <div class="space-y-6">
@@ -22,16 +22,15 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
-import requestsApi from '~/api/requests';
+import requestsApi from '~/api/requests.js'
+import TsAlert from '~/components/layout/ts-alert.vue'
 
 export default {
   name: 'requests-list',
   components: {
+    TsAlert,
     TsLoader: defineAsyncComponent(() =>
       import('~/components/layout/ts-loader.vue')
-    ),
-    TsAlert: defineAsyncComponent(() =>
-      import('~/components/layout/ts-alert.vue')
     )
   },
   data: () => ({

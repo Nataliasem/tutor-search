@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-card mx-auto mt-8">
     <!-- ALERT -->
-    <ts-alert v-if="error" @close="clearError">{{ error }}</ts-alert>
+    <ts-alert :show="Boolean(error)" @close="clearError">{{ error }}</ts-alert>
 
     <!-- LOADING -->
     <ts-loader v-if="loading" >Loading tutors</ts-loader>
@@ -24,10 +24,12 @@
 import { defineAsyncComponent } from 'vue';
 import { AREAS_OPTIONS } from '~/constants.js';
 import tutorApi from '~/api/tutors';
+import TsAlert from '~/components/layout/ts-alert.vue';
 
 export default {
   name: 'tutors-list',
   components: {
+    TsAlert,
     TutorItem: defineAsyncComponent(() =>
       import('~/components/tutors/tutor-item.vue')
     ),
@@ -36,9 +38,6 @@ export default {
     ),
     TsLoader: defineAsyncComponent(() =>
       import('~/components/layout/ts-loader.vue')
-    ),
-    TsAlert: defineAsyncComponent(() =>
-      import('~/components/layout/ts-alert.vue')
     )
   },
   data: () => ({

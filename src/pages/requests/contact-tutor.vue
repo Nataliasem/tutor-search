@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto max-w-card pt-8">
     <!-- ALERT -->
-    <ts-alert v-if="error" @close="clearError">{{ error }}</ts-alert>
+    <ts-alert :show="Boolean(error)" @close="clearError">{{ error }}</ts-alert>
 
     <div class="text-center mb-8 text-size-16">Contact a tutor</div>
     <ts-form :form-schema="contactSchema" submit-text="Send" :saving="saving" @validate="send">
@@ -28,7 +28,8 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
-import requestsApi from '~/api/requests';
+import requestsApi from '~/api/requests.js'
+import TsAlert from '~/components/layout/ts-alert.vue'
 
 const CONTACT_SCHEMA = {
   email: {
@@ -46,6 +47,7 @@ const CONTACT_SCHEMA = {
 export default {
   name: 'contact-tutor',
   components: {
+    TsAlert,
     TsForm: defineAsyncComponent(() =>
       import('~/components/fields/ts-form.vue')
     ),
@@ -54,9 +56,6 @@ export default {
     ),
     TsFieldTextarea: defineAsyncComponent(() =>
       import('~/components/fields/ts-field-textarea.vue')
-    ),
-    TsAlert: defineAsyncComponent(() =>
-      import('~/components/layout/ts-alert.vue')
     )
   },
   data: () => ({
