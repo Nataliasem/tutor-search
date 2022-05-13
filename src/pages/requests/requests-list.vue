@@ -22,8 +22,9 @@
 
 <script>
 import { defineAsyncComponent } from 'vue'
-import requestsApi from '~/api/requests.js'
+import requestsApi from '~/api/requests'
 import TsAlert from '~/components/layout/ts-alert.vue'
+import clonedeep from 'lodash.clonedeep';
 
 export default {
   name: 'requests-list',
@@ -39,6 +40,10 @@ export default {
     error: ''
   }),
   computed: {
+    cashedRequests() {
+      return this.$store.state.requests || []
+    },
+
     hasRequests() {
       return (this.requests || []).length > 0
     }
@@ -50,12 +55,31 @@ export default {
     loadRequests() {
       this.loading = true
 
+      const shouldReload = this.shouldReload()
+      if(shouldReload === false && this.cashedRequests.length > 0) {
+        this.requests = clonedeep(this.cashedRequests)
+        this.loading = false
+        return
+      }
+
       requestsApi.loadRequests()
         .then(requests => (this.requests = requests))
+        .then(() => this.$store.commit('SET_REQUESTS', this.requests))
+        .then(() => this.$store.commit('SET_LAST_FETCH_REQUESTS_TIMESTAMP'))
         .catch(response => {
           this.error = new Error(response.message || 'Failed to fetch')
         })
         .finally(() => (this.loading = false))
+    },
+
+    shouldReload() {
+      const lastTimestamp = this.$store.state.lastFetchRequestsTimestamp
+      if(!lastTimestamp) {
+        return true
+      }
+
+      const currentTimestamp = new Date().getTime()
+      return (currentTimestamp - lastTimestamp) / 1000 > 180
     },
 
     clearError() {

@@ -21,10 +21,11 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue';
-import { AREAS_OPTIONS } from '~/constants.js';
-import tutorApi from '~/api/tutors';
-import TsAlert from '~/components/layout/ts-alert.vue';
+import { defineAsyncComponent } from 'vue'
+import { AREAS_OPTIONS } from '~/constants'
+import tutorApi from '~/api/tutors'
+import TsAlert from '~/components/layout/ts-alert.vue'
+import clonedeep from 'lodash.clonedeep'
 
 export default {
   name: 'tutors-list',
@@ -48,6 +49,10 @@ export default {
     error: ''
   }),
   computed: {
+    cashedTutors() {
+      return this.$store.state.tutors || []
+    },
+
     filteredTutors() {
       if(this.checkedAreas.length === 0) {
         return this.tutors
@@ -55,6 +60,7 @@ export default {
 
       return this.tutors.filter(item => item.areas.some(area => this.checkedAreas.includes(area)))
     },
+
     hasTutors() {
       return (this.tutors || []).length > 0
     }
@@ -66,12 +72,31 @@ export default {
     loadTutors() {
       this.loading = true
 
+      const shouldReload = this.shouldReload()
+      if(shouldReload === false && this.cashedTutors.length > 0) {
+        this.tutors = clonedeep(this.cashedTutors)
+        this.loading = false
+        return
+      }
+
       tutorApi.loadTutors()
         .then(tutors => this.tutors = tutors)
+        .then(() => this.$store.commit('SET_TUTORS', this.tutors))
+        .then(() => this.$store.commit('SET_LAST_FETCH_TUTORS_TIMESTAMP'))
         .catch(response => {
           this.error = new Error(response.message || 'Failed to fetch')
         })
         .finally(() => (this.loading = false))
+    },
+
+    shouldReload() {
+      const lastTimestamp = this.$store.state.lastFetchTutorsTimestamp
+      if(!lastTimestamp) {
+        return true
+      }
+
+      const currentTimestamp = new Date().getTime()
+      return (currentTimestamp - lastTimestamp) / 1000 > 180
     },
 
     clearError() {
