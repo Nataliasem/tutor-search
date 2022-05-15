@@ -1,4 +1,5 @@
-import { BASE_URL } from '~/constants';
+import { BASE_URL } from '~/constants'
+import NetworkService from '~/network-service'
 
 export default {
   loadTutors() {
@@ -23,13 +24,6 @@ export default {
   },
 
   createTutor(tutor) {
-    const config = {
-      method: 'POST',
-      body: JSON.stringify(tutor)
-    }
-
-    return fetch(`${BASE_URL}/tutors.json`, config)
-      .then(response => response.json())
-      .then(tutor => tutor)
+    return NetworkService.post(`${BASE_URL}/tutors.json`, tutor)
   }
 }

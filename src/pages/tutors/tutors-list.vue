@@ -83,8 +83,8 @@ export default {
         .then(tutors => this.tutors = tutors)
         .then(() => this.$store.commit('SET_TUTORS', this.tutors))
         .then(() => this.$store.commit('SET_LAST_FETCH_TUTORS_TIMESTAMP'))
-        .catch(response => {
-          this.error = new Error(response.message || 'Failed to fetch')
+        .catch( ({ message }) => {
+          this.error = message || 'Failed to fetch'
         })
         .finally(() => (this.loading = false))
     },
