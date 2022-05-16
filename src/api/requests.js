@@ -1,9 +1,8 @@
-import { BASE_URL } from '~/constants';
+import NetworkService from '~/network-service'
 
 export default {
   loadRequests() {
-    return fetch(`${BASE_URL}/requests.json`)
-      .then(response => response.json())
+    return NetworkService.get('/requests.json')
       .then(requests => {
         if(!requests) {
           return []
@@ -25,13 +24,6 @@ export default {
   },
 
   createRequest(request) {
-    const config = {
-      method: 'POST',
-      body: JSON.stringify(request)
-    }
-
-    return fetch(`${BASE_URL}/requests.json`, config)
-      .then(response => response.json())
-      .then(request => request)
+    return NetworkService.post('/requests.json', request)
   }
 }
