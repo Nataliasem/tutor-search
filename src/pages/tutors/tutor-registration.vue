@@ -1,5 +1,8 @@
 <template>
   <div class="mx-auto max-w-card pt-8">
+    <!-- ALERT -->
+    <ts-alert :show="Boolean(error)" @close="clearError">{{ error }}</ts-alert>
+
     <div class="text-center mb-8 text-size-16">Register as a tutor now</div>
     <ts-form :form-schema="tutorSchema" submit-text="Register" @validate="register">
     <!-- FIRSTNAME -->
@@ -51,6 +54,7 @@
 import { defineAsyncComponent } from 'vue';
 import { AREAS_OPTIONS } from '~/constants';
 import tutorApi from '~/api/tutors'
+import TsAlert from '~/components/layout/ts-alert.vue'
 
 const TUTOR_SCHEMA = {
   firstName: {
@@ -78,6 +82,7 @@ const TUTOR_SCHEMA = {
 export default {
   name: 'tutor-registration',
   components: {
+    TsAlert,
     TsForm: defineAsyncComponent(() =>
       import('~/components/fields/ts-form.vue')
     ),
@@ -95,6 +100,7 @@ export default {
     tutorSchema: TUTOR_SCHEMA,
     areasOptions: AREAS_OPTIONS,
     checkedAreas: [],
+    error: ''
   }),
   methods: {
     register() {
@@ -109,7 +115,13 @@ export default {
       tutorApi.createTutor(tutor)
         .then(() => this.$store.commit('CLEAR_LAST_FETCH_TUTORS_TIMESTAMP'))
         .then(() => this.$router.push('/tutors'))
-        .then(() => console.log('error'))
+        .catch( ({ message }) => {
+          this.error = message || 'Failed to fetch'
+        })
+    },
+
+    clearError() {
+      this.error = ''
     }
   }
 };

@@ -66,8 +66,8 @@ export default {
         .then(requests => (this.requests = requests))
         .then(() => this.$store.commit('SET_REQUESTS', this.requests))
         .then(() => this.$store.commit('SET_LAST_FETCH_REQUESTS_TIMESTAMP'))
-        .catch(response => {
-          this.error = new Error(response.message || 'Failed to fetch')
+        .catch( ({ message }) => {
+          this.error = message || 'Failed to fetch'
         })
         .finally(() => (this.loading = false))
     },

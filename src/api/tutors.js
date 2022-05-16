@@ -1,9 +1,8 @@
-import { BASE_URL } from '~/constants';
+import NetworkService from '~/network-service'
 
 export default {
   loadTutors() {
-    return fetch(`${BASE_URL}/tutors.json`)
-      .then(response => response.json())
+    return NetworkService.get('/tutors.json')
       .then(tutors => {
         const ids = Object.keys(tutors)
 
@@ -17,19 +16,10 @@ export default {
   },
 
   loadTutor(id) {
-    return fetch(`${BASE_URL}/tutors/${id}.json`)
-      .then(response => response.json())
-      .then(tutor => tutor)
+    return NetworkService.get(`/tutors/${id}.json`)
   },
 
   createTutor(tutor) {
-    const config = {
-      method: 'POST',
-      body: JSON.stringify(tutor)
-    }
-
-    return fetch(`${BASE_URL}/tutors.json`, config)
-      .then(response => response.json())
-      .then(tutor => tutor)
+    return NetworkService.post(`/tutors.json`, tutor)
   }
 }

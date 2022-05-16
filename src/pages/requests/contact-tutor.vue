@@ -80,8 +80,8 @@ export default {
       requestsApi.createRequest(request)
         .then(() => this.$store.commit('CLEAR_LAST_FETCH_REQUESTS_TIMESTAMP'))
         .then(() => this.$router.push('/requests'))
-        .catch(response => {
-          this.error = new Error(response.message || 'Failed to fetch')
+        .catch( ({ message }) => {
+          this.error = message || 'Failed to fetch'
         })
         .finally(() => (this.saving = false))
     },
