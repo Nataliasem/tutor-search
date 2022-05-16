@@ -17,7 +17,7 @@ export default {
   }
 }
 
-const responseHandler = (response) => {
+export const responseHandler = (response) => {
   if (!response || !response.status) {
     return Promise.reject({ message: 'The server is unavailable. Try again later' })
   }
