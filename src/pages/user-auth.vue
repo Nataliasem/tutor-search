@@ -78,7 +78,7 @@ export default {
 
       Promise.resolve()
         .then(() => {
-          this.isAuthenticated ? authApi.signIn(data) : authApi.signUp(data)
+          return this.isAuthenticated ? authApi.signIn(data) : authApi.signUp(data)
         })
         .then(user => this.$store.commit('SET_USER', user))
         .catch( ({ message }) => {
