@@ -7,7 +7,10 @@
         <span class="h-5 w-px bg-slate-300 mx-5" />
         <router-link to="/requests">All requests</router-link>
       </div>
-      <router-link to='/register' class="ts-button-main">Register as a tutor</router-link>
+      <div class="flex items-center space-x-3">
+        <router-link to='/register' class="ts-button-main">Register as a tutor</router-link>
+        <router-link to='/user-auth' class="ts-button-secondary">Sign in</router-link>
+      </div>
     </nav>
   </header>
 </template>

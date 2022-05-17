@@ -32,7 +32,7 @@ export const responseHandler = (response) => {
 
   if (response.status >= 400 && response.status < 500) {
     const status = response.status
-    const statusText = response.statusText
+    const statusText = response.statusText || 'Invalid request'
 
     error.message = `${status}: ${statusText}`
   }

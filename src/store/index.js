@@ -3,13 +3,23 @@ import { createStore } from 'vuex'
 const store = createStore({
   state() {
     return {
+      user: null,
       requests: [],
       tutors: [],
       lastFetchTutorsTimestamp: null,
       lastFetchRequestsTimestamp: null
     }
   },
+  getters: {
+    isAuthenticated(state) {
+      return Boolean(state.user && state.user.idToken)
+    }
+  },
   mutations: {
+    SET_USER(state, user) {
+      state.user = user
+    },
+
     SET_TUTORS(state, tutors) {
       state.tutors = tutors
     },

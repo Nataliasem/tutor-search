@@ -8,7 +8,7 @@ export default {
       body: JSON.stringify(data)
     }
 
-    return fetch(`${AUTH_BASE_URL}:signUp?key${API_KEY}`, config)
+    return fetch(`${AUTH_BASE_URL}:signUp?key=${API_KEY}`, config)
       .then(response => responseHandler(response))
   },
 
