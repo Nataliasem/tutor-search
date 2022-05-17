@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto max-w-card pt-8">
     <!-- ALERT -->
-    <ts-alert :show="Boolean(error)" @close="clearError">{{ error }}</ts-alert>
+    <ts-alert :show="Boolean(message.text)" :message="message" @close="clearMessage" />
 
     <div class="text-center mb-8 text-size-16">Register as a tutor now</div>
     <ts-form :form-schema="authSchema" :submit-text="submitText" @validate="handleAuth">
@@ -9,7 +9,7 @@
       <ts-field-input
         v-model="authSchema.email.value"
         v-model:valid="authSchema.email.valid"
-        :required="authSchema.email.required"
+        :rules="authSchema.email.rules"
       >
         Email
       </ts-field-input>
@@ -18,7 +18,8 @@
       <ts-field-input
         v-model="authSchema.password.value"
         v-model:valid="authSchema.password.valid"
-        :required="authSchema.password.required"
+        type="password"
+        :rules="authSchema.password.rules"
       >
         Password
       </ts-field-input>
@@ -29,14 +30,14 @@
 <script>
 const AUTH_SCHEMA = {
   email: {
-    required: true,
     value: '',
-    valid: true
+    valid: true,
+    rules: ['required', 'email']
   },
   password: {
-    required: true,
     value: '',
-    valid: true
+    valid: true,
+    rules: ['required', 'password']
   }
 }
 
@@ -57,7 +58,10 @@ export default {
   },
   data: () => ({
     authSchema: AUTH_SCHEMA,
-    error: ''
+    message: {
+      text: '',
+      type: ''
+    }
   }),
   computed: {
     isAuthenticated() {
@@ -81,15 +85,17 @@ export default {
           return this.isAuthenticated ? authApi.signIn(data) : authApi.signUp(data)
         })
         .then(user => this.$store.commit('SET_USER', user))
+        .then(() => (this.message.text = 'The user has been successfully registered'))
         .catch( ({ message }) => {
-          this.error = message || 'Failed to fetch'
+          this.message.text = message || 'Failed to fetch'
+          this.message.type = 'error'
         })
     },
 
-    clearError() {
-      this.error = ''
+    clearMessage() {
+      this.message.text = ''
+      this.message.type = ''
     }
   }
 };
 </script>
-e>

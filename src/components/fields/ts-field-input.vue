@@ -12,11 +12,15 @@
       @blur="update"
     />
 
-    <span v-if="!valid" class="text-red-400">Should not be empty</span>
+    <template v-if="valid === false">
+      <div v-for="error in errorMessages" :key="error" class="text-red-400">{{ error }}</div>
+    </template>
   </label>
 </template>
 
 <script>
+import ValidationRules from './validation-rules'
+
 export default {
   name: 'ts-field-input',
   props: {
@@ -35,14 +39,15 @@ export default {
       default: 'string'
     },
 
-    required: {
-      type: Boolean,
-      default: false
+    rules: {
+      type: Array,
+      default: () => []
     }
   },
   emits: ['update:modelValue', 'update:valid'],
   data: () => ({
-    localValue: ''
+    localValue: '',
+    errorMessages: []
   }),
   watch: {
       value() {
@@ -51,13 +56,22 @@ export default {
   },
   methods: {
     update() {
-      if(this.required && !this.localValue) {
-        this.$emit('update:valid', false)
+      if(this.rules.length === 0) {
+        this.$emit('update:modelValue', this.localValue)
+        this.$emit('update:valid', true)
         return
       }
 
-      this.$emit('update:modelValue', this.localValue)
-      this.$emit('update:valid', true)
+      this.errorMessages = this.rules
+        .map(rule => ValidationRules[rule](this.localValue))
+        .filter(item => Boolean(item))
+
+      if(this.errorMessages.length === 0) {
+        this.$emit('update:modelValue', this.localValue)
+        this.$emit('update:valid', true)
+      } else {
+        this.$emit('update:valid', false)
+      }
     }
   }
 };
