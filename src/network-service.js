@@ -42,7 +42,7 @@ export const responseHandler = (response) => {
   }
 
   if (response.status === 401) {
-    error.message = 'First you need to log in'
+    error.message = 'First you need to sign in'
   }
 
   return Promise.reject(error)
