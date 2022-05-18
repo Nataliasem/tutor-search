@@ -77,6 +77,10 @@ body {
     @apply bg-sky-100;
 }
 
+.ts-button-secondary[disabled] {
+    @apply pointer-events-none border-gray-400 text-gray-400;
+}
+
 /*******************TS-INPUT**********************/
 .ts-input {
     @apply border border-slate-300 outline-0 rounded-ts-sm min-h-input;

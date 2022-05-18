@@ -8,8 +8,8 @@
         <router-link to="/requests">All requests</router-link>
       </div>
       <div class="flex items-center space-x-3">
-        <router-link to='/register' class="ts-button-main">Register as a tutor</router-link>
-        <router-link v-if="isAuthenticated === false" to='/user-auth' class="ts-button-secondary">Log in</router-link>
+        <router-link v-if="isAuthenticated" to='/register' class="ts-button-main">Register as a tutor</router-link>
+        <router-link v-else to='/user-auth' class="ts-button-secondary">Log in</router-link>
       </div>
     </nav>
   </header>

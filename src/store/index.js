@@ -13,7 +13,11 @@ const store = createStore({
   getters: {
     isAuthenticated(state) {
       return Boolean(state.user && state.user.idToken)
-    }
+    },
+
+    authToken(state) {
+      return (state.user && state.user.idToken) || ''
+    },
   },
   mutations: {
     SET_USER(state, user) {
