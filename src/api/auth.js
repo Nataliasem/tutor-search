@@ -2,7 +2,7 @@ import {AUTH_BASE_URL, API_KEY } from '~/constants';
 import { responseHandler } from '~/network-service'
 
 export default {
-  signUp(data) {
+  createAccount(data) {
     const config = {
       method: 'POST',
       body: JSON.stringify(data)
@@ -12,7 +12,7 @@ export default {
       .then(response => responseHandler(response))
   },
 
-  signIn(data) {
+  logIn(data) {
     const config = {
       method: 'POST',
       body: JSON.stringify(data)

@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto max-w-card pt-8">
     <!-- ALERT -->
-    <ts-alert :show="Boolean(error)" @close="clearError">{{ error }}</ts-alert>
+    <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
 
     <div class="text-center mb-8 text-size-16">Contact a tutor</div>
     <ts-form :form-schema="contactSchema" submit-text="Send" :saving="saving" @validate="send">
@@ -9,7 +9,8 @@
       <ts-field-input
         v-model="contactSchema.email.value"
         v-model:valid="contactSchema.email.valid"
-        :required="contactSchema.email.required"
+        v-model:touched="contactSchema.email.touched"
+        :rules="contactSchema.email.rules"
       >
         Your email
       </ts-field-input>
@@ -18,7 +19,8 @@
       <ts-field-textarea
         v-model="contactSchema.message.value"
         v-model:valid="contactSchema.message.valid"
-        :required="contactSchema.message.required"
+        v-model:touched="contactSchema.message.touched"
+        :rules="contactSchema.message.rules"
       >
         Message
       </ts-field-textarea>
@@ -33,14 +35,16 @@ import TsAlert from '~/components/layout/ts-alert.vue'
 
 const CONTACT_SCHEMA = {
   email: {
-    required: true,
     value: '',
-    valid: true
+    valid: true,
+    touched: false,
+    rules: ['required']
   },
   message: {
-    required: true,
     value: '',
-    valid: true
+    valid: true,
+    touched: false,
+    rules: ['required']
   },
 }
 
@@ -61,11 +65,18 @@ export default {
   data: () => ({
     contactSchema: CONTACT_SCHEMA,
     saving: false,
-    error: ''
+    message: {
+      text: '',
+      type: ''
+    }
   }),
   computed: {
     tutorId() {
       return this.$route.params.id
+    },
+
+    showAlert() {
+      return Boolean(this.message.text)
     }
   },
   methods: {
@@ -81,13 +92,15 @@ export default {
         .then(() => this.$store.commit('CLEAR_LAST_FETCH_REQUESTS_TIMESTAMP'))
         .then(() => this.$router.push('/requests'))
         .catch( ({ message }) => {
-          this.error = message || 'Failed to fetch'
+          this.message.text = message || 'Failed to fetch'
+          this.message.type = 'error'
         })
         .finally(() => (this.saving = false))
     },
 
-    clearError() {
-      this.error = ''
+    clearMessage() {
+      this.message.text = ''
+      this.message.type = ''
     }
   }
 };

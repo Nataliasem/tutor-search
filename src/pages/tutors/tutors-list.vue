@@ -1,7 +1,7 @@
 <template>
   <div class="page-wrapper">
     <!-- ALERT -->
-    <ts-alert :show="Boolean(error)" @close="clearError">{{ error }}</ts-alert>
+    <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
 
     <!-- LOADING -->
     <ts-loader v-if="loading" >Loading tutors</ts-loader>
@@ -46,7 +46,10 @@ export default {
     tutors: [],
     checkedAreas: [],
     areasOptions: AREAS_OPTIONS,
-    error: ''
+    message: {
+      text: '',
+      type: ''
+    }
   }),
   computed: {
     cashedTutors() {
@@ -63,6 +66,10 @@ export default {
 
     hasTutors() {
       return (this.tutors || []).length > 0
+    },
+
+    showAlert() {
+      return Boolean(this.message.text)
     }
   },
   mounted() {
@@ -84,7 +91,8 @@ export default {
         .then(() => this.$store.commit('SET_TUTORS', this.tutors))
         .then(() => this.$store.commit('SET_LAST_FETCH_TUTORS_TIMESTAMP'))
         .catch( ({ message }) => {
-          this.error = message || 'Failed to fetch'
+          this.message.text = message || 'Failed to fetch'
+          this.message.type = 'error'
         })
         .finally(() => (this.loading = false))
     },
@@ -99,8 +107,9 @@ export default {
       return (currentTimestamp - lastTimestamp) / 1000 > 180
     },
 
-    clearError() {
-      this.error = ''
+    clearMessage() {
+      this.message.text = ''
+      this.message.type = ''
     }
   }
 }

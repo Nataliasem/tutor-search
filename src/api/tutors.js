@@ -1,4 +1,5 @@
 import NetworkService from '~/network-service'
+import store from '~/store'
 
 export default {
   loadTutors() {
@@ -20,6 +21,13 @@ export default {
   },
 
   createTutor(tutor) {
-    return NetworkService.post(`/tutors.json`, tutor)
+    const authToken = store.getters.authToken
+
+    if(!authToken) {
+      console.error('No auth token')
+      return
+    }
+
+    return NetworkService.post(`/requests.json?auth=${authToken}`, tutor)
   }
 }

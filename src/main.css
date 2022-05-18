@@ -62,6 +62,10 @@ body {
     @apply bg-sky-900;
 }
 
+.ts-button-main[disabled] {
+    @apply pointer-events-none bg-gray-400 text-gray-100;
+}
+
 /*******************TS-BUTTON-SECONDARY**********************/
 .ts-button-secondary {
     @apply inline-block;
@@ -71,6 +75,10 @@ body {
 
 .ts-button-secondary:active {
     @apply bg-sky-100;
+}
+
+.ts-button-secondary[disabled] {
+    @apply pointer-events-none border-gray-400 text-gray-400;
 }
 
 /*******************TS-INPUT**********************/

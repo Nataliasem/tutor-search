@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import IconSpinner from '~/components/icons/icon-spinner.vue';
+import IconSpinner from '~/components/icons/icon-spinner.vue'
 
 export default {
   name: 'ts-loader',

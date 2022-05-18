@@ -1,11 +1,11 @@
 <template>
   <teleport to="body">
     <Transition name="slide-fade">
-      <div v-if="show" class="ts-alert">
+      <div v-if="show" class="ts-alert" :class="classByType">
         <span>
-          <slot />
+          {{ message.text }}
         </span>
-        <span class="text-amber-600 cursor-pointer" @click="close">
+        <span class="text-gray-600 cursor-pointer" @click="close">
           <icon-cross />
         </span>
       </div>
@@ -25,12 +25,21 @@ export default {
     show: {
       type: Boolean,
       default: false
+    },
+    message: {
+      type: Object,
+      required: true
     }
   },
   emits: ['close'],
   data: () => ({
     timerId: null
   }),
+  computed: {
+    classByType() {
+      return `ts-alert-${this.message.type || 'success'}`
+    }
+  },
   watch: {
     show: {
       immediate: true,
@@ -53,7 +62,15 @@ export default {
 <style>
 .ts-alert {
   @apply absolute top-4 right-4;
-  @apply flex items-center space-x-6;
-  @apply p-4 border border-amber-400 bg-amber-200;
+  @apply flex items-center space-x-6 p-4;
+  @apply border;
+}
+
+.ts-alert-error {
+  @apply border-amber-400 bg-amber-200;
+}
+
+.ts-alert-success {
+  @apply border-green-400 bg-green-200;
 }
 </style>
