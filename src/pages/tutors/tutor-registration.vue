@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto max-w-card pt-8">
     <!-- ALERT -->
-    <ts-alert :show="Boolean(error)" @close="clearError">{{ error }}</ts-alert>
+    <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
 
     <div class="text-center mb-8 text-size-16">Register as a tutor now</div>
     <ts-form :form-schema="tutorSchema" submit-text="Register" @validate="register">
@@ -100,8 +100,16 @@ export default {
     tutorSchema: TUTOR_SCHEMA,
     areasOptions: AREAS_OPTIONS,
     checkedAreas: [],
-    error: ''
+    message: {
+      text: '',
+      type: ''
+    }
   }),
+  computed: {
+    showAlert() {
+      return Boolean(this.message.text)
+    }
+  },
   methods: {
     register() {
       const tutor = {
@@ -116,12 +124,14 @@ export default {
         .then(() => this.$store.commit('CLEAR_LAST_FETCH_TUTORS_TIMESTAMP'))
         .then(() => this.$router.push('/tutors'))
         .catch( ({ message }) => {
-          this.error = message || 'Failed to fetch'
+          this.message.text = message || 'Failed to fetch'
+          this.message.type = 'error'
         })
     },
 
-    clearError() {
-      this.error = ''
+    clearMessage() {
+      this.message.text = ''
+      this.message.type = ''
     }
   }
 };

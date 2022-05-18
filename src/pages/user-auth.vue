@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto max-w-card pt-8">
     <!-- ALERT -->
-    <ts-alert :show="Boolean(message.text)" :message="message" @close="clearMessage" />
+    <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
 
     <div class="text-center mb-8 text-size-16">Register as a tutor now</div>
     <ts-form :form-schema="authSchema" :submit-text="submitText" @validate="handleAuth">
@@ -70,6 +70,10 @@ export default {
 
     submitText() {
       return this.isAuthenticated ? 'Sign in' : 'Sign up'
+    },
+
+    showAlert() {
+      return Boolean(this.message.text)
     }
   },
   methods: {

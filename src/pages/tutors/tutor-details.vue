@@ -1,7 +1,7 @@
 <template>
   <div class="page-wrapper space-y-6">
     <!-- ALERT -->
-    <ts-alert :show="Boolean(error)" @close="clearError">{{ error }}</ts-alert>
+    <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
 
     <!-- LOADING -->
     <ts-loader v-if="loading" >Loading requests</ts-loader>
@@ -47,7 +47,10 @@ export default {
   data: () => ({
     loading: true,
     tutor: null,
-    error: ''
+    message: {
+      text: '',
+      type: ''
+    }
   }),
   computed: {
     tutorNameView() {
@@ -63,6 +66,10 @@ export default {
 
     tutorContactsLink() {
       return `${this.$route.path}/contact`
+    },
+
+    showAlert() {
+      return Boolean(this.message.text)
     }
   },
   mounted() {
@@ -75,13 +82,15 @@ export default {
       tutorApi.loadTutor(this.id)
         .then(tutor => (this.tutor = tutor))
         .catch( ({ message }) => {
-          this.error = message || 'Failed to fetch'
+          this.message.text = message || 'Failed to fetch'
+          this.message.type = 'error'
         })
         .finally(() => (this.loading = false))
     },
 
-    clearError() {
-      this.error = ''
+    clearMessage() {
+      this.message.text = ''
+      this.message.type = ''
     }
   }
 }
