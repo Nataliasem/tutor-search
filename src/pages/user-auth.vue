@@ -3,8 +3,8 @@
     <!-- ALERT -->
     <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
 
-    <div class="text-center mb-8 text-size-16">Register as a tutor now</div>
-    <ts-form :form-schema="authSchema" :submit-text="submitText" @validate="handleAuth">
+    <div class="text-center mb-8 text-size-16">{{ title }}</div>
+    <ts-form :form-schema="authSchema" :submit-text="submitText" :saving="saving" @validate="handleAuth">
       <!-- EMAIL -->
       <ts-field-input
         v-model="authSchema.email.value"
@@ -57,6 +57,7 @@ export default {
     )
   },
   data: () => ({
+    saving: false,
     authSchema: AUTH_SCHEMA,
     message: {
       text: '',
@@ -68,8 +69,12 @@ export default {
       return this.$store.getters.isAuthenticated || false
     },
 
+    title() {
+      return this.isAuthenticated ? 'Log in to your account' : 'Create a new account'
+    },
+
     submitText() {
-      return this.isAuthenticated ? 'Sign in' : 'Sign up'
+      return this.isAuthenticated ? 'Log in' : 'Register'
     },
 
     showAlert() {
@@ -78,6 +83,8 @@ export default {
   },
   methods: {
     handleAuth() {
+      this.saving = true
+
       const data = {
         email: this.authSchema.email.value,
         password: this.authSchema.password.value,
@@ -86,7 +93,7 @@ export default {
 
       Promise.resolve()
         .then(() => {
-          return this.isAuthenticated ? authApi.signIn(data) : authApi.signUp(data)
+          return this.isAuthenticated ? authApi.logIn(data) : authApi.createAccount(data)
         })
         .then(user => this.$store.commit('SET_USER', user))
         .then(() => (this.message.text = 'The user has been successfully registered'))
@@ -94,6 +101,7 @@ export default {
           this.message.text = message || 'Failed to fetch'
           this.message.type = 'error'
         })
+        .finally(() => (this.saving = false))
     },
 
     clearMessage() {
