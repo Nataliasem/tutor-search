@@ -24,11 +24,6 @@ import ValidationRules from './validation-rules'
 export default {
   name: 'ts-field-input',
   props: {
-    modelValue: {
-      type: [String, Number],
-      required: true
-    },
-
     valid: {
       type: Boolean,
       required: true
@@ -49,11 +44,6 @@ export default {
     localValue: '',
     errorMessages: []
   }),
-  watch: {
-      value() {
-        this.localValue = this.modelValue
-      }
-  },
   methods: {
     update() {
       if(this.rules.length === 0) {
