@@ -67,6 +67,6 @@ export default {
       return 'Should be a string'
     }
 
-    return value.length <= 255 ? '' : 'There are more than 255 characters in the text'
+    return value.length <= 255 ? '' : 'Should not be more than 255 characters'
   }
 }

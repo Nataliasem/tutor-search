@@ -66,13 +66,13 @@ const TUTOR_SCHEMA = {
     value: '',
     valid: true,
     touched: false,
-    rules: ['required']
+    rules: ['required', 'limit']
   },
   lastName: {
     value: '',
     valid: true,
     touched: false,
-    rules: ['required']
+    rules: ['required', 'limit']
   },
   description: {
     value: '',

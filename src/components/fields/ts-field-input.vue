@@ -24,14 +24,14 @@ import ValidationRules from './validation-rules'
 export default {
   name: 'ts-field-input',
   props: {
-    valid: {
-      type: Boolean,
-      required: true
-    },
-
     type: {
       type: String,
       default: 'string'
+    },
+
+    valid: {
+      type: Boolean,
+      required: true
     },
 
     rules: {
@@ -39,18 +39,19 @@ export default {
       default: () => []
     }
   },
-  emits: ['update:modelValue', 'update:valid'],
+  emits: ['update:modelValue', 'update:valid', 'update:touched'],
   data: () => ({
-    localValue: '',
+    localValue: null,
     errorMessages: []
   }),
+  computed: {
+    formattedValue() {
+      return this.type === 'number' ? Number(this.localValue) : this.localValue
+    }
+  },
   methods: {
     update() {
-      if(this.type === 'number') {
-        this.localValue = Number(this.localValue)
-      }
-
-      this.$emit('update:modelValue', this.localValue)
+      this.$emit('update:modelValue', this.formattedValue)
       this.$emit('update:touched', true)
 
       if(this.rules.length === 0) {
@@ -59,7 +60,7 @@ export default {
       }
 
       this.errorMessages = this.rules
-        .map(rule => ValidationRules[rule](this.localValue))
+        .map(rule => ValidationRules[rule](this.formattedValue))
         .filter(item => Boolean(item))
 
       const isValid = this.errorMessages.length === 0
