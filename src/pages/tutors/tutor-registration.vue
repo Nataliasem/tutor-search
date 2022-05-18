@@ -9,7 +9,8 @@
     <ts-field-input
       v-model="tutorSchema.firstName.value"
       v-model:valid="tutorSchema.firstName.valid"
-      :required="tutorSchema.firstName.required"
+      v-model:touched="tutorSchema.firstName.touched"
+      :rules="tutorSchema.firstName.rules"
     >
       First name
     </ts-field-input>
@@ -18,7 +19,8 @@
     <ts-field-input
       v-model="tutorSchema.lastName.value"
       v-model:valid="tutorSchema.lastName.valid"
-      :required="tutorSchema.lastName.required"
+      v-model:touched="tutorSchema.lastName.touched"
+      :rules="tutorSchema.lastName.rules"
     >
       Last name
     </ts-field-input>
@@ -27,7 +29,8 @@
     <ts-field-textarea
       v-model="tutorSchema.description.value"
       v-model:valid="tutorSchema.description.valid"
-      :required="tutorSchema.description.required"
+      v-model:touched="tutorSchema.description.touched"
+      :rules="tutorSchema.description.rules"
     >
       Description
     </ts-field-textarea>
@@ -36,7 +39,9 @@
     <ts-field-input
       v-model="tutorSchema.hourlyRate.value"
       v-model:valid="tutorSchema.hourlyRate.valid"
-      :required="tutorSchema.hourlyRate.required"
+      v-model:touched="tutorSchema.hourlyRate.touched"
+      type="number"
+      :rules="tutorSchema.hourlyRate.rules"
     >
       Hourly rate
     </ts-field-input>
@@ -58,24 +63,28 @@ import TsAlert from '~/components/layout/ts-alert.vue'
 
 const TUTOR_SCHEMA = {
   firstName: {
-    required: true,
     value: '',
-    valid: true
+    valid: true,
+    touched: false,
+    rules: ['required']
   },
   lastName: {
-    required: true,
     value: '',
-    valid: true
+    valid: true,
+    touched: false,
+    rules: ['required']
   },
   description: {
-    required: false,
     value: '',
-    valid: true
+    valid: true,
+    touched: false,
+    rules: ['limit']
   },
   hourlyRate: {
-    required: true,
     value: '',
-    valid: true
+    valid: true,
+    touched: false,
+    rules: ['required', 'integer']
   }
 }
 

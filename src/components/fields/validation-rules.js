@@ -1,5 +1,9 @@
 export default {
   required(value) {
+    if (typeof value === 'number' && value === 0) {
+      return ''
+    }
+
     if(!value) {
       return 'Should not be empty'
     }
@@ -17,6 +21,10 @@ export default {
   },
 
   email(value) {
+    if(!value) {
+      return ''
+    }
+
     const isValid = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Zа-яёА-ЯЁ\-0-9]+\.)+[a-zA-Zа-яёА-ЯЁ]{2,}))$/.test(
       value || ''
     )
@@ -25,6 +33,10 @@ export default {
   },
 
   password(value) {
+    if(!value) {
+      return ''
+    }
+
     const length = (value || []).length > 0
     const latinLettersUppercase = /[A-Z]/.test(value)
     const latinLettersLowercase = /[a-z]/.test(value)
@@ -36,5 +48,25 @@ export default {
     }
 
     return ''
+  },
+
+  integer(value) {
+    if (!value) {
+      return ''
+    }
+
+    return Number.isInteger(value) ? '' : 'Should be an integer'
+  },
+
+  limit(value) {
+    if (!value) {
+      return ''
+    }
+
+    if (typeof value !== 'string') {
+      return 'Should be a string'
+    }
+
+    return value.length <= 255 ? '' : 'There are more than 255 characters in the text'
   }
 }

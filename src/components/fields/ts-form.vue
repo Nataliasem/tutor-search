@@ -4,7 +4,7 @@
       <div class="flex flex-col space-y-8">
         <slot />
       </div>
-      <button type="submit" class="ts-button-main mt-8" :disabled="saving">{{ submitText }}</button>
+        <button type="submit" class="ts-button-main mt-8" :disabled="disabled">{{ submitText }}</button>
     </form>
   </div>
 </template>
@@ -27,20 +27,20 @@ export default {
     }
   },
   emits: ['validate'],
+  computed: {
+    isValid() {
+      const validatedFields = Object.values(this.formSchema)
+
+      return validatedFields.every(item => item.valid && item.touched)
+    },
+
+    disabled() {
+      return this.saving || this.isValid === false
+    }
+  },
   methods: {
     validate() {
-      const rawFields = Object.values(this.formSchema)
-
-      const validatedFields = rawFields.map(item => {
-        if(item.required && !item.value) {
-          item.valid = false
-        }
-
-        return item
-      })
-
-      const isValid = validatedFields.every(item => item.valid)
-      if(!isValid) {
+      if(!this.isValid) {
         return
       }
 

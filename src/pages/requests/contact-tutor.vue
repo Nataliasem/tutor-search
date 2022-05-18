@@ -33,14 +33,14 @@ import TsAlert from '~/components/layout/ts-alert.vue'
 
 const CONTACT_SCHEMA = {
   email: {
-    required: true,
     value: '',
-    valid: true
+    valid: true,
+    rules: ['required']
   },
   message: {
-    required: true,
     value: '',
-    valid: true
+    valid: true,
+    rules: ['required']
   },
 }
 
