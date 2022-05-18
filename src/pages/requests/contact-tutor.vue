@@ -9,7 +9,8 @@
       <ts-field-input
         v-model="contactSchema.email.value"
         v-model:valid="contactSchema.email.valid"
-        :required="contactSchema.email.required"
+        v-model:touched="contactSchema.email.touched"
+        :rules="contactSchema.email.rules"
       >
         Your email
       </ts-field-input>
@@ -18,7 +19,8 @@
       <ts-field-textarea
         v-model="contactSchema.message.value"
         v-model:valid="contactSchema.message.valid"
-        :required="contactSchema.message.required"
+        v-model:touched="contactSchema.message.touched"
+        :rules="contactSchema.message.rules"
       >
         Message
       </ts-field-textarea>
@@ -35,11 +37,13 @@ const CONTACT_SCHEMA = {
   email: {
     value: '',
     valid: true,
+    touched: false,
     rules: ['required']
   },
   message: {
     value: '',
     valid: true,
+    touched: false,
     rules: ['required']
   },
 }

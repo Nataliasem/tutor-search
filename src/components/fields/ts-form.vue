@@ -4,14 +4,28 @@
       <div class="flex flex-col space-y-8">
         <slot />
       </div>
-        <button type="submit" class="ts-button-main mt-8" :disabled="disabled">{{ submitText }}</button>
+        <spinner-button
+          type="submit"
+          class="flex justify-center relative mt-8"
+          :saving="saving"
+          :disabled="disabled"
+        >
+          {{ submitText }}
+        </spinner-button>
     </form>
   </div>
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
+
 export default {
   name: 'ts-form',
+  components: {
+    SpinnerButton: defineAsyncComponent(() =>
+      import('~/components/layout/spinner-button.vue')
+    ),
+  },
   props: {
     formSchema: {
       type: Object,

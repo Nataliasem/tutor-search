@@ -4,7 +4,7 @@
     <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
 
     <div class="text-center mb-8 text-size-16">Register as a tutor now</div>
-    <ts-form :form-schema="tutorSchema" submit-text="Register" @validate="register">
+    <ts-form submit-text="Register" :form-schema="tutorSchema" :saving="saving" @validate="register">
     <!-- FIRSTNAME -->
     <ts-field-input
       v-model="tutorSchema.firstName.value"
@@ -106,6 +106,7 @@ export default {
     )
   },
   data: () => ({
+    saving: false,
     tutorSchema: TUTOR_SCHEMA,
     areasOptions: AREAS_OPTIONS,
     checkedAreas: [],
@@ -121,6 +122,8 @@ export default {
   },
   methods: {
     register() {
+      this.saving = true
+
       const tutor = {
         firstName: this.tutorSchema.firstName.value,
         lastName: this.tutorSchema.lastName.value,
@@ -136,6 +139,7 @@ export default {
           this.message.text = message || 'Failed to fetch'
           this.message.type = 'error'
         })
+        .finally(() => (this.saving = false))
     },
 
     clearMessage() {
