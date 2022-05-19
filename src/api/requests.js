@@ -1,4 +1,5 @@
 import NetworkService from '~/network-service'
+import authUtils from '~/utils/auth'
 
 export default {
   loadRequests() {
@@ -14,12 +15,18 @@ export default {
           return  []
         }
 
+        const currentUser = authUtils.getUser()
+        if(!currentUser) {
+          return []
+        }
+
+
         return ids.map(id => {
           return {
             id: id,
             ...requests[id]
           }
-        })
+        }).filter(item => item.tutorId === currentUser.localId)
       })
   },
 

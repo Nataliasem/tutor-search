@@ -133,7 +133,7 @@ export default {
   computed: {
     userId() {
       const user = authUtils.getUser()
-      return (user && user.tutorId) || ''
+      return (user && user.localId) || ''
     },
 
     showAlert() {

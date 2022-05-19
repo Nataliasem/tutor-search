@@ -5,7 +5,7 @@
       <div class="flex items-center space-x-3">
         <router-link to="/tutors">All tutors</router-link>
         <span class="h-5 w-px bg-slate-300 mx-5" />
-        <router-link to="/requests">All requests</router-link>
+        <router-link to="/requests">Requests</router-link>
       </div>
       <div class="flex items-center space-x-3">
         <template v-if="isAuthenticated">
