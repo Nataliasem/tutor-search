@@ -8,7 +8,11 @@
         <router-link to="/requests">All requests</router-link>
       </div>
       <div class="flex items-center space-x-3">
-        <router-link v-if="isAuthenticated" to='/register' class="ts-button-main">Register as a tutor</router-link>
+        <template v-if="isAuthenticated">
+          <div>Hello, {{ userName }}!</div>
+          <router-link to='/register' class="ts-button-main">Register as a tutor</router-link>
+        </template>
+
         <router-link v-else to='/user-auth' class="ts-button-secondary">Log in</router-link>
       </div>
     </nav>
@@ -16,11 +20,19 @@
 </template>
 
 <script>
+import authUtils from '~/utils/auth'
+
 export default {
   name: 'app-header',
   computed: {
+    userName() {
+      const user = authUtils.getUser()
+
+      return (user && user.email) || ''
+    },
+
     isAuthenticated() {
-      return this.$store.getters.isAuthenticated || false
+      return Boolean(authUtils.getAuthToken())
     }
   }
 };

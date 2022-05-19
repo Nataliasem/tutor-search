@@ -71,6 +71,7 @@ const AUTH_SCHEMA = {
 
 import { defineAsyncComponent } from 'vue';
 import authApi from '~/api/auth'
+import authUtils from '~/utils/auth'
 import TsAlert from '~/components/layout/ts-alert.vue'
 
 export default {
@@ -109,14 +110,18 @@ export default {
     logIn(data) {
       return authApi.logIn(data)
         .then(user => {
-          this.$store.commit('SET_USER', user)
-          this.message.text = `Welcome back, ${user.email}!`
-          })
+          authUtils.setUser(user)
+
+          const email = user && user.email || ''
+          if(email) {
+            this.message.text =`Welcome back, ${email}!`
+          }
+        })
     },
 
     register(data) {
       return authApi.createAccount(data)
-        .then(user => this.$store.commit('SET_USER', user))
+        .then(user => authUtils.setUser(user))
         .then(() => (this.message.text = 'You have successfully registered'))
     },
 

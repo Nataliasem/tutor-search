@@ -1,5 +1,4 @@
 import NetworkService from '~/network-service'
-import store from '~/store'
 
 export default {
   loadRequests() {
@@ -25,12 +24,6 @@ export default {
   },
 
   createRequest(request) {
-    const authToken = store.getters.authToken
-
-    if(!authToken) {
-      return Promise.reject({ message: 'No auth token'})
-    }
-
-    return NetworkService.post(`/requests.json?auth=${authToken}`, request)
+    return NetworkService.post('/requests.json', request)
   }
 }
