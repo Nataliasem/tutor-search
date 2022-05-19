@@ -132,8 +132,7 @@ export default {
   }),
   computed: {
     userId() {
-      const user = authUtils.getUser()
-      return (user && user.localId) || ''
+      return authUtils.getUserId()
     },
 
     showAlert() {

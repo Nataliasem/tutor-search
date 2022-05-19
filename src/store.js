@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import authUtils from '~/utils/auth'
 
 const store = createStore({
   state() {
@@ -7,6 +8,13 @@ const store = createStore({
       tutors: [],
       lastFetchTutorsTimestamp: null,
       lastFetchRequestsTimestamp: null
+    }
+  },
+  getters: {
+    isTutor(state) {
+      const id = authUtils.getUserId()
+
+      return (state.tutors || []).find(item => item.tutorId === id)
     }
   },
   mutations: {

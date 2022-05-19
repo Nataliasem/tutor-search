@@ -21,7 +21,7 @@ export default {
   },
 
   createTutor(tutor) {
-    const authToken = authUtils.getAuthToken()
+    const authToken = authUtils.getUserAuthToken()
 
     if(!authToken) {
       return Promise.reject({ message: 'No auth token'})

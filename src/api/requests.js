@@ -15,8 +15,8 @@ export default {
           return  []
         }
 
-        const currentUser = authUtils.getUser()
-        if(!currentUser) {
+        const currentUserId = authUtils.getUserId()
+        if(!currentUserId) {
           return []
         }
 
@@ -26,7 +26,7 @@ export default {
             id: id,
             ...requests[id]
           }
-        }).filter(item => item.tutorId === currentUser.localId)
+        }).filter(item => item.tutorId === currentUserId)
       })
   },
 
