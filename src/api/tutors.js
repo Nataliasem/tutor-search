@@ -28,6 +28,6 @@ export default {
       return
     }
 
-    return NetworkService.post(`/requests.json?auth=${authToken}`, tutor)
+    return NetworkService.post(`/tutors.json?auth=${authToken}`, tutor)
   }
 }

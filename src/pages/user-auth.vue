@@ -27,7 +27,7 @@
       </ts-field-input>
 
       <template #action-buttons="{ disabled }">
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-2 mt-6">
           <spinner-button
             type="submit"
             class="ts-button-main"
