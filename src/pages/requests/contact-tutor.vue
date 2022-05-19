@@ -24,6 +24,17 @@
       >
         Message
       </ts-field-textarea>
+
+      <template #action-buttons="{ disabled }">
+        <spinner-button
+          type="submit"
+          class="ts-button-main mt-6"
+          :saving="saving"
+          :disabled="disabled"
+        >
+          Register
+        </spinner-button>
+      </template>
     </ts-form>
   </div>
 </template>
@@ -38,13 +49,13 @@ const CONTACT_SCHEMA = {
     value: '',
     valid: true,
     touched: false,
-    rules: ['required']
+    rules: ['required', 'email']
   },
   message: {
     value: '',
     valid: true,
     touched: false,
-    rules: ['required']
+    rules: ['required', 'limit']
   },
 }
 
@@ -60,6 +71,9 @@ export default {
     ),
     TsFieldTextarea: defineAsyncComponent(() =>
       import('~/components/fields/ts-field-textarea.vue')
+    ),
+    SpinnerButton: defineAsyncComponent(() =>
+      import('~/components/layout/spinner-button.vue')
     )
   },
   data: () => ({

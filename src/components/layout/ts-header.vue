@@ -1,7 +1,7 @@
 <template>
   <header class="border-b border-slate-300 py-4 px-8">
     <nav class="flex justify-between items-center">
-      <router-link to="/" class="font-bold text-size-18 text-gray-800">Tutor search</router-link>
+      <router-link to="/" class="font-bold text-size-18 text-gray-800">Tutor Search</router-link>
       <div class="flex items-center space-x-3">
         <router-link to="/tutors">All tutors</router-link>
         <span class="h-5 w-px bg-slate-300 mx-5" />

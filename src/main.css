@@ -53,7 +53,7 @@ body {
 
 /*******************TS-BUTTON-MAIN**********************/
 .ts-button-main {
-    @apply inline-block;
+    @apply inline-flex justify-center items-center relative;
     @apply outline-0 bg-sky-600 text-white;
     @apply px-4 py-1 rounded-ts-sm;
 }
@@ -68,7 +68,7 @@ body {
 
 /*******************TS-BUTTON-SECONDARY**********************/
 .ts-button-secondary {
-    @apply inline-block;
+    @apply inline-flex justify-center items-center relative;
     @apply outline-0 border border-sky-600 text-sky-600;
     @apply px-4 py-1 rounded-ts-sm;
 }

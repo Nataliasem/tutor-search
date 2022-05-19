@@ -14,6 +14,9 @@
       <!-- FILTERS -->
       <ts-field-checklist v-model:checked="checkedAreas" :options="areasOptions" />
 
+      <!-- NO FILTERED TUTORS FOUND -->
+      <div v-if="hasFilteredTutors === false">No tutors found. Try to change the filters</div>
+
       <!-- TUTORS -->
       <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
    </div>
@@ -66,6 +69,10 @@ export default {
 
     hasTutors() {
       return (this.tutors || []).length > 0
+    },
+
+    hasFilteredTutors() {
+      return (this.filteredTutors || []).length > 0
     },
 
     showAlert() {

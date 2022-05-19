@@ -3,7 +3,7 @@
     <!-- ALERT -->
     <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
 
-    <div class="text-center mb-8 text-size-16">{{ title }}</div>
+    <div class="text-center mb-8 text-size-16">Start using Tutor Search</div>
     <ts-form :form-schema="authSchema" submit-text="Log in" :saving="saving" @validate="handleAuth">
       <!-- EMAIL -->
       <ts-field-input
@@ -97,14 +97,6 @@ export default {
     }
   }),
   computed: {
-    isAuthenticated() {
-      return this.$store.getters.isAuthenticated || false
-    },
-
-    title() {
-      return this.isAuthenticated ? 'Log in to your account' : 'Create a new account'
-    },
-
     showAlert() {
       return Boolean(this.message.text)
     }

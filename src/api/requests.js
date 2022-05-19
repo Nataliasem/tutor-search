@@ -28,8 +28,7 @@ export default {
     const authToken = store.getters.authToken
 
     if(!authToken) {
-      console.error('No auth token')
-      return
+      return Promise.reject({ message: 'No auth token'})
     }
 
     return NetworkService.post(`/requests.json?auth=${authToken}`, request)

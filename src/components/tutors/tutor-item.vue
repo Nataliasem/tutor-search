@@ -75,7 +75,7 @@ export default {
 
     tutorContactsLink() {
       const path = this.$route.path
-      const id = this.tutor.id || ''
+      const id = this.tutor.tutorId || ''
 
       return `${path}/${id}/contact`
     }

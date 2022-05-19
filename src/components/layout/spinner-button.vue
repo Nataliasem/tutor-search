@@ -1,6 +1,5 @@
 <template>
   <button
-    class="flex justify-center relative"
     :type="type"
     :class="{ 'pointer-events-none': saving }"
     @click="click"
