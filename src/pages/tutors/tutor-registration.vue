@@ -70,7 +70,6 @@
 import { defineAsyncComponent } from 'vue';
 import { AREAS_OPTIONS } from '~/constants';
 import tutorApi from '~/api/tutors'
-import authUtils from '~/utils/auth'
 import TsAlert from '~/components/layout/ts-alert.vue'
 
 const TUTOR_SCHEMA = {
@@ -132,7 +131,8 @@ export default {
   }),
   computed: {
     userId() {
-      return authUtils.getUserId()
+      const user = this.$store.state.user
+      return (user && user.localId) || ''
     },
 
     showAlert() {

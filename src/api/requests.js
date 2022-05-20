@@ -1,5 +1,5 @@
 import NetworkService from '~/network-service'
-import authUtils from '~/utils/auth'
+import store from '~/store'
 
 export default {
   loadRequests() {
@@ -15,7 +15,7 @@ export default {
           return  []
         }
 
-        const currentUserId = authUtils.getUserId()
+        const currentUserId = store.state.user && store.state.user.localId
         if(!currentUserId) {
           return []
         }

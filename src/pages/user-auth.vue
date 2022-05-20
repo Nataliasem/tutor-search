@@ -111,6 +111,7 @@ export default {
       return authApi.logIn(data)
         .then(user => {
           authUtils.setUser(user)
+          this.$store.commit('SET_USER', user)
 
           const email = user && user.email || ''
           if(email) {
@@ -121,7 +122,10 @@ export default {
 
     register(data) {
       return authApi.createAccount(data)
-        .then(user => authUtils.setUser(user))
+        .then(user => {
+          authUtils.setUser(user)
+          this.$store.commit('SET_USER', user)
+        })
         .then(() => (this.message.text = 'You have successfully registered'))
     },
 
@@ -138,6 +142,7 @@ export default {
         .then(() => {
           return this.mode === 'log-in' ? this.logIn(data) : this.register(data)
         })
+        .then(() => this.$router.push('/'))
         .catch( ({ message }) => {
           this.message.text = message || 'Failed to fetch'
           this.message.type = 'error'

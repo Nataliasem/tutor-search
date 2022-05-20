@@ -1,5 +1,5 @@
 import NetworkService from '~/network-service'
-import authUtils from '~/utils/auth'
+import store from '~/store'
 
 export default {
   loadTutors() {
@@ -21,7 +21,8 @@ export default {
   },
 
   createTutor(tutor) {
-    const authToken = authUtils.getUserAuthToken()
+    const user = store.state.user
+    const authToken = (user && user.idToken) || ''
 
     if(!authToken) {
       return Promise.reject({ message: 'No auth token'})
