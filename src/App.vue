@@ -1,21 +1,14 @@
 <template>
-  <ts-header />
-  <router-view v-slot="{ Component }">
-    <Transition name="route" mode="out-in">
-      <component :is="Component" />
-    </Transition>
-  </router-view>
+  <page-layout />
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue';
+import PageLayout from '~/pages/page-layout.vue';
 
 export default {
   name: 'app',
   components: {
-  TsHeader: defineAsyncComponent(() =>
-      import('~/components/layout/ts-header.vue')
-    ),
+    PageLayout
   }
 }
 </script>

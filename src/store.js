@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import authUtils from '~/utils/auth'
 
 const store = createStore({
   state() {
@@ -12,16 +13,24 @@ const store = createStore({
   },
   getters: {
     isAuthenticated(state) {
-      return Boolean(state.user && state.user.idToken)
+      return state.user && state.user.idToken
     },
 
-    authToken(state) {
-      return (state.user && state.user.idToken) || ''
-    },
+    isTutor(state) {
+      return state.user && state.user.isTutor
+    }
   },
   mutations: {
     SET_USER(state, user) {
+      authUtils.setUser(user)
+
       state.user = user
+    },
+
+    REMOVE_USER(state) {
+      authUtils.removeUser()
+
+      state.user = null
     },
 
     SET_TUTORS(state, tutors) {

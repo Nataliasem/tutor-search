@@ -21,13 +21,13 @@ export default {
   },
 
   createTutor(tutor) {
-    const authToken = store.getters.authToken
+    const user = store.state.user
+    const authToken = (user && user.idToken) || ''
 
     if(!authToken) {
-      console.error('No auth token')
-      return
+      return Promise.reject({ message: 'No auth token'})
     }
 
-    return NetworkService.post(`/requests.json?auth=${authToken}`, tutor)
+    return NetworkService.post(`/tutors.json?auth=${authToken}`, tutor)
   }
 }

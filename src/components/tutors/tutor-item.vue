@@ -36,7 +36,7 @@ export default {
   name: 'tutor-item',
   components: {
     IconUser: defineAsyncComponent(() =>
-      import('~/components/icons/icon-user.vue')
+      import('~/components/icons/icon-user-checked.vue')
     ),
     IconPhone: defineAsyncComponent(() =>
       import('~/components/icons/icon-phone.vue')
@@ -75,7 +75,7 @@ export default {
 
     tutorContactsLink() {
       const path = this.$route.path
-      const id = this.tutor.id || ''
+      const id = this.tutor.tutorId || ''
 
       return `${path}/${id}/contact`
     }

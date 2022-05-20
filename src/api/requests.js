@@ -15,23 +15,22 @@ export default {
           return  []
         }
 
+        const currentUserId = store.state.user && store.state.user.localId
+        if(!currentUserId) {
+          return []
+        }
+
+
         return ids.map(id => {
           return {
             id: id,
             ...requests[id]
           }
-        })
+        }).filter(item => item.tutorId === currentUserId)
       })
   },
 
   createRequest(request) {
-    const authToken = store.getters.authToken
-
-    if(!authToken) {
-      console.error('No auth token')
-      return
-    }
-
-    return NetworkService.post(`/requests.json?auth=${authToken}`, request)
+    return NetworkService.post('/requests.json', request)
   }
 }

@@ -4,7 +4,7 @@
     <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
 
     <div class="text-center mb-8 text-size-16">Register as a tutor now</div>
-    <ts-form submit-text="Register" :form-schema="tutorSchema" :saving="saving" @validate="register">
+    <ts-form :form-schema="tutorSchema" :saving="saving" @validate="register">
     <!-- FIRSTNAME -->
     <ts-field-input
       v-model="tutorSchema.firstName.value"
@@ -51,6 +51,17 @@
       <span class="font-bold">Areas of expertise</span>
       <ts-field-checklist v-model:checked="checkedAreas" :options="areasOptions" />
     </div>
+
+      <template #action-buttons="{ disabled }">
+        <spinner-button
+          type="submit"
+          class="ts-button-main mt-6"
+          :saving="saving"
+          :disabled="disabled"
+        >
+          Register
+        </spinner-button>
+      </template>
     </ts-form>
   </div>
 </template>
@@ -103,6 +114,9 @@ export default {
     ),
     TsFieldChecklist: defineAsyncComponent(() =>
         import('~/components/fields/ts-field-checklist.vue')
+    ),
+    SpinnerButton: defineAsyncComponent(() =>
+      import('~/components/layout/spinner-button.vue')
     )
   },
   data: () => ({
@@ -116,6 +130,11 @@ export default {
     }
   }),
   computed: {
+    userId() {
+      const user = this.$store.state.user
+      return (user && user.localId) || ''
+    },
+
     showAlert() {
       return Boolean(this.message.text)
     }
@@ -125,6 +144,7 @@ export default {
       this.saving = true
 
       const tutor = {
+        tutorId: this.userId,
         firstName: this.tutorSchema.firstName.value,
         lastName: this.tutorSchema.lastName.value,
         areas: this.checkedAreas,

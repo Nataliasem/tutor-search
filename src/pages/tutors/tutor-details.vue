@@ -18,9 +18,6 @@
 
       <!-- DESCRIPTION -->
       <p>{{ tutor.description }}</p>
-
-      <!-- CONTACT LINK -->
-      <router-link class="ts-button-main" :to='tutorContactsLink'>Interested? Reach out now!</router-link>
     </template>
   </div>
 </template>
@@ -62,10 +59,6 @@ export default {
     tutorRateView() {
       const rate = this.tutor.hourlyRate || ''
       return rate ? `${rate}$/hour` : '-'
-    },
-
-    tutorContactsLink() {
-      return `${this.$route.path}/contact`
     },
 
     showAlert() {

@@ -3,7 +3,7 @@
     <!-- ALERT -->
     <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
 
-    <div class="text-center mb-8 text-size-16">{{ title }}</div>
+    <div class="text-center mb-8 text-size-16">Start using Tutor Search</div>
     <ts-form :form-schema="authSchema" submit-text="Log in" :saving="saving" @validate="handleAuth">
       <!-- EMAIL -->
       <ts-field-input
@@ -27,7 +27,7 @@
       </ts-field-input>
 
       <template #action-buttons="{ disabled }">
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-2 mt-6">
           <spinner-button
             type="submit"
             class="ts-button-main"
@@ -71,6 +71,7 @@ const AUTH_SCHEMA = {
 
 import { defineAsyncComponent } from 'vue';
 import authApi from '~/api/auth'
+import authUtils from '~/utils/auth'
 import TsAlert from '~/components/layout/ts-alert.vue'
 
 export default {
@@ -97,14 +98,6 @@ export default {
     }
   }),
   computed: {
-    isAuthenticated() {
-      return this.$store.getters.isAuthenticated || false
-    },
-
-    title() {
-      return this.isAuthenticated ? 'Log in to your account' : 'Create a new account'
-    },
-
     showAlert() {
       return Boolean(this.message.text)
     }
@@ -117,14 +110,22 @@ export default {
     logIn(data) {
       return authApi.logIn(data)
         .then(user => {
+          authUtils.setUser(user)
           this.$store.commit('SET_USER', user)
-          this.message.text = `Welcome back, ${user.email}!`
-          })
+
+          const email = user && user.email || ''
+          if(email) {
+            this.message.text =`Welcome back, ${email}!`
+          }
+        })
     },
 
     register(data) {
       return authApi.createAccount(data)
-        .then(user => this.$store.commit('SET_USER', user))
+        .then(user => {
+          authUtils.setUser(user)
+          this.$store.commit('SET_USER', user)
+        })
         .then(() => (this.message.text = 'You have successfully registered'))
     },
 
@@ -141,6 +142,7 @@ export default {
         .then(() => {
           return this.mode === 'log-in' ? this.logIn(data) : this.register(data)
         })
+        .then(() => this.$router.push('/'))
         .catch( ({ message }) => {
           this.message.text = message || 'Failed to fetch'
           this.message.type = 'error'
