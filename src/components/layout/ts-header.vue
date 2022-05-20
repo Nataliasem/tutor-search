@@ -6,11 +6,23 @@
 
       <!-- NAVIGATION LINKS -->
       <div class="flex items-center space-x-3">
-        <router-link to="/tutors">All tutors</router-link>
+        <router-link
+          to="/tutors"
+          class="ts-nav-link"
+          :class="{ 'active': activeLink === '/tutors' }"
+        >
+          All tutors
+        </router-link>
 
         <template v-if="isAuthenticated && isTutor">
           <span class="h-5 w-px bg-slate-300 mx-5" />
-          <router-link  to="/requests">Requests</router-link>
+          <router-link
+            to="/requests"
+            class="ts-nav-link"
+            :class="{ 'active': activeLink === '/requests' }"
+          >
+            Requests
+          </router-link>
         </template>
       </div>
 
@@ -52,12 +64,16 @@ import IconUser from '~/components/icons/icon-user.vue'
 import IconLogOut from '~/components/icons/icon-log-out.vue'
 
 export default {
-  name: 'app-header',
+  name: 'ts-header',
   components: {
     IconUser,
     IconLogOut
   },
   computed: {
+    activeLink() {
+      return this.$route.path
+    },
+
     userName() {
       const user = this.$store.state.user
 
@@ -81,3 +97,18 @@ export default {
   }
 };
 </script>
+
+
+<style>
+.ts-nav-link {
+  @apply border-b border-transparent;
+}
+
+.ts-nav-link:hover {
+  @apply text-sky-500;
+}
+
+.ts-nav-link.active {
+  @apply text-sky-600 border-sky-600;
+}
+</style>
