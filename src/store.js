@@ -17,13 +17,7 @@ const store = createStore({
     },
 
     isTutor(state) {
-      const user = state.user
-
-      if(!user || !user.localId) {
-        return false
-      }
-
-      return (state.tutors || []).some(item => item.tutorId === user.localId)
+      return state.user && state.user.isTutor
     }
   },
   mutations: {
