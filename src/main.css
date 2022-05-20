@@ -81,6 +81,26 @@ body {
     @apply pointer-events-none border-gray-400 text-gray-400;
 }
 
+/*******************TS-ROUNDED-ICON**********************/
+.ts-rounded-icon {
+    @apply inline-flex justify-center items-center relative;
+    @apply outline-0 rounded-full bg-sky-100 text-sky-600;
+    @apply border border-transparent px-2 py-2;
+}
+
+.ts-rounded-icon:hover {
+    @apply bg-sky-200;
+}
+
+.ts-rounded-icon:active {
+    @apply bg-sky-200 border-sky-600;
+}
+
+.ts-rounded-icon[disabled] {
+    @apply pointer-events-none border-gray-400 text-gray-400;
+}
+
+
 /*******************TS-INPUT**********************/
 .ts-input {
     @apply border border-slate-300 outline-0 rounded-ts-sm min-h-input;

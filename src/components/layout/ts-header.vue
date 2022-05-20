@@ -14,19 +14,38 @@
         <template v-if="isAuthenticated">
           <div>Hello, {{ userName }}!</div>
           <router-link v-if="isTutor === false" to='/register' class="ts-button-main">Register as a tutor</router-link>
-          <button type="button" class="ts-button-secondary" @click="logOut">Log out</button>
+          <button
+            type="button"
+            class="ts-rounded-icon"
+            title="Log out"
+            @click="logOut">
+            <icon-log-out />
+          </button>
         </template>
 
-        <router-link v-else to='/user-auth' class="ts-button-secondary">Log in</router-link>
+        <router-link
+          v-else
+          to='/user-auth'
+          class="ts-rounded-icon"
+          title="Log in"
+        >
+          <icon-user />
+        </router-link>
       </div>
     </nav>
   </header>
 </template>
 
 <script>
+import IconUser from '~/components/icons/icon-user.vue'
+import IconLogOut from '~/components/icons/icon-log-out.vue'
 
 export default {
   name: 'app-header',
+  components: {
+    IconUser,
+    IconLogOut
+  },
   computed: {
     userName() {
       const user = this.$store.state.user
