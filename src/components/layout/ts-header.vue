@@ -1,7 +1,10 @@
 <template>
   <header class="border-b border-slate-300 py-4 px-8">
     <nav class="flex justify-between items-center">
+      <!-- LOGO -->
       <router-link to="/" class="font-bold text-size-18 text-gray-800">Tutor Search</router-link>
+
+      <!-- NAVIGATION LINKS -->
       <div class="flex items-center space-x-3">
         <router-link to="/tutors">All tutors</router-link>
 
@@ -10,19 +13,27 @@
           <router-link  to="/requests">Requests</router-link>
         </template>
       </div>
+
       <div class="flex items-center space-x-3">
         <template v-if="isAuthenticated">
+          <!-- USER INFO -->
           <div>Hello, {{ userName }}!</div>
+
+          <!-- REGISTER AS TUTOR -->
           <router-link v-if="isTutor === false" to='/register' class="ts-button-main">Register as a tutor</router-link>
+
+          <!-- LOG OUT -->
           <button
             type="button"
             class="ts-rounded-icon"
             title="Log out"
-            @click="logOut">
+            @click="logOut"
+          >
             <icon-log-out />
           </button>
         </template>
 
+        <!-- LOG IN -->
         <router-link
           v-else
           to='/user-auth'
