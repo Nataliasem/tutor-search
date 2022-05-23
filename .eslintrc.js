@@ -33,7 +33,7 @@ module.exports = {
     'vue/component-tags-order': [
       'error',
       {
-        order: ['template', 'script', 'style']
+        order: ['script', 'template', 'style']
       }
     ],
     'vue/no-empty-component-block': 'error',
