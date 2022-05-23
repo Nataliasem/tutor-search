@@ -12,35 +12,34 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
 
-    // [VUE]
+    'vue/order-in-components': 'error',
     'vue/multi-word-component-names': [
       'error',
       {
         ignores: ['index']
       }
     ],
-    'vue/no-invalid-model-keys': 'error', // Секция model без опечаток
-    'vue/no-multiple-objects-in-class': 'error', // Несколько объектов в биндингах не нужны
-    'vue/no-reserved-component-names': 'error', // Не именовать компоненты зарезервированными именами
-    'vue/no-restricted-v-bind': 'error', // Проверка корректных v-bind
-    'vue/no-unused-refs': 'warn', // Проверка на неиспользуемые refs
-    'vue/require-direct-export': 'error', // Проверка, что компонент экспортируется напрямую
-    'vue/v-on-event-hyphenation': ['error', 'always'], // Проверка кейса событий
-    'vue/no-v-html': 'error', // Вместо них используем v-safe-html / v-markdown
-    'vue/no-use-v-if-with-v-for': 'error', // Не использовать v-for + v-if одновременно на теге
-    'vue/no-mutating-props': 'warn', // Не мутировать входные параметры
-    'vue/padding-line-between-blocks': ['error', 'always'], // Пустая строка между секциями
+    'vue/no-invalid-model-keys': 'error',
+    'vue/no-multiple-objects-in-class': 'error',
+    'vue/no-reserved-component-names': 'error',
+    'vue/no-restricted-v-bind': 'error',
+    'vue/no-unused-refs': 'warn',
+    'vue/require-direct-export': 'error',
+    'vue/v-on-event-hyphenation': ['error', 'always'],
+    'vue/no-v-html': 'error',
+    'vue/no-use-v-if-with-v-for': 'error',
+    'vue/no-mutating-props': 'warn',
+    'vue/padding-line-between-blocks': ['error', 'always'],
     'vue/component-tags-order': [
       'error',
       {
-        order: ['template', 'script', 'style'] // Порядок секций в компонентах
+        order: ['template', 'script', 'style']
       }
     ],
-    'vue/no-empty-component-block': 'error', // Не оставляем пустые секции
-    'vue/custom-event-name-casing': 'warn', // Именование событий без camelCase
-    'vue/component-definition-name-casing': ['error', 'kebab-case'], // Имена компонентов в kebab-case
+    'vue/no-empty-component-block': 'error',
+    'vue/custom-event-name-casing': 'warn',
+    'vue/component-definition-name-casing': ['error', 'kebab-case'],
     'vue/component-name-in-template-casing': [
-      // Имена компонентов в шаблоне в kebab-case
       'error',
       'kebab-case',
       {
@@ -48,26 +47,25 @@ module.exports = {
         ignores: []
       }
     ],
-    'vue/html-comment-content-spacing': 'error', // Пробелы в комментариях
-    'vue/no-boolean-default': ['warn', 'default-false'], // default: false в булевых входных параметров
-    'vue/no-potential-component-option-typo': ['error', { presets: ['all'] }], // Возможные опечатки в названиях секций компонентов
-    'vue/no-template-target-blank': 'error', // Все ссылки с target="_blank"
+    'vue/html-comment-content-spacing': 'error',
+    'vue/no-boolean-default': ['warn', 'default-false'],
+    'vue/no-potential-component-option-typo': ['error', { presets: ['all'] }],
+    'vue/no-template-target-blank': 'error',
     'vue/no-unused-properties': [
       'warn',
       {
         groups: ['props', 'data', 'computed', 'methods', 'setup']
       }
-    ], // Проверка неиспользуемых свойств
-    'vue/no-useless-mustaches': 'error', // Лишнее использование интерполяции для вставки текста
-    'vue/no-useless-v-bind': 'error', // Лишний биндинг для строк
-    'vue/require-name-property': 'error', // У компонентов должна быть опция name
-    'vue/v-for-delimiter-style': 'error', // Единый стиль разделителя для v-for
-    'vue/eqeqeq': 'error', // Использование только строгих сравнений
-    'vue/no-irregular-whitespace': 'error', // Проверка на нестандартные отступы
-    'vue/prop-name-casing': 'off', // Отключаем проверку camelCase входных параметров
-    'vue/no-constant-condition': 'error', // Постоянные условия в шаблоне
+    ],
+    'vue/no-useless-mustaches': 'error',
+    'vue/no-useless-v-bind': 'error',
+    'vue/require-name-property': 'error',
+    'vue/v-for-delimiter-style': 'error',
+    'vue/eqeqeq': 'error',
+    'vue/no-irregular-whitespace': 'error',
+    'vue/prop-name-casing': 'off',
+    'vue/no-constant-condition': 'error',
     'vue/valid-next-tick': 'error',
-    // У кнопок должен быть указан type
     'vue/html-button-has-type': [
       'error',
       {
@@ -78,8 +76,6 @@ module.exports = {
     ],
     'vue/next-tick-style': ['warn', 'callback'],
     'vue/v-on-function-call': ['error', 'never'],
-
-    // [VUE] Максимум атрибутов в строке
     'vue/max-attributes-per-line': [
       'warn',
       {
@@ -87,8 +83,6 @@ module.exports = {
         multiline: 1
       }
     ],
-
-    // [VUE] Авто-закрытие тегов
     'vue/html-self-closing': [
       'error',
       {
@@ -100,9 +94,6 @@ module.exports = {
         svg: 'always',
         math: 'always'
       }
-    ],
-
-    // [VUE] Порядок опций в компонентах
-    'vue/order-in-components': 'error'
+    ]
   }
 }
