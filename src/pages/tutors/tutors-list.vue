@@ -1,12 +1,21 @@
 <template>
-  <div class="max-w-card mx-auto mt-8">
+  <div class="page-wrapper">
+    <!-- ALERT -->
+    <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
+
+    <!-- LOADING -->
+    <ts-loader v-if="loading" >Loading tutors</ts-loader>
+
     <!-- NO TUTORS MESSAGE -->
-    <div v-if="hasTutors === false">No tutors found</div>
+    <div v-else-if="hasTutors === false">No tutors found</div>
 
     <!-- LIST OF TUTORS -->
-    <div class="space-y-6">
+    <div v-else class="space-y-6">
       <!-- FILTERS -->
       <ts-field-checklist v-model:checked="checkedAreas" :options="allAreas" />
+
+      <!-- NO FILTERED TUTORS FOUND -->
+      <div v-if="hasFilteredTutors === false">No tutors found. Try to change the filters</div>
 
       <!-- TUTORS -->
       <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
@@ -15,43 +24,100 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue';
-import { reactive, computed, toRefs } from 'vue'
-import { useStore } from 'vuex'
-import { AREAS_OPTIONS } from '~/constants.js'
+import { defineAsyncComponent } from 'vue'
+import { AREAS_OPTIONS } from '~/constants'
+import tutorApi from '~/api/tutors'
+import TsAlert from '~/components/layout/ts-alert.vue'
+import clonedeep from 'lodash.clonedeep'
 
 export default {
   name: 'tutors-list',
   components: {
+    TsAlert,
     TutorItem: defineAsyncComponent(() =>
       import('~/components/tutors/tutor-item.vue')
     ),
     TsFieldChecklist: defineAsyncComponent(() =>
       import('~/components/fields/ts-field-checklist.vue')
+    ),
+    TsLoader: defineAsyncComponent(() =>
+      import('~/components/layout/ts-loader.vue')
     )
   },
-  setup() {
-    const store = useStore()
-    const hasTutors = computed(() => {
-      return store.getters['tutors/hasTutors'] || []
-    })
+  data: () => ({
+    loading: true,
+    tutors: [],
+    checkedAreas: [],
+    areasOptions: AREAS_OPTIONS,
+    message: {
+      text: '',
+      type: ''
+    }
+  }),
+  computed: {
+    cashedTutors() {
+      return this.$store.state.tutors || []
+    },
 
-    const areas = reactive({
-      checkedAreas: [],
-      allAreas: AREAS_OPTIONS
-    })
-
-    const filteredTutors = computed(() => {
-      const tutors = store.getters['tutors/tutors'] || []
-
-      if(areas.checkedAreas.length === 0) {
-        return tutors
+    filteredTutors() {
+      if(this.checkedAreas.length === 0) {
+        return this.tutors
       }
 
-      return tutors.filter(item => item.areas.some(area => (areas.checkedAreas || []).includes(area)))
-    })
+      return this.tutors.filter(item => item.areas.some(area => this.checkedAreas.includes(area)))
+    },
 
-    return { ...toRefs(areas), hasTutors, filteredTutors }
+    hasTutors() {
+      return (this.tutors || []).length > 0
+    },
+
+    hasFilteredTutors() {
+      return (this.filteredTutors || []).length > 0
+    },
+
+    showAlert() {
+      return Boolean(this.message.text)
+    }
+  },
+  mounted() {
+    this.loadTutors()
+  },
+  methods: {
+    loadTutors() {
+      this.loading = true
+
+      const shouldReload = this.shouldReload()
+      if(shouldReload === false && this.cashedTutors.length > 0) {
+        this.tutors = clonedeep(this.cashedTutors)
+        this.loading = false
+        return
+      }
+
+      tutorApi.loadTutors()
+        .then(tutors => this.tutors = tutors)
+        .then(() => this.$store.commit('SET_TUTORS', this.tutors))
+        .then(() => this.$store.commit('SET_LAST_FETCH_TUTORS_TIMESTAMP'))
+        .catch( ({ message }) => {
+          this.message.text = message || 'Failed to fetch'
+          this.message.type = 'error'
+        })
+        .finally(() => (this.loading = false))
+    },
+
+    shouldReload() {
+      const lastTimestamp = this.$store.state.lastFetchTutorsTimestamp
+      if(!lastTimestamp) {
+        return true
+      }
+
+      const currentTimestamp = new Date().getTime()
+      return (currentTimestamp - lastTimestamp) / 1000 > 180
+    },
+
+    clearMessage() {
+      this.message.text = ''
+      this.message.type = ''
+    }
   }
 }
 </script>

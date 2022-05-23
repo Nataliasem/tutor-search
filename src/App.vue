@@ -1,17 +1,14 @@
 <template>
-  <app-header />
-  <router-view />
+  <page-layout />
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue';
+import PageLayout from '~/pages/page-layout.vue';
 
 export default {
   name: 'app',
   components: {
-  AppHeader: defineAsyncComponent(() =>
-      import('~/components/layout/ts-header.vue')
-    ),
+    PageLayout
   }
 }
 </script>
