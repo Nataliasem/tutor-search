@@ -24,42 +24,7 @@ export default {
   setup() {
     const store = useStore()
 
-    const loading = ref(false)
-
-    const message = reactive({
-      text: '',
-      type: ''
-    })
-
-    const checkedAreas = ref([])
-    const allAreas = ref(AREAS_OPTIONS)
-
-    const tutors = ref([])
-
-    onMounted(() => loadTutors())
-
-    const cashedTutors = computed(() => {
-      return store.state.tutors || []
-    })
-
-    const filteredTutors = computed(() => {
-      if(checkedAreas.value.length === 0) {
-        return tutors.value
-      }
-
-      return tutors.value.filter(item => item.areas.some(area => checkedAreas.value.includes(area)))
-    })
-
-    const hasTutors = computed(() => {
-      return (tutors.value || []).length > 0
-    })
-
-    const hasFilteredTutors = computed(() => {
-      return (filteredTutors.value || []).length > 0
-    })
-
     const hasTimestampExpired = computed(() => {
-
       const lastTimestamp = store.state.lastFetchTutorsTimestamp
       if(!lastTimestamp) {
         return true
@@ -68,6 +33,16 @@ export default {
       const currentTimestamp = new Date().getTime()
       return (currentTimestamp - lastTimestamp) / 1000 > 180
     })
+
+    const cashedTutors = computed(() => {
+      return store.state.tutors || []
+    })
+
+    // LOAD TUTORS
+    const loading = ref(false)
+    const tutors = ref([])
+
+    onMounted(() => loadTutors())
 
     function loadTutors() {
       loading.value = true
@@ -89,7 +64,32 @@ export default {
         .finally(() => (loading.value = false))
     }
 
+    // GET FILTERED TUTORS
+    const checkedAreas = ref([])
+    const allAreas = ref(AREAS_OPTIONS)
+
+    const filteredTutors = computed(() => {
+      if(checkedAreas.value.length === 0) {
+        return tutors.value
+      }
+
+      return tutors.value.filter(item => item.areas.some(area => checkedAreas.value.includes(area)))
+    })
+
+    const hasTutors = computed(() => {
+      return (tutors.value || []).length > 0
+    })
+
+    const hasFilteredTutors = computed(() => {
+      return (filteredTutors.value || []).length > 0
+    })
+
     // ALERTS COMPOSITION
+    const message = reactive({
+      text: '',
+      type: ''
+    })
+
     const showAlert = computed(() => {
       return Boolean(message.text)
     })
