@@ -58,7 +58,8 @@ export default {
       return (filteredTutors.value || []).length > 0
     })
 
-    const shouldReloadTutors = computed(() => {
+    const hasTimestampExpired = computed(() => {
+
       const lastTimestamp = store.state.lastFetchTutorsTimestamp
       if(!lastTimestamp) {
         return true
@@ -71,7 +72,7 @@ export default {
     function loadTutors() {
       loading.value = true
 
-      if(shouldReloadTutors.value === false && cashedTutors.value.length > 0) {
+      if(hasTimestampExpired.value === false && cashedTutors.value.length > 0) {
         tutors.value = clonedeep(cashedTutors.value)
         loading.value = false
         return
