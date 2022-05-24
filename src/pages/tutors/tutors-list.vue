@@ -44,7 +44,7 @@ export default {
 
     onMounted(() => loadTutors())
 
-    function loadTutors() {
+    const loadTutors = () => {
       loading.value = true
 
       if(hasTimestampExpired.value === false && cashedTutors.value.length > 0) {
@@ -94,21 +94,21 @@ export default {
       return Boolean(message.text)
     })
 
-    function clearMessage() {
+    const clearMessage = () => {
       message.text = ''
       message.type = ''
     }
 
     return {
       loading,
+      checkedAreas,
+      allAreas,
+      filteredTutors,
+      hasFilteredTutors,
+      hasTutors,
       showAlert,
       message,
       clearMessage,
-      hasTutors,
-      checkedAreas,
-      allAreas,
-      hasFilteredTutors,
-      filteredTutors
     }
   }
 }
