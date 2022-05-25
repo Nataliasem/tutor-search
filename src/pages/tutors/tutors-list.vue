@@ -1,11 +1,37 @@
+<template>
+  <div class="page-wrapper">
+    <!-- ALERT -->
+      <ts-alert v-if="isShown" :message="message" :type="type" @hide="hideAlert" />
+
+    <!-- LOADING -->
+    <ts-loader v-if="loading" >Loading tutors</ts-loader>
+
+    <!-- NO TUTORS MESSAGE -->
+    <div v-else-if="hasTutors === false">No tutors found</div>
+
+    <!-- LIST OF TUTORS -->
+    <div v-else class="space-y-6">
+      <!-- FILTERS -->
+      <ts-field-checklist v-model:checked="checkedAreas" :options="allAreas" />
+
+      <!-- NO FILTERED TUTORS MESSAGE -->
+      <div v-if="hasFilteredTutors === false">No tutors found. Try to change the filters</div>
+
+      <!-- TUTORS -->
+      <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
+   </div>
+  </div>
+</template>
+
 <script>
 import { defineAsyncComponent, onMounted } from 'vue';
 import { AREAS_OPTIONS } from '~/constants'
 import tutorApi from '~/api/tutors'
 import TsAlert from '~/components/layout/ts-alert.vue'
 import clonedeep from 'lodash.clonedeep'
-import { ref, reactive, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore }  from 'vuex'
+import alert from '~/compositions/alert';
 
 export default {
   name: 'tutors-list',
@@ -41,6 +67,7 @@ export default {
     // LOAD TUTORS
     const loading = ref(false)
     const tutors = ref([])
+    const { isShown, message, type, showAlert, hideAlert } = alert()
 
     onMounted(() => loadTutors())
 
@@ -57,9 +84,9 @@ export default {
         .then(response => (tutors.value = response))
         .then(() => store.commit('SET_TUTORS', tutors))
         .then(() => store.commit('SET_LAST_FETCH_TUTORS_TIMESTAMP'))
+        .then(() => showAlert('It works!') )
         .catch( ({ message }) => {
-          message.text = message || 'Failed to fetch'
-          message.type = 'error'
+          showAlert(message || 'Failed to fetch', 'error')
         })
         .finally(() => (loading.value = false))
     }
@@ -84,21 +111,6 @@ export default {
       return (filteredTutors.value || []).length > 0
     })
 
-    // ALERTS COMPOSITION
-    const message = reactive({
-      text: '',
-      type: ''
-    })
-
-    const showAlert = computed(() => {
-      return Boolean(message.text)
-    })
-
-    const clearMessage = () => {
-      message.text = ''
-      message.type = ''
-    }
-
     return {
       loading,
       checkedAreas,
@@ -106,35 +118,13 @@ export default {
       filteredTutors,
       hasFilteredTutors,
       hasTutors,
-      showAlert,
+
+      // alert
+      isShown,
       message,
-      clearMessage,
+      type,
+      hideAlert
     }
   }
 }
 </script>
-
-<template>
-  <div class="page-wrapper">
-    <!-- ALERT -->
-    <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
-
-    <!-- LOADING -->
-    <ts-loader v-if="loading" >Loading tutors</ts-loader>
-
-    <!-- NO TUTORS MESSAGE -->
-    <div v-else-if="hasTutors === false">No tutors found</div>
-
-    <!-- LIST OF TUTORS -->
-    <div v-else class="space-y-6">
-      <!-- FILTERS -->
-      <ts-field-checklist v-model:checked="checkedAreas" :options="allAreas" />
-
-      <!-- NO FILTERED TUTORS MESSAGE -->
-      <div v-if="hasFilteredTutors === false">No tutors found. Try to change the filters</div>
-
-      <!-- TUTORS -->
-      <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
-   </div>
-  </div>
-</template>

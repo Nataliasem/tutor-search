@@ -1,11 +1,11 @@
 <template>
   <teleport to="body">
     <Transition name="slide-fade">
-      <div v-if="show" class="ts-alert" :class="classByType">
+      <div class="ts-alert" :class="classByType">
         <span>
-          {{ message.text }}
+          {{ message }}
         </span>
-        <span class="text-gray-600 cursor-pointer" @click="close">
+        <span class="text-gray-600 cursor-pointer" @click="hide">
           <icon-cross />
         </span>
       </div>
@@ -22,13 +22,14 @@ export default {
     IconCross
   },
   props: {
-    show: {
-      type: Boolean,
-      default: false
-    },
     message: {
-      type: Object,
-      required: true
+      type: String,
+      default: ''
+    },
+
+    type: {
+      type: String,
+      default: 'success'
     }
   },
   emits: ['close'],
@@ -37,23 +38,15 @@ export default {
   }),
   computed: {
     classByType() {
-      return `ts-alert-${this.message.type || 'success'}`
+      return `ts-alert-${this.type || 'success'}`
     }
   },
-  watch: {
-    show: {
-      immediate: true,
-      handler() {
-        if (this.show) {
-          this.timerId = setTimeout(this.close, 3000)
-        }
-      }
-    }
+  mounted() {
+    this.timerId = setTimeout(this.hide, 3000)
   },
   methods: {
-    close() {
-      this.timerId = null
-      this.$emit('close')
+    hide() {
+      this.$emit('hide')
     }
   }
 };
