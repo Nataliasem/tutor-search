@@ -1,7 +1,7 @@
 <template>
   <div class="page-wrapper">
     <!-- ALERT -->
-      <ts-alert v-if="isShown" :message="message" :type="type" @hide="hideAlert" />
+    <ts-alert v-if="isShown" :message="message" :type="type" @hide="hideAlert" />
 
     <!-- LOADING -->
     <ts-loader v-if="loading" >Loading tutors</ts-loader>
