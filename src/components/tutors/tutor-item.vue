@@ -1,28 +1,3 @@
-<template>
-    <div class="ts-card">
-      <div class="px-6 pb-10">
-        <div class="flex justify-between items-center">
-          <!-- FULL NAME -->
-          <div class="text-size-22">{{ fullName }}</div>
-
-          <!-- ACTIONS -->
-          <div class="flex items-center space-x-5 text-indigo-900">
-            <router-link :to="tutorContactsLink" title="contact"><icon-phone /></router-link>
-            <router-link :to="tutorDetailsLink" title="details"><icon-user /></router-link>
-          </div>
-        </div>
-
-        <!-- HOURLY RATE -->
-        <div>{{ hourlyRate }}</div>
-      </div>
-
-    <!-- AREAS -->
-    <div class="ts-card-footer">
-      <div v-for="area in formattedAreas" :key="area" class="ts-badge" :class="area">{{ area }}</div>
-    </div>
-    </div>
-</template>
-
 <script>
 import { defineAsyncComponent } from 'vue';
 
@@ -63,7 +38,7 @@ export default {
     },
 
     formattedAreas() {
-      return (this.tutor || []).areas.map(item => AREAS_NAMES[item])
+      return (this.tutor.areas || []).map(item => AREAS_NAMES[item])
     },
 
     tutorDetailsLink() {
@@ -82,3 +57,28 @@ export default {
   }
 }
 </script>
+
+<template>
+    <div class="ts-card">
+      <div class="px-6 pb-10">
+        <div class="flex justify-between items-center">
+          <!-- FULL NAME -->
+          <div class="text-size-22">{{ fullName }}</div>
+
+          <!-- ACTIONS -->
+          <div class="flex items-center space-x-5 text-indigo-900">
+            <router-link :to="tutorContactsLink" title="contact"><icon-phone /></router-link>
+            <router-link :to="tutorDetailsLink" title="details"><icon-user /></router-link>
+          </div>
+        </div>
+
+        <!-- HOURLY RATE -->
+        <div>{{ hourlyRate }}</div>
+      </div>
+
+      <!-- AREAS -->
+    <div class="ts-card-footer">
+      <div v-for="area in formattedAreas" :key="area" class="ts-badge" :class="area">{{ area }}</div>
+    </div>
+    </div>
+</template>
