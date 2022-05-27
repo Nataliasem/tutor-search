@@ -32,7 +32,7 @@ export default {
       default: 'success'
     }
   },
-  emits: ['close'],
+  emits: ['hide'],
   data: () => ({
     timerId: null
   }),

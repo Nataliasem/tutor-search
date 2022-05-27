@@ -24,19 +24,19 @@
 </template>
 
 <script>
-import { defineAsyncComponent, onMounted } from 'vue';
+import { defineAsyncComponent, ref, computed, onMounted } from 'vue'
+import { useStore }  from 'vuex'
 import { AREAS_OPTIONS } from '~/constants'
 import tutorApi from '~/api/tutors'
-import TsAlert from '~/components/layout/ts-alert.vue'
 import clonedeep from 'lodash.clonedeep'
-import { ref, computed } from 'vue'
-import { useStore }  from 'vuex'
-import alert from '~/compositions/alert';
+import alert from '~/compositions/alert'
 
 export default {
   name: 'tutors-list',
   components: {
-    TsAlert,
+    TsAlert: defineAsyncComponent(() =>
+      import('~/components/layout/ts-alert.vue')
+    ),
     TutorItem: defineAsyncComponent(() =>
       import('~/components/tutors/tutor-item.vue')
     ),
@@ -84,7 +84,6 @@ export default {
         .then(response => (tutors.value = response))
         .then(() => store.commit('SET_TUTORS', tutors))
         .then(() => store.commit('SET_LAST_FETCH_TUTORS_TIMESTAMP'))
-        .then(() => showAlert('It works!') )
         .catch( ({ message }) => {
           showAlert(message || 'Failed to fetch', 'error')
         })
