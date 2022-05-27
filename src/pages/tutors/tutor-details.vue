@@ -1,7 +1,7 @@
 <template>
   <div class="page-wrapper space-y-6">
     <!-- ALERT -->
-    <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
+    <ts-alert v-if="isShown" :message="message" :type="type" @hide="hideAlert" />
 
     <!-- LOADING -->
     <ts-loader v-if="loading" >Loading requests</ts-loader>
@@ -25,7 +25,8 @@
 <script>
 import tutorApi from '~/api/tutors'
 import TsAlert from '~/components/layout/ts-alert.vue'
-import { defineAsyncComponent } from 'vue';
+import { defineAsyncComponent } from 'vue'
+import alert from '~/compositions/alert'
 
 export default {
   name: 'tutor-details',
@@ -41,13 +42,20 @@ export default {
       required: true
     }
   },
+  setup() {
+    const { isShown, message, type, showAlert, hideAlert } = alert()
+
+    return {
+      isShown,
+      message,
+      type,
+      showAlert,
+      hideAlert
+    }
+  },
   data: () => ({
     loading: true,
     tutor: null,
-    message: {
-      text: '',
-      type: ''
-    }
   }),
   computed: {
     tutorNameView() {
@@ -59,10 +67,6 @@ export default {
     tutorRateView() {
       const rate = this.tutor.hourlyRate || ''
       return rate ? `${rate}$/hour` : '-'
-    },
-
-    showAlert() {
-      return Boolean(this.message.text)
     }
   },
   mounted() {
@@ -75,15 +79,9 @@ export default {
       tutorApi.loadTutor(this.id)
         .then(tutor => (this.tutor = tutor))
         .catch( ({ message }) => {
-          this.message.text = message || 'Failed to fetch'
-          this.message.type = 'error'
+          this.showAlert(message || 'Failed to fetch')
         })
         .finally(() => (this.loading = false))
-    },
-
-    clearMessage() {
-      this.message.text = ''
-      this.message.type = ''
     }
   }
 }

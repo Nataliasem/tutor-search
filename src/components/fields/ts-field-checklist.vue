@@ -51,5 +51,5 @@ export default {
       this.$emit('update:checked', updatedChecked)
     }
   }
-};
+}
 </script>

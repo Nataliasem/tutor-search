@@ -12,6 +12,36 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
 
+    // [EDITORCONFIG]
+    'linebreak-style': ['error', 'unix'],
+    'no-trailing-spaces': 'error',
+    'eol-last': ['error', 'always'],
+
+    // [ESLINT]
+    'quotes': ['error', 'single'],
+    'eqeqeq': 'error',
+    'radix': 'error',
+    'prefer-const': 'warn',
+    'no-unneeded-ternary': 'error',
+    'camelcase': 'off',
+    'curly': ['error', 'all'],
+    'no-bitwise': 'error',
+    'no-implicit-coercion': 'error',
+    'no-template-curly-in-string': 'error',
+    'consistent-return': 'error',
+    'no-floating-decimal': 'error',
+    'no-multi-spaces': 'error',
+    'no-self-compare': 'error',
+    'no-sequences': 'error',
+    'no-useless-concat': 'error',
+    'yoda': 'error',
+    'require-await': 'error',
+
+    'padding-line-between-statements': [
+      'error',
+      { blankLine: 'always', prev: 'block-like', next: '*' }
+    ],
+
     'vue/order-in-components': 'error',
     'vue/multi-word-component-names': [
       'error',

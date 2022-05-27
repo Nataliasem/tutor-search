@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import ValidationRules from './validation-rules';
+import ValidationRules from './validation-rules'
 
 export default {
   name: 'ts-field-textarea',
@@ -62,5 +62,5 @@ export default {
       this.$emit('update:valid', isValid)
     }
   }
-};
+}
 </script>

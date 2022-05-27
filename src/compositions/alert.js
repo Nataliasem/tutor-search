@@ -7,7 +7,7 @@ const useAlert = () => {
 
   const showAlert = (messageText, messageType) => {
     message.value = messageText
-    type.value = messageType || 'success'
+    type.value = messageType || 'error'
     isShown.value = true
   }
 

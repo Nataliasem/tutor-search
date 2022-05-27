@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto max-w-card pt-8">
     <!-- ALERT -->
-    <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
+    <ts-alert v-if="isShown" :message="message" :type="type" @hide="hideAlert" />
 
     <div class="text-center mb-8 text-size-16">Start using Tutor Search</div>
     <ts-form :form-schema="authSchema" submit-text="Log in" :saving="saving" @validate="handleAuth">
@@ -69,14 +69,16 @@ const AUTH_SCHEMA = {
   }
 }
 
-import { defineAsyncComponent } from 'vue';
+import { defineAsyncComponent } from 'vue'
 import authApi from '~/api/auth'
-import TsAlert from '~/components/layout/ts-alert.vue'
+import alert from '~/compositions/alert'
 
 export default {
   name: 'user-auth',
   components: {
-    TsAlert,
+    TsAlert: defineAsyncComponent(() =>
+      import('~/components/layout/ts-alert.vue')
+    ),
     TsForm: defineAsyncComponent(() =>
       import('~/components/fields/ts-form.vue')
     ),
@@ -87,20 +89,22 @@ export default {
       import('~/components/layout/spinner-button.vue')
     )
   },
+  setup() {
+    const { isShown, message, type, showAlert, hideAlert } = alert()
+
+    return {
+      isShown,
+      message,
+      type,
+      showAlert,
+      hideAlert
+    }
+  },
   data: () => ({
     saving: false,
     authSchema: AUTH_SCHEMA,
-    mode: 'log-in',
-    message: {
-      text: '',
-      type: ''
-    }
+    mode: 'log-in'
   }),
-  computed: {
-    showAlert() {
-      return Boolean(this.message.text)
-    }
-  },
   methods: {
     switchMode(mode) {
       this.mode = mode
@@ -113,7 +117,7 @@ export default {
 
           const email = user && user.email || ''
           if(email) {
-            this.message.text =`Welcome back, ${email}!`
+            this.showAlert(`Welcome back, ${email}!`, 'success')
           }
         })
     },
@@ -121,7 +125,7 @@ export default {
     register(data) {
       return authApi.createAccount(data)
         .then(user => this.$store.commit('SET_USER', user))
-        .then(() => (this.message.text = 'You have successfully registered'))
+        .then(() => this.showAlert('You have successfully registered', 'success'))
     },
 
     handleAuth() {
@@ -137,18 +141,13 @@ export default {
         .then(() => {
           return this.mode === 'log-in' ? this.logIn(data) : this.register(data)
         })
-        .then(() => this.$router.push('/'))
+        // TODO: get rid of Timeout
+        .then(() => setTimeout(() => this.$router.push('/'), 2000))
         .catch( ({ message }) => {
-          this.message.text = message || 'Failed to fetch'
-          this.message.type = 'error'
+          this.showAlert(message || 'Failed to fetch')
         })
         .finally(() => (this.saving = false))
-    },
-
-    clearMessage() {
-      this.message.text = ''
-      this.message.type = ''
     }
   }
-};
+}
 </script>

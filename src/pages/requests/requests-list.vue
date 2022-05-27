@@ -1,7 +1,7 @@
 <template>
   <div class="page-wrapper">
     <!-- ALERT -->
-    <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
+    <ts-alert v-if="isShown" :message="message" :type="type" @hide="hideAlert" />
 
     <!-- LOADING -->
     <ts-loader v-if="loading" >Loading requests</ts-loader>
@@ -24,7 +24,8 @@
 import { defineAsyncComponent } from 'vue'
 import requestsApi from '~/api/requests'
 import TsAlert from '~/components/layout/ts-alert.vue'
-import clonedeep from 'lodash.clonedeep';
+import clonedeep from 'lodash.clonedeep'
+import alert from '~/compositions/alert'
 
 export default {
   name: 'requests-list',
@@ -34,13 +35,20 @@ export default {
       import('~/components/layout/ts-loader.vue')
     )
   },
+  setup() {
+    const { isShown, message, type, showAlert, hideAlert } = alert()
+
+    return {
+      isShown,
+      message,
+      type,
+      showAlert,
+      hideAlert
+    }
+  },
   data: () => ({
     loading: true,
-    requests: [],
-    message: {
-      text: '',
-      type: ''
-    }
+    requests: []
   }),
   computed: {
     cashedRequests() {
@@ -49,10 +57,6 @@ export default {
 
     hasRequests() {
       return (this.requests || []).length > 0
-    },
-
-    showAlert() {
-      return Boolean(this.message.text)
     }
   },
   mounted() {
@@ -74,8 +78,7 @@ export default {
         .then(() => this.$store.commit('SET_REQUESTS', this.requests))
         .then(() => this.$store.commit('SET_LAST_FETCH_REQUESTS_TIMESTAMP'))
         .catch( ({ message }) => {
-          this.message.text = message || 'Failed to fetch'
-          this.message.type = 'error'
+          this.showAlert(message || 'Failed to fetch')
         })
         .finally(() => (this.loading = false))
     },
@@ -88,11 +91,6 @@ export default {
 
       const currentTimestamp = new Date().getTime()
       return (currentTimestamp - lastTimestamp) / 1000 > 180
-    },
-
-    clearMessage() {
-      this.message.text = ''
-      this.message.type = ''
     }
   }
 }

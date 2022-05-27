@@ -12,7 +12,7 @@ export default {
         const ids = Object.keys(requests)
 
         if(ids.length === 0) {
-          return  []
+          return []
         }
 
         const currentUserId = store.state.user && store.state.user.localId

@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto max-w-card pt-8">
     <!-- ALERT -->
-    <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
+    <ts-alert v-if="isShown" :message="message" :type="type" @hide="hideAlert" />
 
     <div class="text-center mb-8 text-size-16">Contact a tutor</div>
     <ts-form :form-schema="contactSchema" submit-text="Send" :saving="saving" @validate="send">
@@ -32,7 +32,7 @@
           :saving="saving"
           :disabled="disabled"
         >
-          Register
+          Send
         </spinner-button>
       </template>
     </ts-form>
@@ -43,6 +43,7 @@
 import { defineAsyncComponent } from 'vue'
 import requestsApi from '~/api/requests'
 import TsAlert from '~/components/layout/ts-alert.vue'
+import alert from '~/compositions/alert'
 
 const CONTACT_SCHEMA = {
   email: {
@@ -76,21 +77,24 @@ export default {
       import('~/components/layout/spinner-button.vue')
     )
   },
+  setup() {
+    const { isShown, message, type, showAlert, hideAlert } = alert()
+
+    return {
+      isShown,
+      message,
+      type,
+      showAlert,
+      hideAlert
+    }
+  },
   data: () => ({
     contactSchema: CONTACT_SCHEMA,
-    saving: false,
-    message: {
-      text: '',
-      type: ''
-    }
+    saving: false
   }),
   computed: {
     tutorId() {
       return this.$route.params.id
-    },
-
-    showAlert() {
-      return Boolean(this.message.text)
     }
   },
   methods: {
@@ -104,19 +108,13 @@ export default {
 
       requestsApi.createRequest(request)
         .then(() => this.$store.commit('CLEAR_LAST_FETCH_REQUESTS_TIMESTAMP'))
-        .then(() => this.$router.push('/requests'))
+        .then(() => this.showAlert('The request has been sent', 'success'))
         .catch( ({ message }) => {
-          this.message.text = message || 'Failed to fetch'
-          this.message.type = 'error'
+          this.showAlert(message || 'Failed to fetch')
         })
         .finally(() => (this.saving = false))
-    },
-
-    clearMessage() {
-      this.message.text = ''
-      this.message.type = ''
     }
   }
-};
+}
 </script>
 

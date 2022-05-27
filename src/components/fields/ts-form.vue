@@ -40,5 +40,5 @@ export default {
       this.$emit('validate')
     }
   }
-};
+}
 </script>
