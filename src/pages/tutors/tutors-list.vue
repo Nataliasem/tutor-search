@@ -25,7 +25,7 @@
 
 <script>
 import { defineAsyncComponent, ref, computed, onMounted } from 'vue'
-import { useStore }  from 'vuex'
+import { useStore } from 'vuex'
 import { AREAS_OPTIONS } from '~/constants'
 import tutorApi from '~/api/tutors'
 import clonedeep from 'lodash.clonedeep'
