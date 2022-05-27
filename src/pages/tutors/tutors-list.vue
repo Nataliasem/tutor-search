@@ -85,7 +85,7 @@ export default {
         .then(() => store.commit('SET_TUTORS', tutors))
         .then(() => store.commit('SET_LAST_FETCH_TUTORS_TIMESTAMP'))
         .catch( ({ message }) => {
-          showAlert(message || 'Failed to fetch', 'error')
+          showAlert(message || 'Failed to fetch')
         })
         .finally(() => (loading.value = false))
     }

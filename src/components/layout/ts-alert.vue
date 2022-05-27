@@ -1,7 +1,6 @@
 <template>
   <teleport to="body">
-    <Transition name="slide-fade">
-      <div class="ts-alert" :class="classByType">
+      <div class="ts-alert fade-in" :class="classByType">
         <span>
           {{ message }}
         </span>
@@ -9,12 +8,11 @@
           <icon-cross />
         </span>
       </div>
-    </Transition>
   </teleport>
 </template>
 
 <script>
-import IconCross from '~/components/icons/icon-cross.vue';
+import IconCross from '~/components/icons/icon-cross.vue'
 
 export default {
   name: 'ts-alert',
@@ -29,7 +27,7 @@ export default {
 
     type: {
       type: String,
-      default: 'success'
+      default: 'error'
     }
   },
   emits: ['hide'],
@@ -38,7 +36,7 @@ export default {
   }),
   computed: {
     classByType() {
-      return `ts-alert-${this.type || 'success'}`
+      return `ts-alert-${this.type}`
     }
   },
   mounted() {
@@ -49,10 +47,19 @@ export default {
       this.$emit('hide')
     }
   }
-};
+}
 </script>
 
 <style>
+.fade-in {
+  animation: fadeIn ease 0.5s;
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
 .ts-alert {
   @apply absolute top-4 right-4;
   @apply flex items-center space-x-6 p-4;

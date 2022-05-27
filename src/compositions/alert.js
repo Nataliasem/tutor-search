@@ -1,13 +1,13 @@
 import { ref } from 'vue';
 
-export default () => {
+const useAlert = () => {
   const isShown = ref(false)
   const message = ref('')
   const type = ref('')
 
   const showAlert = (messageText, messageType) => {
     message.value = messageText
-    type.value = messageType || 'success'
+    type.value = messageType || 'error'
     isShown.value = true
   }
 
@@ -25,3 +25,5 @@ export default () => {
     hideAlert
   }
 }
+
+export default useAlert

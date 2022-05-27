@@ -67,5 +67,5 @@ export default {
       this.$emit('update:valid', isValid)
     }
   }
-};
+}
 </script>

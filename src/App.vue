@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import PageLayout from '~/pages/page-layout.vue';
+import PageLayout from '~/pages/page-layout.vue'
 
 export default {
   name: 'app',

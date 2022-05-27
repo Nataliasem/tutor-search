@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto max-w-card pt-8">
     <!-- ALERT -->
-    <ts-alert :show="showAlert" :message="message" @close="clearMessage" />
+    <ts-alert v-if="isShown" :message="message" :type="type" @hide="hideAlert" />
 
     <div class="text-center mb-8 text-size-16">Register as a tutor now</div>
     <ts-form :form-schema="tutorSchema" :saving="saving" @validate="register">
@@ -67,10 +67,11 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue';
-import { AREAS_OPTIONS } from '~/constants';
+import { defineAsyncComponent } from 'vue'
+import { AREAS_OPTIONS } from '~/constants'
 import tutorApi from '~/api/tutors'
 import TsAlert from '~/components/layout/ts-alert.vue'
+import alert from '~/compositions/alert'
 
 const TUTOR_SCHEMA = {
   firstName: {
@@ -119,24 +120,27 @@ export default {
       import('~/components/layout/spinner-button.vue')
     )
   },
+  setup() {
+    const { isShown, message, type, showAlert, hideAlert } = alert()
+
+    return {
+      isShown,
+      message,
+      type,
+      showAlert,
+      hideAlert
+    }
+  },
   data: () => ({
     saving: false,
     tutorSchema: TUTOR_SCHEMA,
     areasOptions: AREAS_OPTIONS,
-    checkedAreas: [],
-    message: {
-      text: '',
-      type: ''
-    }
+    checkedAreas: []
   }),
   computed: {
     userId() {
       const user = this.$store.state.user
       return (user && user.localId) || ''
-    },
-
-    showAlert() {
-      return Boolean(this.message.text)
     }
   },
   methods: {
@@ -156,16 +160,10 @@ export default {
         .then(() => this.$store.commit('CLEAR_LAST_FETCH_TUTORS_TIMESTAMP'))
         .then(() => this.$router.push('/tutors'))
         .catch( ({ message }) => {
-          this.message.text = message || 'Failed to fetch'
-          this.message.type = 'error'
+          this.showAlert(message || 'Failed to fetch')
         })
         .finally(() => (this.saving = false))
-    },
-
-    clearMessage() {
-      this.message.text = ''
-      this.message.type = ''
     }
   }
-};
+}
 </script>

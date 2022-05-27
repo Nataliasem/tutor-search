@@ -23,5 +23,5 @@ export default {
       this.$store.commit('SET_USER', user)
     }
   }
-};
+}
 </script>
