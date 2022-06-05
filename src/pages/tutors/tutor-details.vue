@@ -1,10 +1,15 @@
 <template>
   <div class="page-wrapper space-y-6">
     <!-- ALERT -->
-    <ts-alert v-if="isShown" :message="message" :type="type" @hide="hideAlert" />
+    <ts-alert
+      v-if="isShown"
+      :message="message"
+      :type="type"
+      @hide="hideAlert"
+    />
 
     <!-- LOADING -->
-    <ts-loader v-if="loading" >Loading requests</ts-loader>
+    <ts-loader v-if="loading">Loading requests</ts-loader>
 
     <!-- NO TUTOR INFO -->
     <div v-else-if="!tutor">No tutor info</div>
@@ -55,7 +60,7 @@ export default {
   },
   data: () => ({
     loading: true,
-    tutor: null,
+    tutor: null
   }),
   computed: {
     tutorNameView() {
@@ -72,13 +77,14 @@ export default {
   mounted() {
     this.loadTutor()
   },
-  methods:{
+  methods: {
     loadTutor() {
       this.loading = true
 
-      tutorApi.loadTutor(this.id)
-        .then(tutor => (this.tutor = tutor))
-        .catch( ({ message }) => {
+      tutorApi
+        .loadTutor(this.id)
+        .then((tutor) => (this.tutor = tutor))
+        .catch(({ message }) => {
           this.showAlert(message || 'Failed to fetch')
         })
         .finally(() => (this.loading = false))

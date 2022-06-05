@@ -1,56 +1,64 @@
 <template>
   <div class="mx-auto max-w-card pt-8">
     <!-- ALERT -->
-    <ts-alert v-if="isShown" :message="message" :type="type" @hide="hideAlert" />
+    <ts-alert
+      v-if="isShown"
+      :message="message"
+      :type="type"
+      @hide="hideAlert"
+    />
 
     <div class="text-center mb-8 text-size-16">Register as a tutor now</div>
     <ts-form :form-schema="tutorSchema" :saving="saving" @validate="register">
-    <!-- FIRSTNAME -->
-    <ts-field-input
-      v-model="tutorSchema.firstName.value"
-      v-model:valid="tutorSchema.firstName.valid"
-      v-model:touched="tutorSchema.firstName.touched"
-      :rules="tutorSchema.firstName.rules"
-    >
-      First name
-    </ts-field-input>
+      <!-- FIRSTNAME -->
+      <ts-field-input
+        v-model="tutorSchema.firstName.value"
+        v-model:valid="tutorSchema.firstName.valid"
+        v-model:touched="tutorSchema.firstName.touched"
+        :rules="tutorSchema.firstName.rules"
+      >
+        First name
+      </ts-field-input>
 
-    <!-- LASTNAME -->
-    <ts-field-input
-      v-model="tutorSchema.lastName.value"
-      v-model:valid="tutorSchema.lastName.valid"
-      v-model:touched="tutorSchema.lastName.touched"
-      :rules="tutorSchema.lastName.rules"
-    >
-      Last name
-    </ts-field-input>
+      <!-- LASTNAME -->
+      <ts-field-input
+        v-model="tutorSchema.lastName.value"
+        v-model:valid="tutorSchema.lastName.valid"
+        v-model:touched="tutorSchema.lastName.touched"
+        :rules="tutorSchema.lastName.rules"
+      >
+        Last name
+      </ts-field-input>
 
-    <!-- DESCRIPTION -->
-    <ts-field-textarea
-      v-model="tutorSchema.description.value"
-      v-model:valid="tutorSchema.description.valid"
-      v-model:touched="tutorSchema.description.touched"
-      :rules="tutorSchema.description.rules"
-    >
-      Description
-    </ts-field-textarea>
+      <!-- DESCRIPTION -->
+      <ts-field-textarea
+        v-model="tutorSchema.description.value"
+        v-model:valid="tutorSchema.description.valid"
+        v-model:touched="tutorSchema.description.touched"
+        :rules="tutorSchema.description.rules"
+      >
+        Description
+      </ts-field-textarea>
 
-    <!-- HOURLY RATE -->
-    <ts-field-input
-      v-model="tutorSchema.hourlyRate.value"
-      v-model:valid="tutorSchema.hourlyRate.valid"
-      v-model:touched="tutorSchema.hourlyRate.touched"
-      type="number"
-      :rules="tutorSchema.hourlyRate.rules"
-    >
-      Hourly rate
-    </ts-field-input>
+      <!-- HOURLY RATE -->
+      <ts-field-input
+        v-model="tutorSchema.hourlyRate.value"
+        v-model:valid="tutorSchema.hourlyRate.valid"
+        v-model:touched="tutorSchema.hourlyRate.touched"
+        type="number"
+        :rules="tutorSchema.hourlyRate.rules"
+      >
+        Hourly rate
+      </ts-field-input>
 
-    <!-- AREAS OF EXPERTISE -->
-    <div class="flex flex-col space-y-2">
-      <span class="font-bold">Areas of expertise</span>
-      <ts-field-checklist v-model:checked="checkedAreas" :options="areasOptions" />
-    </div>
+      <!-- AREAS OF EXPERTISE -->
+      <div class="flex flex-col space-y-2">
+        <span class="font-bold">Areas of expertise</span>
+        <ts-field-checklist
+          v-model:checked="checkedAreas"
+          :options="areasOptions"
+        />
+      </div>
 
       <template #action-buttons="{ disabled }">
         <spinner-button
@@ -108,13 +116,13 @@ export default {
       import('~/components/fields/ts-form.vue')
     ),
     TsFieldInput: defineAsyncComponent(() =>
-        import('~/components/fields/ts-field-input.vue')
+      import('~/components/fields/ts-field-input.vue')
     ),
     TsFieldTextarea: defineAsyncComponent(() =>
-        import('~/components/fields/ts-field-textarea.vue')
+      import('~/components/fields/ts-field-textarea.vue')
     ),
     TsFieldChecklist: defineAsyncComponent(() =>
-        import('~/components/fields/ts-field-checklist.vue')
+      import('~/components/fields/ts-field-checklist.vue')
     ),
     SpinnerButton: defineAsyncComponent(() =>
       import('~/components/layout/spinner-button.vue')
@@ -156,10 +164,11 @@ export default {
         hourlyRate: this.tutorSchema.hourlyRate.value
       }
 
-      tutorApi.createTutor(tutor)
+      tutorApi
+        .createTutor(tutor)
         .then(() => this.$store.commit('CLEAR_LAST_FETCH_TUTORS_TIMESTAMP'))
         .then(() => this.$router.push('/tutors'))
-        .catch( ({ message }) => {
+        .catch(({ message }) => {
           this.showAlert(message || 'Failed to fetch')
         })
         .finally(() => (this.saving = false))

@@ -1,10 +1,20 @@
 <template>
   <div class="mx-auto max-w-card pt-8">
     <!-- ALERT -->
-    <ts-alert v-if="isShown" :message="message" :type="type" @hide="hideAlert" />
+    <ts-alert
+      v-if="isShown"
+      :message="message"
+      :type="type"
+      @hide="hideAlert"
+    />
 
     <div class="text-center mb-8 text-size-16">Start using Tutor Search</div>
-    <ts-form :form-schema="authSchema" submit-text="Log in" :saving="saving" @validate="handleAuth">
+    <ts-form
+      :form-schema="authSchema"
+      submit-text="Log in"
+      :saving="saving"
+      @validate="handleAuth"
+    >
       <!-- EMAIL -->
       <ts-field-input
         v-model="authSchema.email.value"
@@ -44,9 +54,9 @@
             :saving="saving && mode === 'register'"
             :disabled="disabled"
             @click="switchMode('register')"
-         >
-           Register
-         </spinner-button>
+          >
+            Register
+          </spinner-button>
         </div>
       </template>
     </ts-form>
@@ -111,21 +121,23 @@ export default {
     },
 
     logIn(data) {
-      return authApi.logIn(data)
-        .then(user => {
-          this.$store.commit('SET_USER', user)
+      return authApi.logIn(data).then((user) => {
+        this.$store.commit('SET_USER', user)
 
-          const email = user && user.email || ''
-          if(email) {
-            this.showAlert(`Welcome back, ${email}!`, 'success')
-          }
-        })
+        const email = (user && user.email) || ''
+        if (email) {
+          this.showAlert(`Welcome back, ${email}!`, 'success')
+        }
+      })
     },
 
     register(data) {
-      return authApi.createAccount(data)
-        .then(user => this.$store.commit('SET_USER', user))
-        .then(() => this.showAlert('You have successfully registered', 'success'))
+      return authApi
+        .createAccount(data)
+        .then((user) => this.$store.commit('SET_USER', user))
+        .then(() =>
+          this.showAlert('You have successfully registered', 'success')
+        )
     },
 
     handleAuth() {
@@ -143,7 +155,7 @@ export default {
         })
         // TODO: get rid of Timeout
         .then(() => setTimeout(() => this.$router.push('/'), 2000))
-        .catch( ({ message }) => {
+        .catch(({ message }) => {
           this.showAlert(message || 'Failed to fetch')
         })
         .finally(() => (this.saving = false))

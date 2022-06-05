@@ -24,7 +24,7 @@ export default {
     isValid() {
       const validatedFields = Object.values(this.formSchema)
 
-      return validatedFields.every(item => item.valid && item.touched)
+      return validatedFields.every((item) => item.valid && item.touched)
     },
 
     disabled() {
@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     validate() {
-      if(!this.isValid) {
+      if (!this.isValid) {
         return
       }
 

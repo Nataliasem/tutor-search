@@ -2,7 +2,7 @@
   <ts-header />
   <router-view v-slot="{ Component }">
     <Transition name="route" mode="out-in">
-        <component :is="Component" />
+      <component :is="Component" />
     </Transition>
   </router-view>
 </template>
@@ -19,7 +19,7 @@ export default {
   mounted() {
     const user = authUtils.getUser()
 
-    if(user) {
+    if (user) {
       this.$store.commit('SET_USER', user)
     }
   }

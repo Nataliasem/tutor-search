@@ -7,13 +7,15 @@
     <textarea
       v-model.trim="localValue"
       class="ts-input pt-3"
-      :class="{ 'invalid' : valid === false }"
+      :class="{ invalid: valid === false }"
       :rows="rows"
       @blur="update"
     />
 
     <template v-if="valid === false">
-      <div v-for="error in errorMessages" :key="error" class="text-red-400">{{ error }}</div>
+      <div v-for="error in errorMessages" :key="error" class="text-red-400">
+        {{ error }}
+      </div>
     </template>
   </label>
 </template>
@@ -49,14 +51,14 @@ export default {
       this.$emit('update:modelValue', this.localValue)
       this.$emit('update:touched', true)
 
-      if(this.rules.length === 0) {
+      if (this.rules.length === 0) {
         this.$emit('update:valid', true)
         return
       }
 
       this.errorMessages = this.rules
-        .map(rule => ValidationRules[rule](this.localValue))
-        .filter(item => Boolean(item))
+        .map((rule) => ValidationRules[rule](this.localValue))
+        .filter((item) => Boolean(item))
 
       const isValid = this.errorMessages.length === 0
       this.$emit('update:valid', isValid)
