@@ -1,13 +1,13 @@
 <template>
   <teleport to="body">
-      <div class="ts-alert fade-in" :class="classByType">
-        <span>
-          {{ message }}
-        </span>
-        <span class="text-gray-600 cursor-pointer" @click="hide">
-          <icon-cross />
-        </span>
-      </div>
+    <div class="ts-alert fade-in" :class="classByType">
+      <span>
+        {{ message }}
+      </span>
+      <span class="text-gray-600 cursor-pointer" @click="hide">
+        <icon-cross />
+      </span>
+    </div>
   </teleport>
 </template>
 
@@ -56,8 +56,12 @@ export default {
 }
 
 @keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .ts-alert {

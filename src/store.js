@@ -50,7 +50,7 @@ const store = createStore({
     },
     CLEAR_LAST_FETCH_REQUESTS_TIMESTAMP(state) {
       state.lastFetchRequestsTimestamp = null
-    },
+    }
   }
 })
 

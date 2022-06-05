@@ -1,9 +1,10 @@
-import { BASE_URL } from '~/constants';
+import { BASE_URL } from '~/constants'
 
 export default {
   get(url) {
-    return fetch(`${BASE_URL}${url}`)
-      .then(response => responseHandler(response))
+    return fetch(`${BASE_URL}${url}`).then((response) =>
+      responseHandler(response)
+    )
   },
 
   post(url, data) {
@@ -12,17 +13,20 @@ export default {
       body: JSON.stringify(data)
     }
 
-    return fetch(`${BASE_URL}${url}`, config)
-      .then(response => responseHandler(response))
+    return fetch(`${BASE_URL}${url}`, config).then((response) =>
+      responseHandler(response)
+    )
   }
 }
 
 export const responseHandler = (response) => {
   if (!response || !response.status) {
-    return Promise.reject({ message: 'The server is unavailable. Try again later' })
+    return Promise.reject({
+      message: 'The server is unavailable. Try again later'
+    })
   }
 
-  if(response.ok) {
+  if (response.ok) {
     return response.json()
   }
 

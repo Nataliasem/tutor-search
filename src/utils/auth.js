@@ -1,6 +1,6 @@
 export default {
   setUser(user) {
-    if(!user) {
+    if (!user) {
       return
     }
 
@@ -13,5 +13,5 @@ export default {
 
   removeUser() {
     localStorage.removeItem('USER')
-  },
+  }
 }

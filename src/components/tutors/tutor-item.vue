@@ -7,8 +7,13 @@
 
         <!-- ACTIONS -->
         <div class="flex items-center space-x-5 text-indigo-900">
-          <router-link :to="tutorContactsLink" title="contact"><icon-phone /></router-link>
-          <router-link :to="tutorDetailsLink" title="details"><icon-user /></router-link>
+          <router-link :to="tutorContactsLink" title="contact">
+            <icon-phone />
+          </router-link>
+
+          <router-link :to="tutorDetailsLink" title="details">
+            <icon-user />
+          </router-link>
         </div>
       </div>
 
@@ -18,7 +23,14 @@
 
     <!-- AREAS -->
     <div class="ts-card-footer">
-      <div v-for="area in formattedAreas" :key="area" class="ts-badge" :class="area">{{ area }}</div>
+      <div
+        v-for="area in formattedAreas"
+        :key="area"
+        class="ts-badge"
+        :class="area"
+      >
+        {{ area }}
+      </div>
     </div>
   </div>
 </template>
@@ -63,7 +75,7 @@ export default {
     },
 
     formattedAreas() {
-      return (this.tutor.areas || []).map(item => AREAS_NAMES[item])
+      return (this.tutor.areas || []).map((item) => AREAS_NAMES[item])
     },
 
     tutorDetailsLink() {

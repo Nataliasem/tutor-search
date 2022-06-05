@@ -11,20 +11,14 @@ import NotFound from '~/pages/not-found.vue'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', redirect: '/tutors'},
+    { path: '/', redirect: '/tutors' },
     { path: '/user-auth', component: UserAuth },
     { path: '/tutors', component: TutorsList },
-    { path: '/tutors/:id',
-      component: TutorDetails,
-      props: true
-    },
-    { path: '/tutors/:id/contact',
-      component: ContactTutor,
-      props: true
-    },
+    { path: '/tutors/:id', component: TutorDetails, props: true },
+    { path: '/tutors/:id/contact', component: ContactTutor, props: true },
     { path: '/register', component: TutorRegistration },
     { path: '/requests', component: RequestsList },
-    { path: '/:notFound(.*)', component: NotFound },
+    { path: '/:notFound(.*)', component: NotFound }
   ]
 })
 
