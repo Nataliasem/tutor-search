@@ -1,10 +1,20 @@
 <template>
   <div class="mx-auto max-w-card pt-8">
     <!-- ALERT -->
-    <ts-alert v-if="isShown" :message="message" :type="type" @hide="hideAlert" />
+    <ts-alert
+      v-if="isShown"
+      :message="message"
+      :type="type"
+      @hide="hideAlert"
+    />
 
     <div class="text-center mb-8 text-size-16">Contact a tutor</div>
-    <ts-form :form-schema="contactSchema" submit-text="Send" :saving="saving" @validate="send">
+    <ts-form
+      :form-schema="contactSchema"
+      submit-text="Send"
+      :saving="saving"
+      @validate="send"
+    >
       <!-- EMAIL -->
       <ts-field-input
         v-model="contactSchema.email.value"
@@ -57,7 +67,7 @@ const CONTACT_SCHEMA = {
     valid: true,
     touched: false,
     rules: ['required', 'limit']
-  },
+  }
 }
 
 export default {
@@ -106,10 +116,11 @@ export default {
         message: this.contactSchema.message.value
       }
 
-      requestsApi.createRequest(request)
+      requestsApi
+        .createRequest(request)
         .then(() => this.$store.commit('CLEAR_LAST_FETCH_REQUESTS_TIMESTAMP'))
         .then(() => this.showAlert('The request has been sent', 'success'))
-        .catch( ({ message }) => {
+        .catch(({ message }) => {
           this.showAlert(message || 'Failed to fetch')
         })
         .finally(() => (this.saving = false))
@@ -117,4 +128,3 @@ export default {
   }
 }
 </script>
-

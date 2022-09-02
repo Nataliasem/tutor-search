@@ -2,14 +2,16 @@
   <header class="border-b border-slate-300 py-4 px-8">
     <nav class="flex justify-between items-center">
       <!-- LOGO -->
-      <router-link to="/" class="font-bold text-size-18 text-gray-800">Tutor Search</router-link>
+      <router-link to="/" class="font-bold text-size-18 text-gray-800">
+        Tutor Search
+      </router-link>
 
       <!-- NAVIGATION LINKS -->
       <div class="flex items-center space-x-3">
         <router-link
           to="/tutors"
           class="ts-nav-link"
-          :class="{ 'active': activeLink === '/tutors' }"
+          :class="{ active: activeLink === '/tutors' }"
         >
           All tutors
         </router-link>
@@ -19,7 +21,7 @@
           <router-link
             to="/requests"
             class="ts-nav-link"
-            :class="{ 'active': activeLink === '/requests' }"
+            :class="{ active: activeLink === '/requests' }"
           >
             Requests
           </router-link>
@@ -32,7 +34,12 @@
           <div>Hello, {{ userName }}!</div>
 
           <!-- REGISTER AS TUTOR -->
-          <router-link v-if="isTutor === false" to='/register' class="ts-button-main">Register as a tutor</router-link>
+          <router-link
+            v-if="isTutor === false"
+            to="/register"
+            class="ts-button-main"
+            >Register as a tutor</router-link
+          >
 
           <!-- LOG OUT -->
           <button
@@ -48,7 +55,7 @@
         <!-- LOG IN -->
         <router-link
           v-else
-          to='/user-auth'
+          to="/user-auth"
           class="ts-rounded-icon"
           title="Log in"
         >
@@ -97,7 +104,6 @@ export default {
   }
 }
 </script>
-
 
 <style>
 .ts-nav-link {

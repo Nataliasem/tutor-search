@@ -1,8 +1,5 @@
 module.exports = {
-  content: [
-    './index.html',
-    './src/**/*.{vue,js,ts,jsx,tsx}',
-  ],
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
       maxWidth: {
@@ -16,7 +13,7 @@ module.exports = {
         'ts-sm': '2px',
         'ts-md': '8px',
         'ts-lg': '20px'
-      },
+      }
     },
     spacing: {
       0: '0px',

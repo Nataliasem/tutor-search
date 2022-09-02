@@ -1,10 +1,15 @@
 <template>
   <div class="page-wrapper">
     <!-- ALERT -->
-    <ts-alert v-if="isShown" :message="message" :type="type" @hide="hideAlert" />
+    <ts-alert
+      v-if="isShown"
+      :message="message"
+      :type="type"
+      @hide="hideAlert"
+    />
 
     <!-- LOADING -->
-    <ts-loader v-if="loading" >Loading tutors</ts-loader>
+    <ts-loader v-if="loading">Loading tutors</ts-loader>
 
     <!-- NO TUTORS MESSAGE -->
     <div v-else-if="hasTutors === false">No tutors found</div>
@@ -15,11 +20,17 @@
       <ts-field-checklist v-model:checked="checkedAreas" :options="allAreas" />
 
       <!-- NO FILTERED TUTORS MESSAGE -->
-      <div v-if="hasFilteredTutors === false">No tutors found. Try to change the filters</div>
+      <div v-if="hasFilteredTutors === false">
+        No tutors found. Try to change the filters
+      </div>
 
       <!-- TUTORS -->
-      <tutor-item v-for="tutor in filteredTutors" :key="tutor.id" :tutor="tutor"/>
-   </div>
+      <tutor-item
+        v-for="tutor in filteredTutors"
+        :key="tutor.id"
+        :tutor="tutor"
+      />
+    </div>
   </div>
 </template>
 
@@ -52,7 +63,7 @@ export default {
 
     const hasTimestampExpired = computed(() => {
       const lastTimestamp = store.state.lastFetchTutorsTimestamp
-      if(!lastTimestamp) {
+      if (!lastTimestamp) {
         return true
       }
 
@@ -74,17 +85,21 @@ export default {
     const loadTutors = () => {
       loading.value = true
 
-      if(hasTimestampExpired.value === false && cashedTutors.value.length > 0) {
+      if (
+        hasTimestampExpired.value === false &&
+        cashedTutors.value.length > 0
+      ) {
         tutors.value = clonedeep(cashedTutors.value)
         loading.value = false
         return
       }
 
-      tutorApi.loadTutors()
-        .then(response => (tutors.value = response))
+      tutorApi
+        .loadTutors()
+        .then((response) => (tutors.value = response))
         .then(() => store.commit('SET_TUTORS', tutors))
         .then(() => store.commit('SET_LAST_FETCH_TUTORS_TIMESTAMP'))
-        .catch( ({ message }) => {
+        .catch(({ message }) => {
           showAlert(message || 'Failed to fetch')
         })
         .finally(() => (loading.value = false))
@@ -95,11 +110,13 @@ export default {
     const allAreas = ref(AREAS_OPTIONS)
 
     const filteredTutors = computed(() => {
-      if(checkedAreas.value.length === 0) {
+      if (checkedAreas.value.length === 0) {
         return tutors.value
       }
 
-      return tutors.value.filter(item => item.areas.some(area => checkedAreas.value.includes(area)))
+      return tutors.value.filter((item) =>
+        item.areas.some((area) => checkedAreas.value.includes(area))
+      )
     })
 
     const hasTutors = computed(() => {

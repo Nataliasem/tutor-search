@@ -1,8 +1,8 @@
 <template>
-    <div class="flex justify-center space-x-3 my-20">
-      <icon-spinner class="text-blue-500"/>
-      <span><slot>Loading</slot></span>
-    </div>
+  <div class="flex justify-center space-x-3 my-20">
+    <icon-spinner class="text-blue-500" />
+    <span><slot>Loading</slot></span>
+  </div>
 </template>
 
 <script>
